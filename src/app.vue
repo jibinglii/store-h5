@@ -8,17 +8,19 @@
     <div class="position-absolute w-100 h-100 bg-white opacity-70" v-if="isToggled" @click="toggle"></div>
     <div class="back-to-top" ref="backToTopLayer">
       <a class="btn btn-icon btn-secondary text-20" href="javascript:" @click="scrollToTop" data-toggle="tooltip" data-placement="top" title="返回顶部">
-        </a>
+        <arrow-up-icon/>
+      </a>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-
+import ArrowUpIcon from '$icons/ArrowUp'
 export default {
   name: 'app',
   components: {
+    ArrowUpIcon
   },
   computed: {
     ...mapGetters(['currentUser', 'isToggled']),

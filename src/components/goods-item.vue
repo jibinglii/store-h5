@@ -1,8 +1,10 @@
 <template>
     <div class="goods-item">
-        <h3>{{ goods.title }}</h3>
         <div>
             <img :src="goods.logo" alt="" class="logo">
+        </div>
+        <div>
+            <h3>{{ goods.title }}</h3>
         </div>
     </div>
 </template>
@@ -20,6 +22,8 @@ export default {
 .goods-item{
     border: 1px dashed green;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
     img.logo{
         width: 90px;
         height: 90px;

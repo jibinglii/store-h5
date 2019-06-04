@@ -1,87 +1,68 @@
 <template>
   <div class="page-home">
-    <!-- <banner name="home"></banner> -->
-
-    <div class="row mt-3">
-      <div class="col-md-9">
-        <div class="box box-flush">
-          <div class="box-body">
-            <ul class="nav nav-pills">
-              <li class="nav-item">
-                <a class="nav-link" :class="{active: currentThreadsTab == 'default'}" href="javascript:;" @click="currentThreadsTab = 'default'">活跃</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" :class="{active: currentThreadsTab == 'featured'}" href="javascript:;" @click="currentThreadsTab = 'featured'">精选</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" :class="{active: currentThreadsTab == 'zeroComment'}" href="javascript:;" @click="currentThreadsTab = 'zeroComment'">零回复</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" :class="{active: currentThreadsTab == 'recent'}" href="javascript:;" @click="currentThreadsTab = 'recent'">最新发布</a>
-              </li>
-            </ul>
-          </div>
-          <threads-list :threads="threads[currentThreadsTab]" @page-changed="handlePageChanged"></threads-list>
-        </div>
+    <div class="user">
+      <div class="logo">
+        <img :src="currentUser.avatar">
       </div>
-      <div class="col-md-3">
-        <guest-login-guide class="mb-2" />
-        <quick-docs class="mb-2" />
-        <hot-tags />
-        <user-ranking class="mt-2" />
-        <new-users class="mt-2" />
+      <div class="info">
+        <p>{{ currentUser.id }}</p>
+        <p>{{ currentUser.username }}</p>
+        <p>{{ currentUser.nickname }}</p>
+      </div>
+      <div>
+        <button @click="logout()" v-if="isLogged">推出</button>
+        <router-link :to="{ name: 'auth.login' }" tat="button" v-else><a href="javascript:void(0);">去登录</a></router-link>
       </div>
     </div>
+    
+    <goods-item :goods="item" v-for="item in goodsList.data" :key="item.id"></goods-item>
   </div>
 </template>
 
 <script>
-import Banner from '$components/banner'
-import HotTags from '$components/hot-tags'
-import UserRanking from '$components/user-ranking'
-import NewUsers from '$components/new-users'
-import QuickDocs from '$components/quick-docs'
-import ThreadsList from '$components/threads-list'
-import GuestLoginGuide from '$components/guest-login-guide'
-
+import { mapGetters, mapActions } from 'vuex'
+import * as services from '$modules/home/services'
+import GoodsItem from '$components/goods-item'
 export default {
   data () {
     return {
-      threads: {
-        default: {},
-        featured: {},
-        zeroComment: {},
-        recent: {}
-      },
-      currentThreadsTab: 'default'
+      goodsList: []
     }
+  },
+  computed: {
+    ...mapGetters(['isLogged', 'currentUser'])
   },
   components: {
-    Banner,
-    QuickDocs,
-    HotTags,
-    UserRanking,
-    NewUsers,
-    ThreadsList,
-    GuestLoginGuide
-  },
-  watch: {
-    currentThreadsTab () {
-      this.loadThreads(1)
-    }
+    GoodsItem
   },
   methods: {
-    loadThreads (page = 1) {
-      this.$http
-        .get(`threads?tab=${this.currentThreadsTab}&page=${page}`)
-        .then(threads => (this.threads[this.currentThreadsTab] = threads))
-    },
-    handlePageChanged (page) {
-      this.loadThreads(page)
+    ...mapActions(['logout']),
+    getGoods () {
+      services.goods().then(data => {
+        this.goodsList = data.data.goods
+      })
     }
   },
-  mounted () {
-    this.loadThreads()
+  created () {
+    this.getGoods()
   }
 }
 </script>
+
+<style lang="scss">
+.user {
+  display: flex !important;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px dashed red;
+  box-sizing: border-box;
+  .logo {
+    img{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    
+  }
+}
+</style>

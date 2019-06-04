@@ -9,18 +9,7 @@ export const attemptLogin = ({ dispatch }, payload) =>
   services
     .postLogin(payload)
     .then(data => {
-      dispatch('setToken', data.access_token)
-
-      return Promise.resolve()
-    })
-    .then(() => dispatch('loadUser'))
-
-export const attemptRegister = ({ dispatch }, payload) =>
-  services
-    .postRegister(payload)
-    .then(({ token }) => {
-      dispatch('setToken', token)
-
+      dispatch('setToken', data.data.access_token)
       return Promise.resolve()
     })
     .then(() => dispatch('loadUser'))
@@ -84,5 +73,5 @@ export const loadUser = ({ dispatch }) =>
   services
     .loadUserData()
     // store user's data
-    .then(user => dispatch('setUser', user))
+    .then(data => dispatch('setUser', data.data.user))
     .catch(logout)

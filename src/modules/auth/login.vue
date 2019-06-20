@@ -9,9 +9,14 @@
     ></x-header>
     <div class="bg">
       <img
-        src="/images/shop/login/bg.jpg"
+        :src="store.logo"
         alt=""
       >
+      <div>
+      <h4>{{ store.name }}</h4>
+      <p>{{ store.desc }}</p>
+      </div>
+
     </div>
     <div class="login-box">
       <div class="item">
@@ -109,7 +114,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import XHeader from "$components/XHeader"
 import Agree from "$components/Agree"
 import Tcaptcha from '$utils/tcaptcha'
@@ -135,6 +140,9 @@ export default {
       vCodeLabel: '获取验证码',
       vCodeButtonDisabled: false,
     }
+  },
+  computed:{
+    ...mapGetters(['store'])
   },
   // components: {  },
   methods: {
@@ -246,9 +254,13 @@ body {
   background-color: white;
 }
 .bg {
+  height: 10rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   img {
-    width: 100%;
-    height: auto;
+    width: 90px;
+    height: 90px;
   }
 }
 .login-box {

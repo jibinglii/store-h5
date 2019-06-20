@@ -21,7 +21,7 @@ Vue.prototype.$user = () => {
 }
 
 FastClick.attach(document.body)
-
+store.dispatch('storeInfo')
 setTimeout(() => {
   new Vue({
     store,

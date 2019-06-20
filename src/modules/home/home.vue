@@ -51,7 +51,6 @@ export default {
     this.getGoods()
   },
   mounted () {
-    this.$store.dispatch('storeInfo')
   }
 }
 </script>
@@ -69,7 +68,7 @@ export default {
       height: 50px;
       border-radius: 50%;
     }
-    
+
   }
 }
 </style>

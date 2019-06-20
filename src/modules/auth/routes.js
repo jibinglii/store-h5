@@ -1,7 +1,6 @@
-export default [
-  {
+export default [{
     path: 'auth/login',
     name: 'auth.login',
-    component: () => import('./login')
-  }
-]
+    component: () =>
+        import ('./login')
+}]

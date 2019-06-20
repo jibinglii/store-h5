@@ -1,28 +1,32 @@
 <template>
   <div class="page-home">
     <div class="user">
-      <div class="logo">
-        <img :src="currentUser.avatar">
-      </div>
-      <div class="info">
-        <p>{{ currentUser.id }}</p>
-        <p>{{ currentUser.username }}</p>
-        <p>{{ currentUser.nickname }}</p>
+      <div class="store" style="display: flex;">
+        <img :src="store.logo" alt="">
+        <div>
+          <h1>{{ store.name }}</h1>
+          <address>{{ store.desc }}</address>
+        </div>
       </div>
       <div>
         <button @click="logout()" v-if="isLogged">推出</button>
         <router-link :to="{ name: 'auth.login' }" tat="button" v-else><a href="javascript:void(0);">去登录</a></router-link>
       </div>
     </div>
-    
-    <goods-item :goods="item" v-for="item in goodsList.data" :key="item.id"></goods-item>
+    <div class="goods">
+      <div class="goods-item" v-for="item in goodsList" :key="item.uuid">
+        <h1>{{ item.title }}</h1>
+      </div>
+    </div>
+    <tab></tab>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import * as services from '$modules/home/services'
-import GoodsItem from '$components/goods-item'
+import Tab from '$components/Tab'
+
 export default {
   data () {
     return {
@@ -30,21 +34,24 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLogged', 'currentUser'])
+    ...mapGetters(['isLogged', 'currentUser', 'store'])
   },
   components: {
-    GoodsItem
+    Tab
   },
   methods: {
     ...mapActions(['logout']),
     getGoods () {
-      services.goods().then(data => {
-        this.goodsList = data.data.goods
+      services.goods().then(({data}) => {
+        this.goodsList = data.goods.data
       })
     }
   },
   created () {
     this.getGoods()
+  },
+  mounted () {
+    this.$store.dispatch('storeInfo')
   }
 }
 </script>

@@ -1,4 +1,5 @@
-import { Message } from 'element-ui'
+import Toast from 'vant/lib/toast'
+import 'vant/lib/toast/style'
 
 export default http => {
   // 请求拦截
@@ -25,22 +26,14 @@ export default http => {
       if (!error['response']) {
         return Promise.reject(error)
       }
-
+      console.log(error.response)
       switch (error.response.status) {
         case 422:
-          let data = error.response.data.errors
-          let content = ''
-
-          Object.keys(data).map(function (key) {
-            let value = data[key]
-
-            content = value[0]
-          })
-
-          Message.error(content)
+          let content = error.response.data.message
+          Toast.fail(content)
           break
         case 403:
-          Message.error(error.response.data.message || '您没有此操作权限！')
+          Toast.fail(error.response.data.message || '您没有此操作权限！')
           break
         case 401:
           if (window.location.pathname !== '/auth/login') {
@@ -51,7 +44,7 @@ export default http => {
         case 501:
         case 503:
         default:
-          Message.error('服务器出了点小问题，程序员小哥哥要被扣工资了~！')
+          Toast.fail('服务器出了点小问题，程序员小哥哥要被扣工资了~！')
       }
       return Promise.reject(error.response)
     }

@@ -1,3 +1,4 @@
 export default {
-  toggled: false
+  toggled: false,
+  store: {}
 }

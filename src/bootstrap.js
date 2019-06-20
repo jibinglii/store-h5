@@ -1,5 +1,4 @@
-import $ from 'jquery'
-window._ = import('lodash')
+
 window.Popper = import('popper.js').default
 
 /**
@@ -9,7 +8,6 @@ window.Popper = import('popper.js').default
  */
 
 try {
-  import('bootstrap')
   import('$sass/app.scss')
   import('animate.css')
   import('vue-material-design-icons/styles.css')

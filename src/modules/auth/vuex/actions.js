@@ -14,6 +14,15 @@ export const attemptLogin = ({ dispatch }, payload) =>
     })
     .then(() => dispatch('loadUser'))
 
+export const attemptLoginByCode = ({ dispatch }, payload) =>
+  services
+    .postLoginByCode(payload)
+    .then(data => {
+      dispatch('setToken', data.data.access_token)
+      return Promise.resolve()
+    })
+    .then(() => dispatch('loadUser'))
+
 export const logout = ({ dispatch }) => {
   return localforage
     .removeItem(userTokenStorageKey)

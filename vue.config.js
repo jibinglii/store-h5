@@ -47,7 +47,8 @@ module.exports = {
         $components: path.resolve(__dirname, 'src/components'),
         $sass: path.resolve(__dirname, 'src/assets/sass'),
         $icons: path.resolve(__dirname, 'node_modules/vue-material-design-icons'),
-        $config: path.resolve(__dirname, 'src/config')
+        $config: path.resolve(__dirname, 'src/config'),
+        $api: path.resolve(__dirname, 'src/api')
       },
       extensions: ['.vue']
     }
@@ -84,16 +85,16 @@ module.exports = {
   pwa: {},
 
   // configure webpack-dev-server behavior
-  devServer: {
-    open: process.platform === 'darwin',
-    host: '0.0.0.0',
-    port: 8081,
-    https: false,
-    hotOnly: false,
-    // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
-    proxy: null, // string | Object
-    before: app => {}
-  },
+  // devServer: {
+  //   open: process.platform === 'darwin',
+  //   host: '0.0.0.0',
+  //   port: 8081,
+  //   https: false,
+  //   hotOnly: false,
+  //   // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
+  //   proxy: null, // string | Object
+  //   before: app => {}
+  // },
 
   // options for 3rd party plugins
   pluginOptions: {}

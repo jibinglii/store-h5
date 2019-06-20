@@ -7,9 +7,12 @@ import beforeEach from './beforeEach'
 Vue.use(Router)
 
 const AppRoute = {
-  path: '/',
+  path: '/:store/',
   component: () => import('../app'),
-  children: [...home, ...auth]
+  children: [...home, ...auth, {
+    path: '*',
+    component: () => import('../not-found')
+  }]
 }
 
 const routes = [AppRoute]
@@ -22,5 +25,4 @@ const router = new Router({
 })
 
 router.beforeEach(beforeEach)
-
 export default router

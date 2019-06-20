@@ -13,6 +13,12 @@ export const postLogin = ({ username, password }) => {
     scope: ''
   })
 }
-
+export const postLoginByCode = ({ username, code }) => {
+  return http.post('api/v1/user/login-by-code', {
+    mobile: username,
+    code: code,
+    client_id: process.env.VUE_APP_AUTH_CLIENT_ID,
+  })
+}
 // get current user's data
-export const loadUserData = () => http.get('api/v1/auth/me').catch(() => {})
+export const loadUserData = () => http.get('api/v1/auth/me', {params: {include: 'store'}}).catch(() => {})

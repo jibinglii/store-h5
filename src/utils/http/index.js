@@ -16,4 +16,9 @@ export function setToken (token) {
   http.defaults.headers.common.Authorization = `Bearer ${token}`
 }
 
+let url = window.location.pathname
+url.match(/^\/?(\w+)\/?.*$/)
+let store = RegExp.$1
+http.defaults.headers['x-store-id'] = `${store}`
+
 export default http

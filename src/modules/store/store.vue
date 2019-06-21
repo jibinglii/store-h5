@@ -1,5 +1,6 @@
+
 <template>
-  <div class="store">
+  <div>
     <x-header
       title="店铺主页"
       back-url="home"
@@ -7,44 +8,63 @@
       color="#000"
       underline-color="#f2f2f2"
     ></x-header>
+    <div class="stores">
+      <ul class="tab-bar">
+        <li
+          v-for="(item,index) in tabs"
+          :key="index"
+          :class="{active:index == num}"
+          @click="tab(index)"
+        >{{item}}</li>
+      </ul>
+      <div class="tabCon">
+        <div v-for="(itemCon,index) in tabContents" :key="index" v-show="index == num">{{itemCon}}</div>
+      </div>
+    </div>
 
     <tab></tab>
   </div>
 </template>
-
 <script>
-import Tab from "$components/Tab";
-import listItem from "$components/listItem";
 import XHeader from "$components/XHeader";
+import Tab from "$components/Tab";
+
 export default {
   name: "store",
-  data() {
-    return {};
-  },
-
   components: {
     Tab,
-    listItem,
     XHeader
+  },
+  data() {
+    return {
+      tabs: ["游戏", "流量", "账号", "服务", "服务", "服务","账号", "服务", "服务", "服务"],
+      tabContents: ["内容一", "内容二", "内容三", "内容四"],
+      num: 1
+    };
+  },
+  methods: {
+    tab(index) {
+      this.num = index;
+    }
   }
 };
 </script>
-
 <style lang="scss">
-@import "../../assets/css/common.css";
-
-.page-home {
-  .top {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: solid 1px #f2f2f2;
-    padding: 0 10px;
-    background-color: #ffffff;
-    h3 {
-      font-size: 1.1em;
+.stores{
+  .tab-bar {
+    overflow: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+    height: 50px;
+    line-height: 50px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    li{
+      float: left;
+      padding: 0 10px;
     }
   }
 }
+
 </style>

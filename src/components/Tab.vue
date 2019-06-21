@@ -55,7 +55,7 @@ export default {
         },
         {
           text: "我的",
-          url: ""
+          url: "me.me"
         }
       ],
       isFirst: true
@@ -80,7 +80,7 @@ body {
   width: 100%;
   background-color: white;
   .kefu{
-   width: 47%;
+   width: 45px;
   }
   .weui-tabbar__item {
     border-right: solid 1px #f2f2f2;
@@ -97,13 +97,13 @@ body {
   .weui-tabbar__label {
     text-align: center;
     color: #999;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 2.8;
   }
 }
-.weui-tabbar:before {
-  border: none;
-}
+// .weui-tabbar:before {
+//   border: none;
+// }
 .tools-bar {
   position: fixed;
   left: 1rem;

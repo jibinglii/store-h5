@@ -8,7 +8,7 @@ import store from './vuex'
 import Toast from 'vant/lib/toast'
 import 'vant/lib/toast/style'
 import mixins from './mixins/index'
-
+import 'swiper/dist/css/swiper.css';
 // const FastClick = require('fastclick');
 import FastClick from 'fastclick'
 Vue.config.productionTip = false
@@ -17,15 +17,15 @@ sync(store, router)
 Vue.prototype.$toast = Toast
 Vue.prototype.$http = http
 Vue.prototype.$user = () => {
-  return store.getters.currentUser
+    return store.getters.currentUser
 }
 
 FastClick.attach(document.body)
 store.dispatch('storeInfo')
 setTimeout(() => {
-  new Vue({
-    store,
-    router,
-    render: h => h(Root)
-  }).$mount('#app')
+    new Vue({
+        store,
+        router,
+        render: h => h(Root)
+    }).$mount('#app')
 }, 200)

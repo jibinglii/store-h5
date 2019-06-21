@@ -39,10 +39,11 @@
 </template>
 
 <script>
+import XHeader from "$components/XHeader"
 import Tab from "$components/Tab";
 import listItem from "$components/listItem";
 import NavList from "$components/NavList";
-import XHeader from "$components/XHeader"
+
 export default {
   name: "home",
   data() {

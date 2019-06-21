@@ -5,7 +5,7 @@
         </div>
         <h1>{{ title }}</h1>
         <div class="right-box">
-            <slot name="right-btn"></slot>
+            <slot name="right-btn">推广</slot>
         </div>
     </header>
 </template>

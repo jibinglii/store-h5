@@ -4,21 +4,21 @@ import http from '$utils/http'
 
 // send login data and retrive a new token
 export const postLogin = ({ username, password }) => {
-  return http.post('api/v1/auth/login', {
-    grant_type: 'password',
-    client_id: process.env.VUE_APP_AUTH_CLIENT_ID,
-    client_secret: process.env.VUE_APP_AUTH_CLIENT_SECRET,
-    username: username,
-    password: password,
-    scope: ''
-  })
+    return http.post('api/v1/auth/login', {
+        grant_type: 'password',
+        client_id: process.env.VUE_APP_AUTH_CLIENT_ID,
+        client_secret: process.env.VUE_APP_AUTH_CLIENT_SECRET,
+        username: username,
+        password: password,
+        scope: ''
+    })
 }
 export const postLoginByCode = ({ username, code }) => {
-  return http.post('api/v1/user/login-by-code', {
-    mobile: username,
-    code: code,
-    client_id: process.env.VUE_APP_AUTH_CLIENT_ID,
-  })
-}
-// get current user's data
-export const loadUserData = () => http.get('api/v1/auth/me', {params: {include: 'store'}}).catch(() => {})
+        return http.post('api/v1/user/login-by-code', {
+            mobile: username,
+            code: code,
+            client_id: process.env.VUE_APP_AUTH_CLIENT_ID,
+        })
+    }
+    // get current user's data
+export const loadUserData = () => http.get('api/v1/auth/me', { params: { include: 'store' } }).catch(() => {})

@@ -19,10 +19,10 @@ const AppRoute = {
 const routes = [AppRoute]
 
 const router = new Router({
-  routes,
-  linkActiveClass: 'active',
-  linkExactActiveClass: 'active',
-  mode: 'history'
+    routes,
+    linkActiveClass: 'active',
+    linkExactActiveClass: 'active',
+    mode: 'history'
 })
 
 router.beforeEach(beforeEach)

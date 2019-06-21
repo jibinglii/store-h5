@@ -1,4 +1,4 @@
-! function (t) {
+! function(t) {
     var e = {};
 
     function n(o) {
@@ -10,18 +10,18 @@
         };
         return t[o].call(r.exports, r, r.exports, n), r.l = !0, r.exports
     }
-    n.m = t, n.c = e, n.d = function (t, e, o) {
+    n.m = t, n.c = e, n.d = function(t, e, o) {
         n.o(t, e) || Object.defineProperty(t, e, {
             enumerable: !0,
             get: o
         })
-    }, n.r = function (t) {
+    }, n.r = function(t) {
         "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(t, Symbol.toStringTag, {
             value: "Module"
         }), Object.defineProperty(t, "__esModule", {
             value: !0
         })
-    }, n.t = function (t, e) {
+    }, n.t = function(t, e) {
         if (1 & e && (t = n(t)), 8 & e) return t;
         if (4 & e && "object" == typeof t && t && t.__esModule) return t;
         var o = Object.create(null);
@@ -29,51 +29,51 @@
                 enumerable: !0,
                 value: t
             }), 2 & e && "string" != typeof t)
-            for (var r in t) n.d(o, r, function (e) {
+            for (var r in t) n.d(o, r, function(e) {
                 return t[e]
             }.bind(null, r));
         return o
-    }, n.n = function (t) {
-        var e = t && t.__esModule ? function () {
+    }, n.n = function(t) {
+        var e = t && t.__esModule ? function() {
             return t["default"]
-        } : function () {
+        } : function() {
             return t
         };
         return n.d(e, "a", e), e
-    }, n.o = function (t, e) {
+    }, n.o = function(t, e) {
         return Object.prototype.hasOwnProperty.call(t, e)
     }, n.p = "", n(n.s = 31)
-}([function (t, e, n) {
+}([function(t, e, n) {
     "use strict";
-    var o = function () {
+    var o = function() {
         var t = 1,
             e = /subsid=(\d+)/.exec(location.href);
         e && (t = parseInt(e[1], 10) + 1);
-        var n = function (e, n) {
+        var n = function(e, n) {
             var o = n || t;
             return e = /subsid=\d+/.test(e) ? e.replace(/subsid=\d+/g, "subsid=" + o) : e + "&subsid=" +
                 o, n || t++, e
         };
-        return n.get = function () {
+        return n.get = function() {
             return t
-        }, n.bind = function () {
+        }, n.bind = function() {
             var e = t++;
-            return function (t) {
+            return function(t) {
                 return n(t, e)
             }
         }, n
     }();
     t.exports = o
-}, , function (t, e, n) {
+}, , function(t, e, n) {
     "use strict";
     var o = Object.prototype.hasOwnProperty,
         r = Object.prototype.toString,
         i = Object.defineProperty,
         a = Object.getOwnPropertyDescriptor,
-        c = function (t) {
+        c = function(t) {
             return "function" == typeof Array.isArray ? Array.isArray(t) : "[object Array]" === r.call(t)
         },
-        s = function (t) {
+        s = function(t) {
             if (!t || "[object Object]" !== r.call(t)) return !1;
             var e, n = o.call(t, "constructor"),
                 i = t.constructor && t.constructor.prototype && o.call(t.constructor.prototype, "isPrototypeOf");
@@ -81,7 +81,7 @@
             for (e in t);
             return void 0 === e || o.call(t, e)
         },
-        u = function (t, e) {
+        u = function(t, e) {
             i && "__proto__" === e.name ? i(t, e.name, {
                 enumerable: !0,
                 configurable: !0,
@@ -89,7 +89,7 @@
                 writable: !0
             }) : t[e.name] = e.newValue
         },
-        p = function (t, e) {
+        p = function(t, e) {
             if ("__proto__" === e) {
                 if (!o.call(t, e)) return;
                 if (a) return a(t, e).value
@@ -114,7 +114,7 @@
                 }));
         return a
     }
-}, function (t, e, n) {
+}, function(t, e, n) {
     "use strict";
     var o, r, i = n(0),
         a = {
@@ -131,10 +131,11 @@
         },
         s = (o = document.referrer, r = location.href || document.URL, o = o.length > 512 ? o.substr(0, 512) :
             o, r = r.length > 1024 ? r.substr(0, 1024) : r, ["referer=" + encodeURIComponent(o), "href=" +
-                encodeURIComponent(r)].join("&"));
+                encodeURIComponent(r)
+            ].join("&"));
     t.exports = {
         type: a,
-        send: function (t, e, n) {
+        send: function(t, e, n) {
             try {
                 (n = n || c[t]).length > 1024 && n.substr(0, 1024);
                 var o = ["type=" + (t = a[t]), "appid=" + e, "reason=" + encodeURIComponent(n)],
@@ -142,7 +143,7 @@
                 (new Image).src = i(r)
             } catch (u) {}
         },
-        perfectStack: function (t) {
+        perfectStack: function(t) {
             var e = "";
             t && t.stack && (e = t.stack.replace(/\n/gi, "").split(/\bat\b/).join("\n").replace(
                 /\?[^:]+/gi, ""));
@@ -153,24 +154,24 @@
             return e
         }
     }
-}, , function (t, e, n) {
+}, , function(t, e, n) {
     "use strict";
     t.exports = {
-        add: function (t, e, n) {
+        add: function(t, e, n) {
             t && (t.addEventListener ? t.addEventListener(e, n, !1) : t.attachEvent ? t.attachEvent(
                 "on" + e, n) : t["on" + e] = n)
         },
-        remove: function (t, e, n) {
+        remove: function(t, e, n) {
             t && (t.removeEventListener ? t.removeEventListener(e, n, !1) : t.detachEvent ? t.detachEvent(
                 "on" + e, n) : t["on" + e] = null)
         }
     }
-}, , , , , , , function (t, e) {
-    t.exports = function (t) {
+}, , , , , , , function(t, e) {
+    t.exports = function(t) {
         var e = [];
-        return e.toString = function () {
-            return this.map(function (e) {
-                var n = function (t, e) {
+        return e.toString = function() {
+            return this.map(function(e) {
+                var n = function(t, e) {
                     var n = t[1] || "",
                         o = t[3];
                     if (!o) return n;
@@ -179,7 +180,7 @@
                                 "/*# sourceMappingURL=data:application/json;charset=utf-8;base64," +
                                 btoa(unescape(encodeURIComponent(JSON.stringify(a)))) +
                                 " */"),
-                            i = o.sources.map(function (t) {
+                            i = o.sources.map(function(t) {
                                 return "/*# sourceURL=" + o.sourceRoot + t + " */"
                             });
                         return [n].concat(i).concat([r]).join("\n")
@@ -189,8 +190,10 @@
                 }(e, t);
                 return e[2] ? "@media " + e[2] + "{" + n + "}" : n
             }).join("")
-        }, e.i = function (t, n) {
-            "string" == typeof t && (t = [[null, t, ""]]);
+        }, e.i = function(t, n) {
+            "string" == typeof t && (t = [
+                [null, t, ""]
+            ]);
             for (var o = {}, r = 0; r < this.length; r++) {
                 var i = this[r][0];
                 "number" == typeof i && (o[i] = !0)
@@ -202,18 +205,18 @@
             }
         }, e
     }
-}, function (t, e) {
+}, function(t, e) {
     var n = {},
-        o = function (t) {
+        o = function(t) {
             var e;
-            return function () {
+            return function() {
                 return void 0 === e && (e = t.apply(this, arguments)), e
             }
         },
-        r = o(function () {
+        r = o(function() {
             return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase())
         }),
-        i = o(function () {
+        i = o(function() {
             return document.head || document.getElementsByTagName("head")[0]
         }),
         a = null,
@@ -258,7 +261,7 @@
 
     function p(t, e) {
         var n = Array.prototype.slice.call(arguments, 2);
-        return function () {
+        return function() {
             var o = Array.prototype.slice.call(arguments);
             t.apply(e, n.concat(o))
         }
@@ -278,26 +281,26 @@
         } else t.sourceMap && "function" == typeof URL && "function" == typeof URL.createObjectURL &&
             "function" == typeof URL.revokeObjectURL && "function" == typeof Blob && "function" == typeof btoa ?
             (s = document.createElement("link"), u = i(), s.rel = "stylesheet", u.appendChild(s), o = p(m, null,
-                n = s), r = function () {
+                n = s), r = function() {
                 n.parentNode.removeChild(n), n.href && URL.revokeObjectURL(n.href)
-            }) : (n = f(), o = p(b, null, n), r = function () {
+            }) : (n = f(), o = p(b, null, n), r = function() {
                 n.parentNode.removeChild(n)
             });
         return o(t),
-            function (e) {
+            function(e) {
                 if (e) {
                     if (e.css === t.css && e.media === t.media && e.sourceMap === t.sourceMap) return;
                     o(t = e)
                 } else r()
             }
     }
-    t.exports = function (t, e) {
+    t.exports = function(t, e) {
         if ("undefined" != typeof DEBUG && DEBUG && "object" != typeof document) throw new Error(
             "The style-loader cannot be used in a non-browser environment");
-        "undefined" == typeof (e = e || {}).singleton && (e.singleton = r());
+        "undefined" == typeof(e = e || {}).singleton && (e.singleton = r());
         var o = u(t);
         return s(o, e),
-            function (t) {
+            function(t) {
                 for (var r = [], i = 0; i < o.length; i++) {
                     var a = o[i];
                     (c = n[a.id]).refs--, r.push(c)
@@ -312,7 +315,7 @@
                 }
             }
     };
-    var d, h = (d = [], function (t, e) {
+    var d, h = (d = [], function(t, e) {
         var n = [];
         d[t] = e;
         for (var o = 0; o < d.length; o++) d[o] && n.push(d[o]);
@@ -351,16 +354,16 @@
             i = t.href;
         t.href = URL.createObjectURL(r), i && URL.revokeObjectURL(i)
     }
-}, function (module, exports, __webpack_require__) {
+}, function(module, exports, __webpack_require__) {
     "use strict";
-    var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) {
+    var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t) {
         return typeof t
-    } : function (t) {
+    } : function(t) {
         return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ?
             "symbol" : typeof t
     };
     "object" !== ("undefined" == typeof JSON ? "undefined" : _typeof(JSON)) && (JSON = {}),
-    function () {
+    function() {
         var rx_one = /^[\],:{}\s]*$/,
             rx_two = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,
             rx_three = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
@@ -380,10 +383,9 @@
         }
 
         function quote(t) {
-            return rx_escapable.lastIndex = 0, rx_escapable.test(t) ? '"' + t.replace(rx_escapable, function (t) {
+            return rx_escapable.lastIndex = 0, rx_escapable.test(t) ? '"' + t.replace(rx_escapable, function(t) {
                 var e = meta[t];
-                return "string" == typeof e ? e : "\\u" + ("0000" + t.charCodeAt(0).toString(16)).slice(
-                    -4)
+                return "string" == typeof e ? e : "\\u" + ("0000" + t.charCodeAt(0).toString(16)).slice(-4)
             }) + '"' : '"' + t + '"'
         }
 
@@ -417,7 +419,7 @@
                         "{" + a.join(",") + "}", gap = c, r
             }
         }
-        "function" != typeof Date.prototype.toJSON && (Date.prototype.toJSON = function () {
+        "function" != typeof Date.prototype.toJSON && (Date.prototype.toJSON = function() {
                 return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + f(this.getUTCMonth() + 1) +
                     "-" + f(this.getUTCDate()) + "T" + f(this.getUTCHours()) + ":" + f(this.getUTCMinutes()) +
                     ":" + f(this.getUTCSeconds()) + "Z" : null
@@ -430,7 +432,7 @@
             "\r": "\\r",
             '"': '\\"',
             "\\": "\\\\"
-        }, JSON.stringify = function (t, e, n) {
+        }, JSON.stringify = function(t, e, n) {
             var o;
             if (gap = "", indent = "", "number" == typeof n)
                 for (o = 0; o < n; o += 1) indent += " ";
@@ -440,7 +442,7 @@
             return str("", {
                 "": t
             })
-        }), "function" != typeof JSON.parse && (JSON.parse = function (text, reviver) {
+        }), "function" != typeof JSON.parse && (JSON.parse = function(text, reviver) {
             var j;
 
             function walk(t, e) {
@@ -451,7 +453,7 @@
                 return reviver.call(t, e, r)
             }
             if (text = String(text), rx_dangerous.lastIndex = 0, rx_dangerous.test(text) && (text =
-                    text.replace(rx_dangerous, function (t) {
+                    text.replace(rx_dangerous, function(t) {
                         return "\\u" + ("0000" + t.charCodeAt(0).toString(16)).slice(-4)
                     })), rx_one.test(text.replace(rx_two, "@").replace(rx_three, "]").replace(rx_four,
                     ""))) return j = eval("(" + text + ")"), "function" == typeof reviver ? walk({
@@ -460,11 +462,11 @@
             throw new SyntaxError("JSON.parse")
         })
     }()
-}, function (t, e, n) {
+}, function(t, e, n) {
     "use strict";
-    var o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) {
+    var o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t) {
             return typeof t
-        } : function (t) {
+        } : function(t) {
             return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ?
                 "symbol" : typeof t
         },
@@ -479,39 +481,39 @@
     }
 
     function c(t, e) {
-        this.targets = {}, this.name = t, this.listenFunc = [], "string" != typeof (r = e || r) && (r = r.toString()),
+        this.targets = {}, this.name = t, this.listenFunc = [], "string" != typeof(r = e || r) && (r = r.toString()),
             this.initListen()
     }
-    a.prototype.send = i ? function (t) {
+    a.prototype.send = i ? function(t) {
         this.target.postMessage(t, this.domain)
-    } : function (t) {
+    } : function(t) {
         var e = window.navigator[r + this.name];
         if ("function" != typeof e) throw new Error("target callback function is not defined");
         e(t, window)
-    }, c.prototype.addTarget = function (t, e, n) {
+    }, c.prototype.addTarget = function(t, e, n) {
         var o = new a(t, e, n);
         this.targets[e] = o
-    }, c.prototype.initListen = function () {
+    }, c.prototype.initListen = function() {
         var t = this,
-            e = function (e) {
+            e = function(e) {
                 "object" == (void 0 === e ? "undefined" : o(e)) && e.data && (e = e.data);
                 for (var n = 0; n < t.listenFunc.length; n++) t.listenFunc[n](e)
             };
         i ? "addEventListener" in document ? window.addEventListener("message", e, !1) : "attachEvent" in
             document && window.attachEvent("onmessage", e) : window.navigator[r + this.name] = e
-    }, c.prototype.listen = function (t) {
+    }, c.prototype.listen = function(t) {
         this.listenFunc.push(t)
-    }, c.prototype.clear = function () {
+    }, c.prototype.clear = function() {
         this.listenFunc = []
-    }, c.prototype.send = function (t) {
+    }, c.prototype.send = function(t) {
         var e, n = this.targets;
         for (e in n) n.hasOwnProperty(e) && n[e].send(t)
     }, window.TCapMsg = c, t.exports = c
-}, , , , , , , , , , , , , , , , function (module, exports, __webpack_require__) {
+}, , , , , , , , , , , , , , , , function(module, exports, __webpack_require__) {
     "use strict";
-    var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) {
+    var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t) {
         return typeof t
-    } : function (t) {
+    } : function(t) {
         return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ?
             "symbol" : typeof t
     };
@@ -559,22 +561,22 @@
             domain: capDomain,
             htdoc_path: capDomain
         },
-        noop = function () {},
-        isGrayscaleAppId = function (t) {
+        noop = function() {},
+        isGrayscaleAppId = function(t) {
             if (needGrayscaleJs !== undefined) return needGrayscaleJs;
             for (var e = 0, n = grayscaleAppId.length; e < n; e++)
                 if (t == grayscaleAppId[e]) return needGrayscaleJs = !0;
             return needGrayscaleJs = !1
         },
-        callbackWrap = function (t, e) {
-            return function (n) {
+        callbackWrap = function(t, e) {
+            return function(n) {
                 "object" === (void 0 === n ? "undefined" : _typeof(n)) && (n = extend({
                     bizState: t.options.bizState,
                     appid: t.options.appid
                 }, n)), e && e(n)
             }
         },
-        executor = new Executor(function () {
+        executor = new Executor(function() {
             if (initQueue.length > 0) {
                 for (var t = 0; t < initQueue.length; t++) initQueue[t].show();
                 initQueue.length = 0
@@ -603,20 +605,20 @@
             opts = opts || {}, opts.callback = _tcallback_ || opts.callback, opts.start = opts.start || noop,
                 opts.end = opts.end || noop;
             var readyCallback = "function" == typeof opts.ready ? opts.ready : noop;
-            if (opts.ready = function (t) {
+            if (opts.ready = function(t) {
                     readyCallback.call(this, t)
                 }, opts.appid = appid || opts.appid, opts.bizState = bizState || opts.bizState, opts.fwidth =
                 parseFloat(opts.fwidth) || 0, opts.sdkOpts = opts.sdkOpts || null, opts.ele = $btn, this.options =
                 opts, "function" != typeof opts.callback) throw new Error("Lost `callback`");
             if (this.initOpts = extend({}, defaultOpt, opts), this.langFun(), $btn) {
                 var that = this;
-                eventListener.add($btn, "click", function () {
+                eventListener.add($btn, "click", function() {
                     that.show()
                 })
             }
         };
     Captcha.prototype = {
-        show: function () {
+        show: function() {
             if (executor.isDone) this.__show__();
             else {
                 for (var t = 0; t < initQueue.length; t++)
@@ -624,7 +626,7 @@
                 initQueue.push(this)
             }
         },
-        __show__: function () {
+        __show__: function() {
             var t = this.initOpts;
             if ("undefined" == typeof window.AqSCode) return capError.send(
                 "ERROR_TYPE_FRAMEJS_CODE_ERROR", t.appid), alert(
@@ -655,7 +657,7 @@
                     left: t.left || undefined
                 }), capObj.create())
         },
-        langFun: function () {
+        langFun: function() {
             if (this.initOpts.forceLang) {
                 var t = {
                         "zh-cn": "2052",
@@ -667,32 +669,32 @@
                     1) : this.initOpts.forceLang = ""
             }
         },
-        destroy: function () {
+        destroy: function() {
             capObj && capObj.destroy && capObj.destroy()
         },
-        refresh: function () {
+        refresh: function() {
             capObj && capObj.refresh && capObj.refresh()
         },
-        getTicket: function () {
+        getTicket: function() {
             if (capObj && capObj.getTicket) {
                 var t = null;
-                return callbackWrap(this, function (e) {
+                return callbackWrap(this, function(e) {
                     t = e
                 })(capObj.getTicket()), t
             }
             return null
         }
     };
-    var autoBindBtn = function () {
+    var autoBindBtn = function() {
         var t = document.getElementById("TencentCaptcha");
         t && new Captcha(t)
     };
-    executor.exec(function (t) {
-        domReady(function () {
+    executor.exec(function(t) {
+        domReady(function() {
             try {
                 autoBindBtn()
             } catch (e) {}
-            new Messenger("TCaptchaVerifyDetect").listen(function (t) {
+            new Messenger("TCaptchaVerifyDetect").listen(function(t) {
                 if (t && "object" === (void 0 === t ? "undefined" : _typeof(t))) switch (
                     t.type) {
                     case "preVerify":
@@ -704,30 +706,33 @@
             } catch (e) {}
             t()
         })
-    }), executor.exec(function (t) {
+    }), executor.exec(function(t) {
         jsLoadStatus = "loading", needGrayscaleJs = !0, loadScript(grayscaleFrameJs, capDomain,
             capDomain,
-            function () {
+            function() {
                 return !!window.AqSCode
             },
-            function () {
+            function() {
                 jsLoadStatus = "loaded", t()
             },
-            function () {
+            function() {
                 jsLoadStatus = "none", capError.send("ERROR_TYPE_FRAMEJS_DOWNLOAD_FAIL"), t()
             })
     }), window.TencentCaptcha = Captcha
-}, function (t, e, n) {
+}, function(t, e, n) {
     var o = n(33);
-    "string" == typeof o && (o = [[t.i, o, ""]]);
+    "string" == typeof o && (o = [
+        [t.i, o, ""]
+    ]);
     n(13)(o, {});
     o.locals && (t.exports = o.locals)
-}, function (t, e, n) {
+}, function(t, e, n) {
     (t.exports = n(12)(!1)).push([t.i,
         "@keyframes animate_dots{0%{opacity:1}to{opacity:0}}@-webkit-keyframes animate_dots{0%{opacity:1}to{opacity:0}}.dot0,.dot1{animation:animate_dots .9s infinite;-moz-animation:animate_dots .9s infinite;-webkit-animation:animate_dots .9s infinite;-o-animation:animate_dots .9s infinite}.dot1{animation-delay:.2s;-webkit-animation-delay:.2s}.dot2{animation:animate_dots .9s infinite;-moz-animation:animate_dots .9s infinite;-webkit-animation:animate_dots .9s infinite;-o-animation:animate_dots .9s infinite;animation-delay:.4s;-webkit-animation-delay:.4s}.dots_item{display:inline-block;margin-right:5px;width:10px;height:10px;border-radius:50%;background:#4886ff}.verify-icon{position:absolute;width:100%;margin-top:70px;text-align:center}.t-mask{width:100%;height:100%;position:fixed;_position:absolute;left:0;top:0;background:#000;opacity:.5;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);z-index:2000000000}",
-        ""])
-}, function (t, e, n) {
-    t.exports = function (t) {
+        ""
+    ])
+}, function(t, e, n) {
+    t.exports = function(t) {
         var e, n = [],
             o = document,
             r = o.documentElement,
@@ -737,39 +742,40 @@
         function c(t) {
             for (a = 1; t = n.shift();) t()
         }
-        return o.addEventListener && o.addEventListener("DOMContentLoaded", e = function () {
+        return o.addEventListener && o.addEventListener("DOMContentLoaded", e = function() {
             o.removeEventListener("DOMContentLoaded", e, !1), c()
-        }, !1), i && o.attachEvent("onreadystatechange", e = function () {
+        }, !1), i && o.attachEvent("onreadystatechange", e = function() {
             /^c/.test(o.readyState) && (o.detachEvent("onreadystatechange", e), c())
-        }), t = i ? function (e) {
-            self != top ? a ? e() : n.push(e) : function () {
+        }), t = i ? function(e) {
+            self != top ? a ? e() : n.push(e) : function() {
                 try {
                     r.doScroll("left")
                 } catch (n) {
-                    return setTimeout(function () {
+                    return setTimeout(function() {
                         t(e)
                     }, 50)
                 }
                 e()
             }()
-        } : function (t) {
+        } : function(t) {
             a ? t() : n.push(t)
         }
     }()
-}, function (t, e, n) {
+}, function(t, e, n) {
     "use strict";
     var o = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
-        r = function (t) {
+        r = function(t) {
             var e = [0, 2, 1][t.length % 3],
                 n = t.charCodeAt(0) << 16 | (t.length > 1 ? t.charCodeAt(1) : 0) << 8 | (t.length > 2 ? t.charCodeAt(
                     2) : 0);
             return [o.charAt(n >>> 18), o.charAt(n >>> 12 & 63), e >= 2 ? "=" : o.charAt(n >>> 6 & 63), e >= 1 ?
-                "=" : o.charAt(63 & n)].join("")
+                "=" : o.charAt(63 & n)
+            ].join("")
         };
-    t.exports = function (t) {
+    t.exports = function(t) {
         return t.replace(/[\s\S]{1,3}/g, r)
     }
-}, function (t, e, n) {
+}, function(t, e, n) {
     "use strict";
     var o = 2;
     t.exports = function r(t, e, n, i, a, c, s) {
@@ -783,22 +789,22 @@
         }
         p.type = "text/javascript", p.async = !0, p.src = (s > 1 ? n : e) + t, "onload" in p ? p.onload = f :
             p.onreadystatechange = f;
-        var l = function () {
+        var l = function() {
             u || (u = !0, s >= o ? c && c() : r(t, e, n, i, a, c, s + 1))
         };
         p.onerror = l, document.getElementsByTagName("head").item(0).appendChild(p)
     }
-}, function (t, e, n) {
+}, function(t, e, n) {
     "use strict";
-    var o = function (t, e) {
+    var o = function(t, e) {
         this.i = 0, this.doneCallback = t, this.isDone = !1, this.timeout = e || 0;
         var n = this;
-        this.immediateExec = setTimeout(function () {
+        this.immediateExec = setTimeout(function() {
             n.doneCheck()
         }, 0)
     };
     o.prototype = {
-        doneCheck: function (t, e) {
+        doneCheck: function(t, e) {
             try {
                 t && t(e)
             } catch (n) {}
@@ -806,41 +812,41 @@
                 this.isDone = !0, this.doneCallback()
             } catch (n) {}
         },
-        exec: function (t, e, n) {
+        exec: function(t, e, n) {
             clearTimeout(this.immediateExec);
             var o = !1,
                 r = "",
                 i = this;
             this.i++, this.i > 0 && (this.isDone = !1);
             try {
-                (r = t(function (t) {
-                    o || (o = !0, setTimeout(function () {
+                (r = t(function(t) {
+                    o || (o = !0, setTimeout(function() {
                         i.doneCheck(e, t)
                     }, 0))
-                })) && (o = !0, setTimeout(function () {
+                })) && (o = !0, setTimeout(function() {
                     i.doneCheck(e, r)
                 }, 0))
-            } catch (a) {}(n = n || this.timeout || 0) > 0 && setTimeout(function () {
+            } catch (a) {}(n = n || this.timeout || 0) > 0 && setTimeout(function() {
                 o || (o = !0, i.doneCheck(e, ""))
             }, n)
         }
     }, t.exports = o
-}, function (t, e, n) {
+}, function(t, e, n) {
     "use strict";
-    t.exports = function (t) {
+    t.exports = function(t) {
         var e = document.createElement("b");
         return e.innerHTML = "\x3c!--[if IE " + t + "]><i></i><![endif]--\x3e", e.getElementsByTagName("i") &&
             1 === e.getElementsByTagName("i").length
     }
-}, function (t, e, n) {
+}, function(t, e, n) {
     "use strict";
-    var o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) {
+    var o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t) {
         return typeof t
-    } : function (t) {
+    } : function(t) {
         return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ?
             "symbol" : typeof t
     };
-    t.exports = function (t) {
+    t.exports = function(t) {
         try {
             return t instanceof HTMLElement
         } catch (e) {
@@ -848,9 +854,9 @@
                 .style) && "object" === o(t.ownerDocument)
         }
     }
-}, function (t, e, n) {
+}, function(t, e, n) {
     "use strict";
-    t.exports = function (t) {
+    t.exports = function(t) {
         var e = document.createElement("iframe");
         return e.src = t, e.style.cssText = "width: 0px; height: 0px; display: none;", (document.body ||
             document.getElementsByTagName("body").item("0")).appendChild(e), e

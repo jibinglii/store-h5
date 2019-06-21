@@ -1,75 +1,114 @@
 <template>
   <div class="page-home">
-    <div class="user">
-      <div class="store" style="display: flex;">
-        <img :src="store.logo" alt="">
-        <div>
-          <h1>{{ store.name }}</h1>
-          <address>{{ store.desc }}</address>
+    <x-header
+      title="店铺主页"
+      back-url="home"
+      back-color="#ffffff"
+      color="#000"
+      underline-color="#f2f2f2"
+    ></x-header>
+    <div class="top-search">
+      <div class="top-search-l">
+        <img src="../../assets/images/top_search.png" alt>
+        <div class="top-search-text">
+          <p>游戏道具专卖店</p>
+          <span>支持各类游戏道具</span>
         </div>
       </div>
-      <div>
-        <button @click="logout()" v-if="isLogged">推出</button>
-        <router-link :to="{ name: 'auth.login' }" tat="button" v-else><a href="javascript:void(0);">去登录</a></router-link>
+      <a href="javascript:;" class="searchBtn">
+        <img src="../../assets/images/sousuo.png" alt>搜索
+      </a>
+    </div>
+    <div class="store">
+      <div class="store_title">
+        <img src="../../assets/images/title_img.png" alt>
+      </div>
+      <div class="list">
+        <list-item></list-item>
+        <list-item></list-item>
+        <list-item></list-item>
+        <list-item></list-item>
+        <div class="clearBoth"></div>
       </div>
     </div>
-    <div class="goods">
-      <div class="goods-item" v-for="item in goodsList" :key="item.uuid">
-        <h1>{{ item.title }}</h1>
-      </div>
+    <div class="nav_ul">
+      <nav-list></nav-list>
     </div>
     <tab></tab>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import * as services from '$modules/home/services'
-import Tab from '$components/Tab'
-
+import Tab from "$components/Tab";
+import listItem from "$components/listItem";
+import NavList from "$components/NavList";
+import XHeader from "$components/XHeader"
 export default {
-  data () {
-    return {
-      goodsList: []
-    }
+  name: "home",
+  data() {
+    return {};
   },
-  computed: {
-    ...mapGetters(['isLogged', 'currentUser', 'store'])
-  },
+
   components: {
-    Tab
-  },
-  methods: {
-    ...mapActions(['logout']),
-    getGoods () {
-      services.goods().then(({data}) => {
-        this.goodsList = data.goods.data
-      })
-    }
-  },
-  created () {
-    this.getGoods()
-  },
-  mounted () {
-    this.$store.dispatch('storeInfo')
+    Tab,
+    listItem,
+    NavList,
+    XHeader
   }
-}
+};
 </script>
 
 <style lang="scss">
-.user {
-  display: flex !important;
-  justify-content: space-evenly;
-  align-items: center;
-  border: 1px dashed red;
-  box-sizing: border-box;
-  .logo {
-    img{
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+@import "../../assets/css/common.css";
+
+.page-home {
+  .top-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    padding: 20px 10px;
+    .top-search-l {
+      display: flex;
+      align-items: center;
+
+      img {
+        padding-right: 10px;
+        width: 50px;
+        height: 50px;
+      }
+      .top-search-text {
+        span {
+          font-size: 0.8em;
+          color: #999999;
+        }
+      }
     }
-    
+    .searchBtn {
+      display: flex;
+      align-items: center;
+      padding: 3px 15px;
+      background: #ededed;
+      font-size: 0.85em;
+      color: #999;
+      border-radius: 20px;
+    }
+  }
+  .store {
+    .store_title {
+      text-align: center;
+      padding: 18px 0;
+    }
+    .list{
+      padding: 0 10px;
+      .listItem{
+         margin-right: 2%;
+      }
+      .listItem:nth-child(2n){
+         margin-right: 0%;
+      }
+
+    }
   }
 }
 </style>

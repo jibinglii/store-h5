@@ -30,3 +30,7 @@ i {
 .clearBoth {
     clear: both;
 }
+
+img {
+    vertical-align: middle;
+}

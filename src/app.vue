@@ -23,7 +23,4 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  background: #F2F2F2;
-}
 </style>

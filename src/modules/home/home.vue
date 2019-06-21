@@ -36,6 +36,7 @@
         >
       </div>
       <div class="list">
+        <van-skeleton :row="4" :loading="loading" row-width="9.0625rem"/>
         <goods-item
           v-for="item in goods"
           :key="item.id"
@@ -66,7 +67,9 @@ import { mapGetters } from 'vuex'
 import * as services from './services'
 import InfiniteLoading from 'vue-infinite-loading'
 import Loading from 'vant/lib/loading'
+import Skeleton from 'vant/lib/skeleton'
 import 'vant/lib/loading/style'
+import 'vant/lib/skeleton/style'
 
 export default {
   name: "home",
@@ -76,19 +79,23 @@ export default {
     'nav-block': Nav,
     XHeader,
     InfiniteLoading,
-    'van-loading': Loading
+    'van-loading': Loading,
+    'van-skeleton': Skeleton
   },
   data() {
     return {
       goods: [],
-      page: 1
+      page: 1,
+      loading: true
     }
   },
   computed: {
     ...mapGetters(['store'])
   },
   created() {
-
+    setTimeout(()=>{
+      this.loading = false
+    }, 300)
   },
   methods: {
     infiniteHandler($state) {
@@ -114,7 +121,25 @@ export default {
 };
 </script>
 <style lang="scss">
-
+.van-skeleton{
+  padding: 0;
+  .van-skeleton__row{
+    background: white;
+    height: 10rem;
+    width: 9.0625rem;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    margin-bottom: .625rem;
+    margin-top: 0;
+    &:nth-child(odd) {
+      left: 0;
+    }
+    &:nth-child(even) {
+      left: .625rem;
+    }
+  }
+}
 .page-home {
   .top-search {
     display: flex;

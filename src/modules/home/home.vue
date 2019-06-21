@@ -2,58 +2,114 @@
   <div class="page-home">
     <x-header
       title="店铺主页"
-      back-url="home"
+      :allow-back="false"
       back-color="#ffffff"
       color="#000"
       underline-color="#f2f2f2"
     ></x-header>
     <div class="top-search">
       <div class="top-search-l">
-        <img src="../../assets/images/top_search.png" alt>
+        <img
+          :src="store.logo"
+          alt
+        >
         <div class="top-search-text">
-          <p>游戏道具专卖店</p>
-          <span>支持各类游戏道具</span>
+          <h4>{{ store.name }}</h4>
+          <span>{{ store.desc }}</span>
         </div>
       </div>
-      <a href="javascript:;" class="searchBtn">
-        <img src="../../assets/images/sousuo.png" alt>搜索
+      <a
+        href="javascript:;"
+        class="searchBtn"
+      >
+        <img
+          src="../../assets/images/sousuo.png"
+          alt
+        >搜索
       </a>
     </div>
     <div class="store">
       <div class="store_title">
-        <img src="../../assets/images/title_img.png" alt>
+        <img
+          src="../../assets/images/title_img.png"
+          alt
+        >
       </div>
       <div class="list">
-        <list-item></list-item>
-        <list-item></list-item>
-        <list-item></list-item>
-        <list-item></list-item>
-        <div class="clearBoth"></div>
+        <goods-item
+          v-for="item in goods"
+          :key="item.id"
+          :goods="item"
+        ></goods-item>
+        <infinite-loading
+          @infinite="infiniteHandler"
+        >
+          <div slot="spinner">
+            <van-loading type="spinner" size="18px"> 加载中... </van-loading>
+          </div>
+          <div slot="no-more">没有更多数据啦...</div>
+          <div slot="no-results">没有数据</div>
+        </infinite-loading>
       </div>
     </div>
-    <div class="nav_ul">
-      <nav-list></nav-list>
-    </div>
+    <nav-block/>
     <tab></tab>
   </div>
 </template>
 
 <script>
-import Tab from "$components/Tab";
-import listItem from "$components/listItem";
-import NavList from "$components/NavList";
+import Tab from "$components/Tab"
+import GoodsItem from "$components/GoodsItem"
+import Nav from "$components/Nav"
 import XHeader from "$components/XHeader"
+import { mapGetters } from 'vuex'
+import * as services from './services'
+import InfiniteLoading from 'vue-infinite-loading'
+import Loading from 'vant/lib/loading'
+import 'vant/lib/loading/style'
+
 export default {
   name: "home",
-  data() {
-    return {};
-  },
-
   components: {
     Tab,
-    listItem,
-    NavList,
-    XHeader
+    GoodsItem,
+    'nav-block': Nav,
+    XHeader,
+    InfiniteLoading,
+    'van-loading': Loading
+  },
+  data() {
+    return {
+      goods: [],
+      page: 1
+    }
+  },
+  computed: {
+    ...mapGetters(['store'])
+  },
+  created() {
+
+  },
+  methods: {
+    infiniteHandler($state) {
+      let param = {
+        params: {
+          'fields[store_goods]': "id,title,amount,game_id,sale_nums,images",
+          page: this.page,
+          per_page: 20
+        }
+      };
+      services.goods(param).then(({ data }) => {
+        if (data.goods.data.length > 0) {
+          this.page += 1;
+          this.goods.push(...data.goods.data);
+          $state.loaded();
+        }
+        if (data.goods.per_page > data.goods.data.length) {
+          $state.complete();
+        }
+      })
+    }
   }
 };
 </script>
@@ -74,12 +130,16 @@ export default {
 
       img {
         padding-right: 10px;
-        width: 50px;
-        height: 50px;
+        width: 3.125rem;
+        height: 3.125rem;
       }
       .top-search-text {
+        h4 {
+          font-size: .8125rem;
+          font-weight: 400;
+        }
         span {
-          font-size: 0.8em;
+          font-size: 0.6rem;
           color: #999999;
         }
       }
@@ -87,27 +147,24 @@ export default {
     .searchBtn {
       display: flex;
       align-items: center;
-      padding: 3px 15px;
+      padding: 0.15rem 0.75rem;
       background: #ededed;
-      font-size: 0.85em;
+      font-size: 0.7rem;
       color: #999;
-      border-radius: 20px;
+      border-radius: .9rem;
+      height: 1.5rem;
     }
   }
   .store {
     .store_title {
-      text-align: center;
-      padding: 18px 0;
+      display: flex;
+      height: 60px;
+      line-height: 60px;
+      justify-content: center;
+      align-items: center;
     }
-    .list{
-      padding: 0 10px;
-      .listItem{
-         margin-right: 2%;
-      }
-      .listItem:nth-child(2n){
-         margin-right: 0%;
-      }
-
+    .list {
+      position: relative;
     }
   }
 }

@@ -1,10 +1,7 @@
 <template>
   <div class="home-goods">
-    <div class="img">
-      <img
-        :src="goods.logo"
-        alt=""
-      >
+    <div class="img" :style="{backgroundImage: 'url('+goods.logo+')'}">
+      <div></div>
     </div>
     <div class="info">
       <h4 class="title">{{ goods.title }}</h4>
@@ -38,11 +35,9 @@ export default {
   .img {
     height: 6.25rem;
     overflow: hidden;
-    background-color: white;
-    width: 100%;
-    img {
-      width: 100%;
-    }
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
   }
   .info{
     background-color: white;

@@ -10,7 +10,8 @@ Vue.use(Router)
 const AppRoute = {
   path: '/:store/',
   component: () => import('../app'),
-  children: [...home, ...auth, ...collection, {
+  children: [...home, ...auth, ...collection,
+  {
     path: '*',
     component: () => import('../not-found')
   }]

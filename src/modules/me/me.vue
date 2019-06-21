@@ -1,17 +1,19 @@
 <template>
   <div class="personCenter">
     <div class="header">
-      <img src="../../assets/images/user_logo.png" alt class="user_logo">
-      <p>
-        爱抽烟的菇凉
-        <img src="../../assets/images/bianji.png" alt>
-      </p>
-      <span>命里有时终须有 命里无时莫强求</span>
+      <div class="user-icon">
+        <img :src="currentUser.avatar" alt="">
+      </div>
+      <h3>{{ currentUser.nickname }}</h3>
+      <span>{{ currentUser.sign }}</span>
     </div>
     <div class="page_item">
-      <p class="p_title">我是买家</p>
+      <div class="weui-cells__title">我是买家</div>
       <div class="weui-cells">
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/order.png">
           </div>
@@ -23,18 +25,24 @@
       </div>
     </div>
     <div class="page_item">
-      <p class="p_title">我是卖家</p>
+      <div class="weui-cells__title">我是卖家</div>
       <div class="weui-cells">
-        <router-link :to="{ name: 'me.storemanage'}" class="weui-cell weui-cell_access">
-            <div class="weui-cell__hd">
-              <img src="../../assets/images/dianpu.png">
-            </div>
-            <div class="weui-cell__bd">
-              <p>店铺管理</p>
-            </div>
-            <div class="weui-cell__ft"></div>
+        <router-link
+          :to="{ name: 'me.storemanage'}"
+          class="weui-cell weui-cell_access"
+        >
+          <div class="weui-cell__hd">
+            <img src="../../assets/images/dianpu.png">
+          </div>
+          <div class="weui-cell__bd">
+            <p>店铺管理</p>
+          </div>
+          <div class="weui-cell__ft"></div>
         </router-link>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/shangpin.png">
           </div>
@@ -43,7 +51,10 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/fenxiao.png">
           </div>
@@ -52,7 +63,10 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/jiesuan.png">
           </div>
@@ -64,9 +78,12 @@
       </div>
     </div>
     <div class="page_item">
-      <p class="p_title">常用工具</p>
+      <div class="weui-cells__title">常用工具</div>
       <div class="weui-cells">
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/mai.png">
           </div>
@@ -75,7 +92,10 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/shoucang.png">
           </div>
@@ -84,7 +104,10 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/liucheng.png">
           </div>
@@ -93,7 +116,10 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/xiaoxi.png">
           </div>
@@ -102,7 +128,10 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/fankui.png">
           </div>
@@ -111,7 +140,10 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/help.png">
           </div>
@@ -120,7 +152,10 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a
+          class="weui-cell weui-cell_access"
+          href="javascript:;"
+        >
           <div class="weui-cell__hd">
             <img src="../../assets/images/seting.png">
           </div>
@@ -138,6 +173,7 @@
 <script>
 import Tab from "$components/Tab";
 import XHeader from "$components/XHeader";
+import {mapGetters} from 'vuex'
 export default {
   name: "storeManage",
   components: {
@@ -146,48 +182,52 @@ export default {
   },
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters(['currentUser'])
   }
 };
 </script>
 
 <style lang="scss">
-@import "../../assets/css/common.css";
-
 .header {
-  background-image: url(../../assets/images/me_bg.png);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  text-align: center;
-  padding: 30px 0;
-  color: #ffffff;
-  .user_logo {
-    width: 20%;
-    padding-bottom: 15px;
-  }
-  p {
-    font-weight: 600;
-    img {
-      width: 18px;
-      vertical-align: middle;
+    height: 10rem;
+    background-image: url('/images/shop/me-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    .user-icon {
+      img {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+      }
+    }
+    h3{
+      font-size: 18px;
+      line-height: 2;
+      color: white;
+      font-weight: 400;
+      margin-bottom: -8px;
+    }
+    span{
+      font-size: 14px;
+      line-height: 2;
+      color: #999;
+      margin-bottom: 24px;
     }
   }
-  span {
-    font-size: 0.13rem;
-    color: #999999;
-  }
-}
 .page_item {
-  .p_title {
-    font-size: 0.12rem;
-    color: #818181;
-    padding: 10px;
-  }
   .weui-cells {
     margin-top: 0;
     .weui-cell {
       padding: 6px 15px;
       img {
-        width: 35px;
+        width: 20px;
+        margin-right: 16px;
       }
     }
   }

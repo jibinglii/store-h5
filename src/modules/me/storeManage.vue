@@ -132,8 +132,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../assets/css/common.css";
-
 .storeManage {
   .right-box {
     display: none;

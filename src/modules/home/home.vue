@@ -113,9 +113,7 @@ export default {
   }
 };
 </script>
-
 <style lang="scss">
-@import "../../assets/css/common.css";
 
 .page-home {
   .top-search {

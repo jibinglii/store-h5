@@ -1,14 +1,7 @@
 <template>
-  <div
-    class="weui-tabbar"
-    :style="{paddingBottom: paddingBottom + 'px'}"
-  >
+  <div class="weui-tabbar" :style="{paddingBottom: paddingBottom + 'px'}">
     <div class="weui-tabbar__item">
-      <img
-        src="../assets/images/kefu.png"
-        alt
-        class="kefu"
-      >
+      <img src="../assets/images/kefu.png" alt class="kefu">
     </div>
 
     <a
@@ -83,14 +76,18 @@ body {
 .weui-tabbar {
   position: fixed;
   bottom: 0;
-  height: 3.125rem;
+  height: 2.56rem;
   width: 100%;
   background-color: white;
   .kefu {
-    width: 45px;
+    width: 1.92rem;
+    position: absolute;
+    left: 31%;
+    top: 16%;
   }
   .weui-tabbar__item {
     border-right: solid 1px #f2f2f2;
+    position: relative;
   }
   .weui-tabbar__item:last-child {
     border: none;
@@ -104,8 +101,8 @@ body {
   .weui-tabbar__label {
     text-align: center;
     color: #999;
-    font-size: 16px;
-    line-height: 2.8;
+    font-size: 0.682667rem;
+    line-height: 3.3;
   }
 }
 </style>

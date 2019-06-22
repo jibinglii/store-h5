@@ -33,7 +33,7 @@ export default {
     left: .625rem;
   }
   .img {
-    height: 6.25rem;
+    height: 5.333333rem;
     overflow: hidden;
     background-repeat: no-repeat;
     background-position: center center;
@@ -43,23 +43,25 @@ export default {
     background-color: white;
     padding: .3125rem;
     .title{
-      height: 2.5rem;
+      height: 1.706667rem;
       color: #333;
-      font-size: .8125rem;
-      font-weight: 300;
+      font-size: .554667rem;
+      font-weight: 500;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp:2;
       -webkit-box-orient: vertical;
+      text-align: justify;
     }
     .price{
       color: #f00;
-      font-size: 1.125rem;
-      padding: .25rem 0;
+      font-size: .512rem;
+      padding: .3rem 0 0;
+      font-weight: bold;
       &::before{
         content: '￥';
-        font-size: .75rem;
+        font-size: .512rem;
       }
     }
   }

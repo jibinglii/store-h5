@@ -6,27 +6,29 @@ import { routes as me } from '$modules/me'
 import Vue from 'vue'
 import Router from 'vue-router'
 import beforeEach from './beforeEach'
-
+import Vant from 'vant';
+import 'vant/lib/index.css'
 Vue.use(Router)
+Vue.use(Vant)
 
 const AppRoute = {
-  path: '/:store/',
-  component: () =>
-    import('../app'),
-  children: [...home, ...auth, ...store, ...collection, ...me, {
-    path: '*',
+    path: '/:store/',
     component: () =>
-      import('../not-found')
-  }]
+        import ('../app'),
+    children: [...home, ...auth, ...store, ...collection, ...me, {
+        path: '*',
+        component: () =>
+            import ('../not-found')
+    }]
 }
 
 const routes = [AppRoute]
 
 const router = new Router({
-  routes,
-  linkActiveClass: 'active',
-  linkExactActiveClass: 'active',
-  mode: 'history'
+    routes,
+    linkActiveClass: 'active',
+    linkExactActiveClass: 'active',
+    mode: 'history'
 })
 
 router.beforeEach(beforeEach)

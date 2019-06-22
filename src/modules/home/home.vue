@@ -9,44 +9,26 @@
     ></x-header>
     <div class="top-search">
       <div class="top-search-l">
-        <img
-          :src="store.logo"
-          alt
-        >
+        <img :src="store.logo" alt>
         <div class="top-search-text">
           <h4>{{ store.name }}</h4>
           <span>{{ store.desc }}</span>
         </div>
       </div>
-      <a
-        href="javascript:;"
-        class="searchBtn"
-      >
-        <img
-          src="../../assets/images/sousuo.png"
-          alt
-        >搜索
+      <a href="javascript:;" class="searchBtn">
+        <img src="../../assets/images/sousuo.png" alt>搜索
       </a>
     </div>
     <div class="store">
       <div class="store_title">
-        <img
-          src="../../assets/images/title_img.png"
-          alt
-        >
+        <img src="../../assets/images/title_img.png" alt>
       </div>
       <div class="list">
         <van-skeleton :row="4" :loading="loading" row-width="9.0625rem"/>
-        <goods-item
-          v-for="item in goods"
-          :key="item.id"
-          :goods="item"
-        ></goods-item>
-        <infinite-loading
-          @infinite="infiniteHandler"
-        >
+        <goods-item v-for="item in goods" :key="item.id" :goods="item"></goods-item>
+        <infinite-loading @infinite="infiniteHandler">
           <div slot="spinner">
-            <van-loading type="spinner" size="18px"> 加载中... </van-loading>
+            <van-loading type="spinner" size="18px">加载中...</van-loading>
           </div>
           <div slot="no-more">没有更多数据啦...</div>
           <div slot="no-results">没有数据</div>
@@ -59,49 +41,49 @@
 </template>
 
 <script>
-import Tab from "$components/Tab"
-import GoodsItem from "$components/GoodsItem"
-import Nav from "$components/Nav"
-import XHeader from "$components/XHeader"
-import { mapGetters } from 'vuex'
-import * as services from './services'
-import InfiniteLoading from 'vue-infinite-loading'
-import Loading from 'vant/lib/loading'
-import Skeleton from 'vant/lib/skeleton'
-import 'vant/lib/loading/style'
-import 'vant/lib/skeleton/style'
+import Tab from "$components/Tab";
+import GoodsItem from "$components/GoodsItem";
+import Nav from "$components/Nav";
+import XHeader from "$components/XHeader";
+import { mapGetters } from "vuex";
+import * as services from "./services";
+import InfiniteLoading from "vue-infinite-loading";
+import Loading from "vant/lib/loading";
+import Skeleton from "vant/lib/skeleton";
+import "vant/lib/loading/style";
+import "vant/lib/skeleton/style";
 
 export default {
   name: "home",
   components: {
     Tab,
     GoodsItem,
-    'nav-block': Nav,
+    "nav-block": Nav,
     XHeader,
     InfiniteLoading,
-    'van-loading': Loading,
-    'van-skeleton': Skeleton
+    "van-loading": Loading,
+    "van-skeleton": Skeleton
   },
   data() {
     return {
       goods: [],
       page: 1,
       loading: true
-    }
+    };
   },
   computed: {
-    ...mapGetters(['store'])
+    ...mapGetters(["store"])
   },
   created() {
-    setTimeout(()=>{
-      this.loading = false
-    }, 300)
+    setTimeout(() => {
+      this.loading = false;
+    }, 300);
   },
   methods: {
     infiniteHandler($state) {
       let param = {
         params: {
-          'fields[store_goods]': "id,title,amount,game_id,sale_nums,images",
+          "fields[store_goods]": "id,title,amount,game_id,sale_nums,images",
           page: this.page,
           per_page: 20
         }
@@ -115,28 +97,28 @@ export default {
         if (data.goods.per_page > data.goods.data.length) {
           $state.complete();
         }
-      })
+      });
     }
   }
 };
 </script>
 <style lang="scss">
-.van-skeleton{
+.van-skeleton {
   padding: 0;
-  .van-skeleton__row{
+  .van-skeleton__row {
     background: white;
     height: 10rem;
     width: 9.0625rem;
     box-sizing: border-box;
     display: inline-block;
     position: relative;
-    margin-bottom: .625rem;
+    margin-bottom: 0.625rem;
     margin-top: 0;
     &:nth-child(odd) {
       left: 0;
     }
     &:nth-child(even) {
-      left: .625rem;
+      left: 0.625rem;
     }
   }
 }
@@ -153,16 +135,17 @@ export default {
 
       img {
         padding-right: 10px;
-        width: 3.125rem;
-        height: 3.125rem;
+        width: 2.133333rem;
+        height: 2.133333rem;
       }
       .top-search-text {
+        line-height: 1.1;
         h4 {
-          font-size: .8125rem;
+          font-size: 0.682667rem;
           font-weight: 400;
         }
         span {
-          font-size: 0.6rem;
+          font-size: 0.512rem;
           color: #999999;
         }
       }
@@ -170,24 +153,28 @@ export default {
     .searchBtn {
       display: flex;
       align-items: center;
-      padding: 0.15rem 0.75rem;
+      padding: 0 0.469333rem;
       background: #ededed;
-      font-size: 0.7rem;
+      font-size: 0.597333rem;
       color: #999;
-      border-radius: .9rem;
+      border-radius: 0.9rem;
       height: 1.5rem;
+      img{
+        width: 1.28rem;
+      }
     }
   }
   .store {
     .store_title {
       display: flex;
-      height: 60px;
-      line-height: 60px;
       justify-content: center;
       align-items: center;
+      height: 2.56rem;
+      line-height: 2.56rem;
     }
     .list {
       position: relative;
+
     }
   }
 }

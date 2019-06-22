@@ -87,7 +87,7 @@ header {
   }
   h1 {
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: .768rem;
     height: 100%;
     line-height: $height;
     margin: 0;
@@ -100,7 +100,7 @@ header {
     height: 100%;
     text-align: center;
     line-height: $height;
-    font-size: 0.8rem;
+    font-size: .682667rem;
     .iconfont {
       font-size: 0.8rem;
     }

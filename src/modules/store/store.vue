@@ -11,12 +11,14 @@
     <van-tabs v-model="active">
       <van-tab
         :title="item"
+        title-active-color="#000000"
         v-for="(item, index) in tabs"
         :key="index"
       >
         <van-tabs
           v-model="activeContent[index]"
           @click="onTabClick"
+          class="tabsTwo"
         >
           <van-tab
             :title="itemContent"
@@ -115,8 +117,18 @@ export default {
 };
 </script>
 <style lang="scss">
+.van-tabs__line{
+  background-color: #000000;
+  height: 2px;
+}
+.tabsTwo{
+ .van-tabs__line{
+   height: 0px;
+ }
+}
 .list {
   position: relative;
   margin-top: 10px;
+  overflow: hidden;
 }
 </style>

@@ -1,33 +1,40 @@
 <template>
-  <header :style="{backgroundColor: backColor, color: color, borderBottom: '1px solid ' + underlineColor}">
-    <div
-      @click="back()"
-      class="back-icon"
-      v-if="allowBack"
-    >
-      <i
-        class="iconfont icon-left"
-        :style="{color: color}"
-      ></i>
+  <nav-bar
+    :title="title"
+    :left-text="leftText"
+    :right-text="rightText"
+    left-arrow
+    @click-left="back"
+    @click-right="onClickRight"
+    :style="{backgroundColor: backColor, color: color, borderBottom: '1px solid ' + underlineColor}"
+  >
+    <div slot="right">
+      <slot name="right"></slot>
     </div>
-    <h1>{{ title }}</h1>
-    <div class="right-box">
-      <slot name="right-btn">推广</slot>
-    </div>
-  </header>
+  </nav-bar>
 </template>
 
 <script>
+import NavBar from 'vant/lib/nav-bar'
+import 'vant/lib/nav-bar/style'
 export default {
+  name: 'x-header',
+  components: {
+    NavBar
+  },
   props: {
-    allowBack: {
-      type: Boolean,
-      default: true
-    },
     title: {
       type: String
     },
-    backUrl: {
+    url: {
+      type: String,
+      default: ''
+    },
+    leftText: {
+      type: String,
+      default: ''
+    },
+    rightText: {
       type: String,
       default: ''
     },
@@ -44,17 +51,16 @@ export default {
       default: '#ededed'
     }
   },
-  data() {
-    return {
-    }
-  },
   methods: {
     back() {
-      if (this.backUrl == '') {
+      if (this.url == '') {
         this.$router.back()
       } else {
-        this.$router.push({ name: this.backUrl })
+        this.$router.push({ name: this.url })
       }
+    },
+    onClickRight () {
+      this.$emit('click-right')
     }
   },
   mounted() {

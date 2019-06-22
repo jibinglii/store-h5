@@ -19,6 +19,11 @@
         <img src="../../assets/images/sousuo.png" alt>搜索
       </a>
     </div>
+    <div class="ads">
+      <a :href="item.url != '' ? item.url : 'javascript:void()'" v-for="item in ads" :key="item.id">
+        <img v-lazy="item.img">
+      </a>
+    </div>
     <div class="store">
       <div class="store_title">
         <img src="../../assets/images/title_img.png" alt>
@@ -35,24 +40,23 @@
         </infinite-loading>
       </div>
     </div>
-    <nav-block/>
+    <nav-block />
     <tab></tab>
   </div>
 </template>
 
 <script>
-import Tab from "$components/Tab";
-import GoodsItem from "$components/GoodsItem";
-import Nav from "$components/Nav";
-import XHeader from "$components/XHeader";
-import { mapGetters } from "vuex";
-import * as services from "./services";
-import InfiniteLoading from "vue-infinite-loading";
-import Loading from "vant/lib/loading";
-import Skeleton from "vant/lib/skeleton";
-import "vant/lib/loading/style";
-import "vant/lib/skeleton/style";
-
+import Tab from "$components/Tab"
+import GoodsItem from "$components/GoodsItem"
+import Nav from "$components/Nav"
+import XHeader from "$components/XHeader"
+import { mapGetters } from 'vuex'
+import * as services from './services'
+import InfiniteLoading from 'vue-infinite-loading'
+import Loading from 'vant/lib/loading'
+import Skeleton from 'vant/lib/skeleton'
+import 'vant/lib/loading/style'
+import 'vant/lib/skeleton/style'
 export default {
   name: "home",
   components: {
@@ -68,19 +72,30 @@ export default {
     return {
       goods: [],
       page: 1,
-      loading: true
-    };
+      loading: true,
+      ads: []
+    }
   },
   computed: {
     ...mapGetters(["store"])
   },
   created() {
+    this.getAds()
     setTimeout(() => {
-      this.loading = false;
-    }, 300);
+      this.loading = false
+    }, 300)
   },
   methods: {
-    infiniteHandler($state) {
+    async getAds() {
+      let param = {
+        'fields[store_ads]': "id,img,url",
+        per_page: 10
+      }
+      await services.ads(param).then(({ data }) => {
+        this.ads = data.ads.data
+      })
+    },
+    async infiniteHandler($state) {
       let param = {
         params: {
           "fields[store_goods]": "id,title,amount,game_id,sale_nums,images",
@@ -88,7 +103,7 @@ export default {
           per_page: 20
         }
       };
-      services.goods(param).then(({ data }) => {
+      await services.goods(param).then(({ data }) => {
         if (data.goods.data.length > 0) {
           this.page += 1;
           this.goods.push(...data.goods.data);

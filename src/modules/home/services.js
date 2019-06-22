@@ -6,3 +6,7 @@ import http from '$utils/http'
 export const goods = (params) => {
   return http.get('api/v2/store/goods', params)
 }
+
+export const ads = (params) => {
+  return http.get('api/v2/store/ads', params)
+}

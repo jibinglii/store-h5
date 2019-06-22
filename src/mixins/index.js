@@ -1,22 +1,22 @@
 export default {
     methods: {
-        isIPhoneX() {
+        isIPhoneX () {
             // X XS, XS Max, XR
             const xSeriesConfig = [{
-                    devicePixelRatio: 3,
-                    width: 375,
-                    height: 812,
-                },
-                {
-                    devicePixelRatio: 3,
-                    width: 414,
-                    height: 896,
-                },
-                {
-                    devicePixelRatio: 2,
-                    width: 414,
-                    height: 896,
-                },
+                devicePixelRatio: 3,
+                width: 375,
+                height: 812,
+            },
+            {
+                devicePixelRatio: 3,
+                width: 414,
+                height: 896,
+            },
+            {
+                devicePixelRatio: 2,
+                width: 414,
+                height: 896,
+            },
             ];
             // h5
             if (typeof window !== 'undefined' && window) {
@@ -28,27 +28,27 @@ export default {
             }
             return false;
         },
-        isWechat() {
+        isWechat () {
             const ua = window.navigator.userAgent;
             const isWechat = /micromessenger/i.test(ua);
             return isWechat;
         },
-        isSoogua() {
+        isSoogua () {
             const ua = window.navigator.userAgent;
             const isWechat = /soogua/i.test(ua);
             return isWechat;
         },
-        isIos() {
+        isIos () {
             const ua = window.navigator.userAgent;
             const isIos = /iphone/gi.test(ua);
             return isIos;
         },
-        isAndroid() {
+        isAndroid () {
             const ua = window.navigator.userAgent;
             const isAndroid = /(Android);?[\s/]+([\d.]+)?/.test(ua);
             return isAndroid;
         },
-        getQueryString(name) {
+        getQueryString (name) {
             const queryString = require('query-string');
             const parsed = queryString.parse(location.search);
             return parsed[name]

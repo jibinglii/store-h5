@@ -148,6 +148,7 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
 import ImagePreview from 'vant/lib/image-preview'
 import 'vant/lib/image-preview/style'
 import Actionsheet from 'vant/lib/action-sheet'
@@ -158,7 +159,10 @@ import TradeDesc from './components/TradeDesc'
 import GoodsKeep from './components/GoodsKeep'
 import GoodsTips from './components/GoodsTips'
 import * as service from '$modules/goods/services'
+import VueClipboard from 'vue-clipboard2';
 
+VueClipboard.config.autoSetContainer = true;
+Vue.use(VueClipboard);
 export default {
   components: {
     ImagePreview, XHeader, TradeDesc, GoodsKeep, GoodsTips, 'van-action-sheet': Actionsheet, Recommend
@@ -170,9 +174,6 @@ export default {
       goods: { images: [], game: [], server: [], specs: [] },
       showShare: false
     }
-  },
-  watch:{
-
   },
   computed: {
     goodsImgLen() {

@@ -83,7 +83,7 @@ body {
 .weui-tabbar {
   position: fixed;
   bottom: 0;
-  height: 3.125rem;
+  height: 50px;
   width: 100%;
   background-color: white;
   .kefu {
@@ -91,6 +91,12 @@ body {
   }
   .weui-tabbar__item {
     border-right: solid 1px #f2f2f2;
+     &:nth-child(1){
+      flex: 0.8;
+    }
+    &:nth-child(3){
+      flex: 1.5;
+    }
   }
   .weui-tabbar__item:last-child {
     border: none;

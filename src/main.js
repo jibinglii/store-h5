@@ -10,7 +10,7 @@ import 'vant/lib/toast/style'
 import mixins from './mixins/index'
 import '$utils/rem'
 import * as filters from './filters'
-import 'swiper/dist/css/swiper.css';
+
 // const FastClick = require('fastclick');
 import Lazyload from 'vant/lib/lazyload'
 Vue.use(Lazyload)

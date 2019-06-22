@@ -9,14 +9,23 @@
     ></x-header>
     <div class="top-search">
       <div class="top-search-l">
-        <img :src="store.logo" alt>
+        <img
+          :src="store.logo"
+          alt
+        >
         <div class="top-search-text">
           <h4>{{ store.name }}</h4>
           <span>{{ store.desc }}</span>
         </div>
       </div>
-      <a href="javascript:;" class="searchBtn">
-        <img src="../../assets/images/sousuo.png" alt>搜索
+      <a
+        href="javascript:;"
+        class="searchBtn"
+      >
+        <img
+          src="../../assets/images/sousuo.png"
+          alt
+        >搜索
       </a>
     </div>
     <div class="ads">
@@ -26,14 +35,28 @@
     </div>
     <div class="store">
       <div class="store_title">
-        <img src="../../assets/images/title_img.png" alt>
+        <img
+          src="../../assets/images/title_img.png"
+          alt
+        >
       </div>
       <div class="list">
-        <van-skeleton :row="4" :loading="loading" row-width="9.0625rem"/>
-        <goods-item v-for="item in goods" :key="item.id" :goods="item"></goods-item>
+        <van-skeleton
+          :row="4"
+          :loading="loading"
+          row-width="9.0625rem"
+        />
+        <goods-item
+          v-for="item in goods"
+          :key="item.id"
+          :goods="item"
+        ></goods-item>
         <infinite-loading @infinite="infiniteHandler">
           <div slot="spinner">
-            <van-loading type="spinner" size="18px">加载中...</van-loading>
+            <van-loading
+              type="spinner"
+              size="18px"
+            > 加载中... </van-loading>
           </div>
           <div slot="no-more">没有更多数据啦...</div>
           <div slot="no-results">没有数据</div>
@@ -62,11 +85,11 @@ export default {
   components: {
     Tab,
     GoodsItem,
-    "nav-block": Nav,
+    'nav-block': Nav,
     XHeader,
     InfiniteLoading,
-    "van-loading": Loading,
-    "van-skeleton": Skeleton
+    'van-loading': Loading,
+    'van-skeleton': Skeleton
   },
   data() {
     return {
@@ -77,7 +100,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["store"])
+    ...mapGetters(['store'])
   },
   created() {
     this.getAds()
@@ -98,7 +121,7 @@ export default {
     async infiniteHandler($state) {
       let param = {
         params: {
-          "fields[store_goods]": "id,title,amount,game_id,sale_nums,images",
+          'fields[store_goods]': "id,title,amount,game_id,sale_nums,images",
           page: this.page,
           per_page: 20
         }
@@ -112,12 +135,20 @@ export default {
         if (data.goods.per_page > data.goods.data.length) {
           $state.complete();
         }
-      });
+      })
     }
   }
 };
 </script>
 <style lang="scss">
+.ads{
+  margin: 10px 0;
+  font-size: 0;
+  img{
+    width: 100%;
+    height: auto;
+  }
+}
 .van-skeleton {
   padding: 0;
   .van-skeleton__row {
@@ -150,17 +181,16 @@ export default {
 
       img {
         padding-right: 10px;
-        width: 2.133333rem;
-        height: 2.133333rem;
+        width: 3.125rem;
+        height: 3.125rem;
       }
       .top-search-text {
-        line-height: 1.1;
         h4 {
-          font-size: 0.682667rem;
+          font-size: 0.8125rem;
           font-weight: 400;
         }
         span {
-          font-size: 0.512rem;
+          font-size: 0.6rem;
           color: #999999;
         }
       }
@@ -168,28 +198,24 @@ export default {
     .searchBtn {
       display: flex;
       align-items: center;
-      padding: 0 0.469333rem;
+      padding: 0.15rem 0.75rem;
       background: #ededed;
-      font-size: 0.597333rem;
+      font-size: 0.7rem;
       color: #999;
       border-radius: 0.9rem;
       height: 1.5rem;
-      img{
-        width: 1.28rem;
-      }
     }
   }
   .store {
     .store_title {
       display: flex;
+      height: 60px;
+      line-height: 60px;
       justify-content: center;
       align-items: center;
-      height: 2.56rem;
-      line-height: 2.56rem;
     }
     .list {
       position: relative;
-
     }
   }
 }

@@ -2,3 +2,19 @@
 @import "variables";
 @import "../css/weui.mini.css";
 @import url('//at.alicdn.com/t/font_1165461_7rfpihnytm6.css');
+
+body{
+  // font-family: PingFang-SC-Medium;
+  background-color: #f2f2f2;
+}
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.infinite-status-prompt{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: .75rem;
+  color: #999;
+}

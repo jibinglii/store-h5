@@ -3,6 +3,6 @@
 import http from '$utils/http'
 
 // send login data and retrive a new token
-export const goods = () => {
-  return http.get('api/v2/store/goods')
+export const goods = (params) => {
+  return http.get('api/v2/store/goods', params)
 }

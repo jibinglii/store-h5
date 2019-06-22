@@ -1,7 +1,14 @@
 <template>
-  <div class="weui-tabbar" :style="{paddingBottom: paddingBottom + 'px'}">
+  <div
+    class="weui-tabbar"
+    :style="{paddingBottom: paddingBottom + 'px'}"
+  >
     <div class="weui-tabbar__item">
-      <img src="../assets/images/kefu.png" alt class="kefu">
+      <img
+        src="../assets/images/kefu.png"
+        alt
+        class="kefu"
+      >
     </div>
 
     <a
@@ -55,7 +62,7 @@ export default {
         },
         {
           text: "我的",
-          url: ""
+          url: "me.me"
         }
       ],
       isFirst: true
@@ -79,8 +86,8 @@ body {
   height: 3.125rem;
   width: 100%;
   background-color: white;
-  .kefu{
-   width: 47%;
+  .kefu {
+    width: 45px;
   }
   .weui-tabbar__item {
     border-right: solid 1px #f2f2f2;
@@ -91,31 +98,14 @@ body {
   .weui-tabbar__item.active {
     p {
       color: #000;
-      font-weight: 400;
+      font-weight: 500;
     }
   }
   .weui-tabbar__label {
     text-align: center;
     color: #999;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 2.8;
-  }
-}
-.weui-tabbar:before {
-  border: none;
-}
-.tools-bar {
-  position: fixed;
-  left: 1rem;
-  bottom: 6rem;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  height: 3rem;
-  line-height: 3rem;
-  .btn {
-    padding: 0 0.5rem;
-    display: inline-block;
-    border-left: white 1px dashed;
   }
 }
 </style>

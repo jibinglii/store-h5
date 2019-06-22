@@ -36,10 +36,23 @@
 
 <script>
 import XHeader from "$components/XHeader";
+import CellGroup from 'vant/lib/cell-group';
+import Cell from 'vant/lib/cell';
+import Button from 'vant/lib/button';
+import Field  from 'vant/lib/field';
+import Uploader  from 'vant/lib/uploader';
+import 'vant/lib/button/style';
+import 'vant/lib/cell/style'
+import 'vant/lib/field/style'
+import 'vant/lib/uploader/style'
 export default {
-  name: "",
   components: {
-    XHeader
+    XHeader,
+    'van-button': Button,
+    'van-cell-group': CellGroup,
+    'van-cell': Cell,
+    'van-field': Field,
+    'van-uploader':Uploader
   },
   data() {
     return {

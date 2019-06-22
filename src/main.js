@@ -8,7 +8,7 @@ import store from './vuex'
 import Toast from 'vant/lib/toast'
 import 'vant/lib/toast/style'
 import mixins from './mixins/index'
-import './config/rem'
+import '$utils/rem'
 
 // const FastClick = require('fastclick');
 import FastClick from 'fastclick'

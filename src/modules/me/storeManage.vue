@@ -138,7 +138,7 @@ export default {
   }
   .store_banner {
     width: 100%;
-    height: 180px;
+    height: 7.68rem;
     background-image: url(../../assets/images/bg.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -150,10 +150,10 @@ export default {
       flex: 1;
       text-align: center;
       p {
-        font-size: 1.8em;
+        font-size: 1.408rem;
       }
       span {
-        font-size: 0.6em;
+        font-size: .554667rem;
       }
     }
     .store_banner_l {
@@ -168,22 +168,23 @@ export default {
       display: block;
       flex: 1;
       text-align: center;
-      padding: 18px 0;
+      padding: .768rem 0;
       dl {
         img {
-          width: 30px;
+          width: 1.28rem;
         }
         dd {
-          font-size: 0.8em;
+          font-size: .682667rem;
         }
       }
     }
   }
   .store_manage {
     background: #ffffff;
-    margin: 10px 0;
+    margin: .426667rem 0;
     p{
-       padding: 10px 0 0 10px;
+      font-size: .682667rem;
+       padding: .426667rem 0 0 .426667rem;
     }
     .store_manage_list {
       display: flex;
@@ -192,19 +193,20 @@ export default {
         display: block;
         flex: 1;
         text-align: center;
-        padding: 18px 0;
+        padding: .768rem 0;
         dl {
           img {
-            width: 30px;
+            width: 1.28rem;
           }
           dd {
-            font-size: 0.8em;
+            font-size: .597333rem;
           }
         }
       }
     }
     .weui-cell{
-      padding: 14px 15px;
+      font-size: .682667rem;
+      padding: .521rem .64rem;
     }
     .weui-cell:before{
       left: 0;

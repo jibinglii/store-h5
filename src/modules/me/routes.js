@@ -10,4 +10,16 @@ export default [{
         component: () =>
             import ('../me/storeManage')
     },
+    {
+        path: 'me/accountsetting',
+        name: 'me.accountsetting',
+        component: () =>
+            import ('../me/accountSetting')
+    },
+    {
+        path: 'me/modifyuseinfo',
+        name: 'me.modifyuseinfo',
+        component: () =>
+            import ('../me/modifyUseInfo')
+    },
 ]

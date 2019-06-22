@@ -1,5 +1,5 @@
 <template>
-  <div class="home-goods">
+  <div class="home-goods" @click="onClick">
     <div class="img" :style="{backgroundImage: 'url('+goods.logo+')'}">
       <div></div>
     </div>
@@ -15,6 +15,11 @@ export default {
   name: 'goods-item',
   props: {
     goods: Object
+  },
+  methods: {
+    onClick () {
+      this.$router.push({name: 'goods.view', params:{'goods': this.goods.uuid}})
+    }
   }
 }
 </script>

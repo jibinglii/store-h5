@@ -28,6 +28,11 @@
         >搜索
       </a>
     </div>
+    <div class="ads">
+      <a :href="item.url != '' ? item.url : 'javascript:void()'" v-for="item in ads" :key="item.id">
+        <img v-lazy="item.img">
+      </a>
+    </div>
     <div class="store">
       <div class="store_title">
         <img
@@ -36,24 +41,29 @@
         >
       </div>
       <div class="list">
-        <van-skeleton :row="4" :loading="loading" row-width="9.0625rem"/>
+        <van-skeleton
+          :row="4"
+          :loading="loading"
+          row-width="9.0625rem"
+        />
         <goods-item
           v-for="item in goods"
           :key="item.id"
           :goods="item"
         ></goods-item>
-        <infinite-loading
-          @infinite="infiniteHandler"
-        >
+        <infinite-loading @infinite="infiniteHandler">
           <div slot="spinner">
-            <van-loading type="spinner" size="18px"> 加载中... </van-loading>
+            <van-loading
+              type="spinner"
+              size="18px"
+            > 加载中... </van-loading>
           </div>
           <div slot="no-more">没有更多数据啦...</div>
           <div slot="no-results">没有数据</div>
         </infinite-loading>
       </div>
     </div>
-    <nav-block/>
+    <nav-block />
     <tab></tab>
   </div>
 </template>
@@ -70,7 +80,6 @@ import Loading from 'vant/lib/loading'
 import Skeleton from 'vant/lib/skeleton'
 import 'vant/lib/loading/style'
 import 'vant/lib/skeleton/style'
-
 export default {
   name: "home",
   components: {
@@ -86,19 +95,30 @@ export default {
     return {
       goods: [],
       page: 1,
-      loading: true
+      loading: true,
+      ads: []
     }
   },
   computed: {
     ...mapGetters(['store'])
   },
   created() {
-    setTimeout(()=>{
+    this.getAds()
+    setTimeout(() => {
       this.loading = false
     }, 300)
   },
   methods: {
-    infiniteHandler($state) {
+    async getAds() {
+      let param = {
+        'fields[store_ads]': "id,img,url",
+        per_page: 10
+      }
+      await services.ads(param).then(({ data }) => {
+        this.ads = data.ads.data
+      })
+    },
+    async infiniteHandler($state) {
       let param = {
         params: {
           'fields[store_goods]': "id,title,amount,game_id,sale_nums,images",
@@ -106,7 +126,7 @@ export default {
           per_page: 20
         }
       };
-      services.goods(param).then(({ data }) => {
+      await services.goods(param).then(({ data }) => {
         if (data.goods.data.length > 0) {
           this.page += 1;
           this.goods.push(...data.goods.data);
@@ -121,22 +141,30 @@ export default {
 };
 </script>
 <style lang="scss">
-.van-skeleton{
+.ads{
+  margin: 10px 0;
+  font-size: 0;
+  img{
+    width: 100%;
+    height: auto;
+  }
+}
+.van-skeleton {
   padding: 0;
-  .van-skeleton__row{
+  .van-skeleton__row {
     background: white;
     height: 10rem;
     width: 9.0625rem;
     box-sizing: border-box;
     display: inline-block;
     position: relative;
-    margin-bottom: .625rem;
+    margin-bottom: 0.625rem;
     margin-top: 0;
     &:nth-child(odd) {
       left: 0;
     }
     &:nth-child(even) {
-      left: .625rem;
+      left: 0.625rem;
     }
   }
 }
@@ -158,7 +186,7 @@ export default {
       }
       .top-search-text {
         h4 {
-          font-size: .8125rem;
+          font-size: 0.8125rem;
           font-weight: 400;
         }
         span {
@@ -174,7 +202,7 @@ export default {
       background: #ededed;
       font-size: 0.7rem;
       color: #999;
-      border-radius: .9rem;
+      border-radius: 0.9rem;
       height: 1.5rem;
     }
   }

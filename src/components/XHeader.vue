@@ -70,46 +70,7 @@ export default {
 </script>
 
 <style lang="scss">
-$height: 2.5rem;
-header {
-  height: $height;
-  box-sizing: border-box;
-  text-align: center;
-  z-index: 99;
-  width: 100%;
-  position: relative;
-  div.back-icon {
-    width: $height;
-    height: $height;
-    display: inline-block;
-    line-height: $height;
-    text-align: center;
-    position: absolute;
-    box-sizing: border-box;
-    left: 0;
-    i {
-      font-size: 0.8rem;
-    }
-  }
-  h1 {
-    display: inline-block;
-    font-size: .768rem;
-    height: 100%;
-    line-height: $height;
-    margin: 0;
-  }
-  .right-box {
-    position: absolute;
-    width: $height;
-    right: 0;
-    top: 0;
-    height: 100%;
-    text-align: center;
-    line-height: $height;
-    font-size: .682667rem;
-    .iconfont {
-      font-size: 0.8rem;
-    }
-  }
+.van-nav-bar .van-icon{
+  color: #020202;
 }
 </style>

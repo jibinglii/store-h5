@@ -7,16 +7,13 @@ import { routes as goods } from '$modules/goods'
 import Vue from 'vue'
 import Router from 'vue-router'
 import beforeEach from './beforeEach'
-import Vant from 'vant';
-import 'vant/lib/index.css'
 Vue.use(Router)
-Vue.use(Vant)
 
 const AppRoute = {
     path: '/:store/',
     component: () =>
         import ('../app'),
-    children: [...home, ...auth, ...store, ...collection, ...me, {
+    children: [...home, ...auth, ...store, ...collection, ...me, ...goods, {
         path: '*',
         component: () =>
             import ('../not-found')

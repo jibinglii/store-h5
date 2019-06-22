@@ -20,10 +20,19 @@
 
 <script>
 import XHeader from "$components/XHeader";
+import CellGroup from "vant/lib/cell-group";
+import Cell from "vant/lib/cell";
+import Button from "vant/lib/button";
+import "vant/lib/button/style";
+import "vant/lib/cell/style";
+
 export default {
   name: "",
   components: {
-    XHeader
+    XHeader,
+    "van-button": Button,
+    "van-cell-group": CellGroup,
+    "van-cell": Cell
   },
   data() {
     return {};
@@ -45,9 +54,9 @@ export default {
       }
     }
   }
-  .btn{
+  .btn {
     text-align: center;
-    .van-button{
+    .van-button {
       width: 90%;
       margin: 2.133333rem auto;
       background: #000;

@@ -6,6 +6,6 @@ export const getCollectionGoods = () => {
 export const deleteCollectionGoods = (goodsId) => {
   return http.delete('/api/v1/collect/goods/' + goodsId)
 }
-export const deleteAllCollectionGoods = (goodList) => {
-  return http.delete('/api/v1/collects/delete', goodList)
+export const deleteAllCollectionGoods = (goodsList) => {
+  return http.delete('/api/v1/collects/delete', { data: goodsList })
 }

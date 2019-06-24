@@ -34,9 +34,9 @@ import "vant/lib/checkbox/style";
 import "vant/lib/checkbox-group/style";
 import "vant/lib/dialog/style";
 import XHeader from "$components/XHeader";
-import Slide from "./slide";
-import GoodsCard from "./goodscard.vue";
-import SelectDelete from "./selectdelete.vue";
+import Slide from "./components/slide";
+import GoodsCard from "./components/goodscard";
+import SelectDelete from "./components/selectdelete";
 import * as service from "$modules/collection/services";
 export default {
   data() {
@@ -100,14 +100,19 @@ export default {
             self.manageState = false;
             self.$toast.success("删除成功");
           };
-          self.deleteInterface(arr, cb);
+          let waitDeleteArr = [];
+          for (let index = 0; index < self.goods.length; index++) {
+            const element = self.goods[index];
+            waitDeleteArr.push(element.uuid);
+          }
+          self.deleteInterface(waitDeleteArr, cb);
         })
         .catch(() => {});
     },
     onDelete(id) {
       let self = this;
-      let arr = id ? [id] : self.checkedGoods;
-      if (arr.length == 0) return;
+      let waitDeleteArr = id ? [id] : self.checkedGoods;
+      if (waitDeleteArr.length == 0) return;
       Dialog.confirm({
         title: "温馨提示",
         message: "您确定要取消收藏？",
@@ -118,7 +123,7 @@ export default {
       })
         .then(() => {
           const cb = function() {
-            arr.some(function(item, index, array) {
+            waitDeleteArr.some(function(item, index, array) {
               for (let i = 0; i < self.goods.length; i++) {
                 let element = self.goods[i];
                 if (element.uuid == item) {
@@ -134,32 +139,35 @@ export default {
             }
             self.$toast.success("删除成功");
           };
-          self.deleteInterface(arr, cb);
+          self.deleteInterface(waitDeleteArr, cb);
         })
         .catch(() => {});
     },
-    deleteInterface(arr, cb) {
-      console.log("TCL: deleteInterface -> arr", arr);
+    deleteInterface(waitDeleteArr, cb) {
       let self = this;
 
-      if (arr.length === 1) {
+      if (waitDeleteArr.length === 1) {
         service
-          .deleteCollectionGoods(arr[0])
+          .deleteCollectionGoods(waitDeleteArr[0])
           .then(data => {
             if (data.status == "success" && data.code == 200) {
               cb && cb();
             }
           })
-          .catch(() => {});
+          .catch(() => {
+            self.$toast.fail("删除失败");
+          });
       } else {
         service
-          .deleteAllCollectionGoods(arr)
+          .deleteAllCollectionGoods(waitDeleteArr)
           .then(data => {
             if (data.status == "success" && data.code == 200) {
               cb && cb();
             }
           })
-          .catch(() => {});
+          .catch(() => {
+            self.$toast.fail("删除失败");
+          });
       }
     }
   },

@@ -1,14 +1,20 @@
 <template>
-  <div class="select-content">
-    <van-checkbox name="selectall" v-model="isAllSelected" @change="selectCheckBox(isAllSelected)">
-      全选
-      <img slot="icon" slot-scope="props" :src="props.checked ? icon.active : icon.inactive">
-    </van-checkbox>
-    <section class="custom-btn">
-      <van-button @click="oneKeyClean">一键清除</van-button>
-      <van-button @click="onDelete">删除</van-button>
-    </section>
-  </div>
+  <transition name="fade">
+    <div class="select-content">
+      <van-checkbox
+        name="selectall"
+        v-model="isAllSelected"
+        @change="selectCheckBox(isAllSelected)"
+      >
+        全选
+        <img slot="icon" slot-scope="props" :src="props.checked ? icon.active : icon.inactive">
+      </van-checkbox>
+      <section class="custom-btn">
+        <van-button @click="oneKeyClean">一键清除</van-button>
+        <van-button @click="onDelete">删除</van-button>
+      </section>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -64,6 +70,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
 .select-content {
   display: flex;
   align-items: center;

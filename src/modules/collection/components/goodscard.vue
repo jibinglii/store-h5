@@ -11,7 +11,8 @@
         <section class="custom-card-bottom">
           <span class="custom-price">
             ￥
-            <i>{{item.amount | formatMoney | roundNum}}</i>.{{item.amount | formatMoney | decimalNum}}
+            <i>{{item.amount | formatMoney | roundNum}}.</i>
+            {{item.amount | formatMoney | decimalNum}}
           </span>
           <div class="custom-btns">
             <van-button>分享</van-button>
@@ -40,7 +41,10 @@ export default {
   },
   methods: {
     onBuy() {
-      this.$router.push({name: 'goods.view', params:{'goods': this.item.uuid}})
+      this.$router.push({
+        name: "goods.view",
+        params: { goods: this.item.uuid }
+      });
     }
   },
   components: {
@@ -103,9 +107,13 @@ export default {
   .custom-price {
     color: #ff0000;
     font-size: 0.6rem;
+    line-height: 0.6rem;
+    display: flex;
+    align-items: flex-end;
     i {
       font-style: normal;
       font-size: 0.9rem;
+      line-height: 0.8rem;
     }
   }
   .custom-btns {

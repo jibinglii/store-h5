@@ -39,13 +39,7 @@ export default {
   computed: {
     isAllSelected: {
       set: function(checked) {
-        let dt = [];
-        if (checked) {
-          for (let i = 1, l = this.goodsLength; i <= l; i++) {
-            dt.push(i);
-          }
-        }
-        this.$emit("updateCheckedGoods", dt);
+        this.$emit("updateCheckedGoods", checked);
       },
       get: function() {
         let sL = this.checkedGoods.length;
@@ -75,29 +69,29 @@ export default {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 2.090667rem /* 98/46.875 */;
+  height: 2.45rem;
   position: fixed;
   bottom: 0;
   left: 0;
   background: #f2f2f2;
   border: 1px solid #ededed;
   /deep/.van-checkbox {
-    margin-left: 28px;
+    margin-left: 0.7rem;
     .van-checkbox__icon {
-      width: 0.704rem /* 33/46.875 */;
-      height: 0.704rem /* 33/46.875 */;
-      font-size: 0.704rem;
-      line-height: 0.704rem;
+      width: 0.825rem;
+      height: 0.825rem;
+      font-size: 0.825rem;
+      line-height: 0.825rem;
       img {
         width: 100%;
         height: auto;
       }
     }
     .van-checkbox__label {
-      font-size: 0.597333rem /* 28/46.875 */;
-      margin-left: 0.426667rem /* 20/46.875 */;
+      font-size: 0.7rem;
+      margin-left: 0.5rem;
       color: #323233;
-      line-height: 0.426667rem /* 20/46.875 */;
+      line-height: 0.5rem;
     }
   }
 
@@ -105,18 +99,18 @@ export default {
     display: flex;
     align-items: center;
     height: 100%;
-    margin-right: 12px;
+    margin-right: 0.6rem;
     .van-button {
-      height: 1.152rem;
-      width: 2.773333rem;
-      line-height: 1.109333rem /* 52/46.875 */;
+      height: 1.35rem;
+      width: 3.25rem;
+      line-height: 1.25rem;
       &:first-child {
-        margin-right: 0.426667rem;
+        margin-right: 0.5rem;
       }
     }
     .van-button--normal {
       padding: 0;
-      font-size: 0.512rem;
+      font-size: 0.6rem;
       font-family: PingFang-SC-Medium;
       font-weight: 500;
     }
@@ -124,7 +118,7 @@ export default {
       color: #fff;
       background-color: #000;
       border: 1px solid #000;
-      border-radius: 0.170667rem /* 8/46.875 */;
+      border-radius: 0.2rem;
       &:first-child {
         color: #000;
         background-color: #fff;

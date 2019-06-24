@@ -80,7 +80,7 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <router-link :to="{ name: 'collection.collection'}" class="weui-cell weui-cell_access" href="javascript:;">
           <div class="weui-cell__hd">
             <img src="../../assets/images/shoucang.png">
           </div>
@@ -88,7 +88,7 @@
             <p>我的收藏</p>
           </div>
           <div class="weui-cell__ft"></div>
-        </a>
+        </router-link>
         <a class="weui-cell weui-cell_access" href="javascript:;">
           <div class="weui-cell__hd">
             <img src="../../assets/images/liucheng.png">

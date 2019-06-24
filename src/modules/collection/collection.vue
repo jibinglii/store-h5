@@ -156,7 +156,7 @@ export default {
           .deleteAllCollectionGoods(arr)
           .then(data => {
             if (data.status == "success" && data.code == 200) {
-              ca && cb();
+              cb && cb();
             }
           })
           .catch(() => {});

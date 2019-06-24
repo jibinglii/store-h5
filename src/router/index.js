@@ -4,6 +4,7 @@ import { routes as store } from '$modules/store'
 import { routes as collection } from '$modules/collection'
 import { routes as me } from '$modules/me'
 import { routes as goods } from '$modules/goods'
+import { routes as distribution } from '$modules/distribution'
 import Vue from 'vue'
 import Router from 'vue-router'
 import beforeEach from './beforeEach'
@@ -13,7 +14,7 @@ const AppRoute = {
     path: '/:store/',
     component: () =>
         import ('../app'),
-    children: [...home, ...auth, ...store, ...collection, ...me, ...goods, {
+    children: [...home, ...auth, ...store, ...collection, ...me, ...goods, ...distribution, {
         path: '*',
         component: () =>
             import ('../not-found')

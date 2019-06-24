@@ -26,6 +26,7 @@
 <script>
 import { Button, Card } from "vant";
 export default {
+  name:"goodscard",
   props: {
     item: {
       type: Object,

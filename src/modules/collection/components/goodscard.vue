@@ -2,20 +2,21 @@
   <div>
     <van-card
       slot="center"
-      :name="item.id"
+      :name="item.uuid"
       :title="item.title"
-      :desc="item.desc"
-      :thumb="item.thumb"
+      :desc="item.game_name"
+      :thumb="item.logo"
     >
       <div slot="price">
         <section class="custom-card-bottom">
           <span class="custom-price">
             ￥
-            <i>{{item.price}}</i>.00
+            <i>{{item.amount | formatMoney | roundNum}}.</i>
+            {{item.amount | formatMoney | decimalNum}}
           </span>
           <div class="custom-btns">
             <van-button>分享</van-button>
-            <van-button>立即购买</van-button>
+            <van-button @click="onBuy">立即购买</van-button>
           </div>
         </section>
       </div>
@@ -36,8 +37,15 @@ export default {
     }
   },
   data() {
-    return {
-    };
+    return {};
+  },
+  methods: {
+    onBuy() {
+      this.$router.push({
+        name: "goods.view",
+        params: { goods: this.item.uuid }
+      });
+    }
   },
   components: {
     [Card.name]: Card,
@@ -48,20 +56,20 @@ export default {
 
 <style lang="scss" scoped>
 /deep/.van-card {
-  padding: 0.426667rem 0.512rem;
+  padding: 0.5rem 0.6rem;
   background-color: #fff;
   margin-top: 0;
   .van-card__thumb {
-    width: 4.266667rem;
-    height: 4.266667rem;
-    margin-right: 0.426667rem;
+    width: 5rem;
+    height: 5rem;
+    margin-right: 0.5rem;
   }
 
   .van-card__title {
-    width: 5.333333rem;
-    height: 0.597333rem;
-    margin-top: 0.170667rem;
-    font-size: 0.597333rem;
+    width: 100%;
+    height: 0.7rem;
+    margin-top: 0.2rem;
+    font-size: 0.7rem;
     font-family: PingFang-SC-Medium;
     font-weight: 500;
     color: #000;
@@ -69,17 +77,17 @@ export default {
   }
   .van-card__desc {
     max-height: none;
-    margin-top: 0.512rem;
-    width: 2.133333rem;
-    padding-left: 0.256rem;
-    padding-right: 0.256rem;
-    height: 0.64rem;
-    font-size: 0.426667rem;
-    line-height: 0.64rem;
+    margin-top: 0.6rem;
+    width: 2.5rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    height: 0.75rem;
+    font-size: 0.5rem;
+    line-height: 0.75rem;
     text-align: center;
     background: rgba(137, 199, 56, 1);
     color: #fff;
-    border-radius: 0.170667rem;
+    border-radius: 0.2rem;
   }
   .van-card__bottom {
     display: flex;
@@ -98,25 +106,29 @@ export default {
   justify-content: space-between;
   .custom-price {
     color: #ff0000;
-    font-size: 0.512rem;
+    font-size: 0.6rem;
+    line-height: 0.6rem;
+    display: flex;
+    align-items: flex-end;
     i {
       font-style: normal;
-      font-size: 0.768rem;
+      font-size: 0.9rem;
+      line-height: 0.8rem;
     }
   }
   .custom-btns {
     .van-button {
-      height: 1.152rem;
-      width: 2.773333rem;
-      line-height: 1.109333rem /* 52/46.875 */;
+      height: 1.35rem;
+      width: 3.25rem;
+      line-height: 1.25rem;
       &:first-child {
-        margin-right: 0.426667rem;
+        margin-right: 0.5rem;
       }
     }
 
     .van-button--normal {
       padding: 0;
-      font-size: 0.512rem;
+      font-size: 0.6rem;
       font-family: PingFang-SC-Medium;
       font-weight: 500;
     }
@@ -125,7 +137,7 @@ export default {
       color: #fff;
       background-color: #000;
       border: 1px solid #000;
-      border-radius: 0.170667rem;
+      border-radius: 0.2rem;
       &:first-child {
         color: #000;
         background-color: #fff;

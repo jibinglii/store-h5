@@ -1,7 +1,7 @@
 export default [
   {
-    path: 'collection',
-    name: 'collection',
+    path: 'collection/collection',
+    name: 'collection.collection',
     component: () => import('./collection')
   }
 ]

@@ -2,14 +2,13 @@
   <nav-bar
     :title="title"
     :left-text="leftText"
-    :right-text="rightText"
     left-arrow
     @click-left="back"
     @click-right="onClickRight"
     :style="{backgroundColor: backColor, color: color, borderBottom: '1px solid ' + underlineColor}"
   >
     <div slot="right">
-      <slot name="right"></slot>
+      <slot name="right">{{rightText}}</slot>
     </div>
   </nav-bar>
 </template>

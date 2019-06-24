@@ -30,6 +30,7 @@ import Card from "vant/lib/card";
 import "vant/lib/button/style";
 import "vant/lib/card/style";
 export default {
+  name:"goodscard",
   props: {
     item: {
       type: Object,

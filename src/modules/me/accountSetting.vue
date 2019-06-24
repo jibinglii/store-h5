@@ -2,22 +2,19 @@
   <div class="accountSet">
     <x-header
       title="账号设置"
-      back-url="me.me"
-      back-color="#ffffff"
-      color="#000"
-      underline-color="#f2f2f2"
+      url="me.me"
     ></x-header>
     <van-cell-group>
       <!-- <van-cell title="修改登录密码" is-link to="me"/> -->
       <van-cell
         title="修改支付密码"
         is-link
-        to="index"
+        :to="{name: 'me.edit-pay-pwd'}"
       />
       <van-cell
         title="银行卡管理"
         is-link
-        to="index"
+        :to="{name: 'banks'}"
       />
     </van-cell-group>
     <div class="btn">

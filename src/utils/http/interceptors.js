@@ -23,11 +23,11 @@ export default http => {
      * requests
      */
     error => {
-      console.log(error)
       if (!error['response']) {
         return Promise.reject(error)
       }
       switch (error.response.status) {
+        case 400:
         case 422:
           let content = error.response.data.message
           Toast.fail(content)

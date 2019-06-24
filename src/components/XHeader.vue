@@ -2,7 +2,7 @@
   <nav-bar
     :title="title"
     :left-text="leftText"
-    left-arrow
+    :left-arrow="leftArrow"
     @click-left="back"
     @click-right="onClickRight"
     :style="{backgroundColor: backColor, color: color, borderBottom: '1px solid ' + underlineColor}"
@@ -48,6 +48,15 @@ export default {
     underlineColor: {
       type: String,
       default: "#ededed"
+    },
+    allowBack: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    leftArrow () {
+      return this.allowBack
     }
   },
   methods: {

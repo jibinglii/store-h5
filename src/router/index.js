@@ -4,6 +4,7 @@ import { routes as store } from '$modules/store'
 import { routes as collection } from '$modules/collection'
 import { routes as me } from '$modules/me'
 import { routes as goods } from '$modules/goods'
+import { routes as bank } from '$modules/bank'
 import { routes as distribution } from '$modules/distribution'
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -14,14 +15,14 @@ const AppRoute = {
     path: '/:store/',
     component: () =>
         import ('../app'),
-    children: [...home, ...auth, ...store, ...collection, ...me, ...goods, ...distribution, {
-        path: '*',
-        component: () =>
-            import ('../not-found')
-    }]
+    children: [...home, ...auth, ...store, ...collection, ...me, ...goods, ...distribution, ...bank]
 }
 
-const routes = [AppRoute]
+const routes = [AppRoute, {
+  path: '*',
+  component: () =>
+      import ('../not-found')
+}]
 
 const router = new Router({
     routes,

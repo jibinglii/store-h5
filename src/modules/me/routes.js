@@ -5,7 +5,7 @@ export default [{
     requiresAuth: true
   },
   component: () =>
-    import('../me/me')
+    import('./me')
 },
 {
   path: 'me/storemanage',
@@ -14,7 +14,7 @@ export default [{
     requiresAuth: true
   },
   component: () =>
-    import('../me/storeManage')
+    import('./storeManage')
 },
 {
   path: 'me/accountsetting',
@@ -23,7 +23,7 @@ export default [{
     requiresAuth: true
   },
   component: () =>
-    import('../me/accountSetting')
+    import('./accountSetting')
 },
 {
   path: 'me/modifyuseinfo',
@@ -32,6 +32,24 @@ export default [{
     requiresAuth: true
   },
   component: () =>
-    import('../me/modifyUseInfo')
+    import('./modifyUseInfo')
+},
+{
+  path: 'me/edit-pay-pwd',
+  name: 'me.edit-pay-pwd',
+  meta: {
+    requiresAuth: true
+  },
+  component: () =>
+    import('./EditPayPwd')
+},
+{
+  path: 'me/set-pay-pwd',
+  name: 'me.set-pay-pwd',
+  meta: {
+    requiresAuth: true
+  },
+  component: () =>
+    import('./SetPayPwd')
 },
 ]

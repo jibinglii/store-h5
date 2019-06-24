@@ -206,7 +206,7 @@ export default {
   methods: {
     buy(goodsId) {
       if (this.canBuy) {
-        location.href = '/shop/confirm/' + goodsId + '.html'
+        this.$router.push({name: 'confirm', params:{'goods': goodsId}})
       }
     },
     async getDetail() {
@@ -245,11 +245,12 @@ export default {
     },
     collect(goods) {
       if (!goods.is_collect) {
-        this.$http.put('api/v1/collect/goods/' + this.goodsId, { loading: true }).then(({ data }) => {
+        this.$http.put('api/v1/collect/goods/' + this.goodsId).then(({ data }) => {
           this.$toast.success('收藏成功');
           this.$set(goods, 'is_collect', true)
-        }).catch(({ response }) => {
-          this.$toast.fail(response.data.message)
+        }).catch(error => {
+          console.log(error.config)
+          // this.$toast.fail(response.message)
         });
       }
     },

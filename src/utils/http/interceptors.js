@@ -23,10 +23,10 @@ export default http => {
      * requests
      */
     error => {
+      console.log(error)
       if (!error['response']) {
         return Promise.reject(error)
       }
-      console.log(error.response)
       switch (error.response.status) {
         case 422:
           let content = error.response.data.message

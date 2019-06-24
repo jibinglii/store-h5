@@ -26,7 +26,7 @@ export default {
     margin-top: .625rem;
     h6 {
         color: #020202;
-        font-size: .875rem;
+        font-size: 14px;
         line-height: 2.5;
         font-weight: 200;
         padding-left: .75rem;

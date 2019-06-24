@@ -4,7 +4,7 @@ import interceptors from './interceptors'
 // allow use http client without Vue instance
 const http = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
-  timeout: 10000
+  timeout: 30000
 })
 
 interceptors(http)
@@ -19,6 +19,7 @@ export function setToken (token) {
 let url = window.location.pathname
 url.match(/^\/?(\w+)\/?.*$/)
 let store = RegExp.$1
-http.defaults.headers['x-store-id'] = `${store}`
+http.defaults.headers['X-Store-Id'] = `${store}`
+http.defaults.headers['Accept'] = 'application/json'
 
 export default http

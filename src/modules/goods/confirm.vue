@@ -135,7 +135,7 @@ export default {
             express_type: 0,
             insure: this.serviceValue.index,
           };
-          this.$toast.loading()
+          this.$toast.loading({mask: true})
           this.$http.post('api/v1/order/' + this.goodsId, param).then(({ data }) => {
             this.$toast.clear()
             this.creating = false;

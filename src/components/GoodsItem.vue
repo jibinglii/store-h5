@@ -26,16 +26,16 @@ export default {
 
 <style lang="scss">
 .home-goods {
-  width: 9.0625rem;
+  width: 8.5rem;
   box-sizing: border-box;
   display: inline-block;
   position: relative;
   margin-bottom: .625rem;
   &:nth-child(odd) {
-    left: 0;
+    left: .6rem;
   }
   &:nth-child(even) {
-    left: .625rem;
+    left: 1.2rem;
   }
   .img {
     height: 6.25rem;

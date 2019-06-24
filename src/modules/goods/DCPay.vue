@@ -136,7 +136,7 @@ export default {
       this.isShow = false
     },
     async confirmPay(param) {
-      this.$loading.show('正在请求支付...');
+      this.$loading({message: '正在请求支付...', mask: true});
       location.replace('/api/v1/pay/fuiou-h5/' + param.orderid + '/' + param.bankid + '?token=')
     }
   },

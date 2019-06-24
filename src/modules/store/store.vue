@@ -4,9 +4,6 @@
     <x-header
       title="店铺主页"
       back-url="home"
-      back-color="#ffffff"
-      color="#000"
-      underline-color="#f2f2f2"
     ></x-header>
     <van-tabs v-model="active" @click="onTabClickTop">
       <van-tab

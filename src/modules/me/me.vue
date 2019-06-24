@@ -16,7 +16,7 @@
     <div class="page_item">
       <div class="weui-cells__title">我是买家</div>
       <div class="weui-cells">
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <router-link class="weui-cell weui-cell_access" :to="{name: 'orders'}">
           <div class="weui-cell__hd">
             <img src="../../assets/images/order.png">
           </div>
@@ -24,7 +24,7 @@
             <p>我的订单</p>
           </div>
           <div class="weui-cell__ft"></div>
-        </a>
+        </router-link>
       </div>
     </div>
     <div class="page_item">

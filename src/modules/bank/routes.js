@@ -16,4 +16,13 @@ export default [{
   component: () =>
     import('./add')
 },
+{
+  path: 'bank/view/:id.html',
+  name: 'banks.view',
+  rmeta: {
+    requiresAuth: true
+  },
+  component: () =>
+    import('./view')
+},
 ]

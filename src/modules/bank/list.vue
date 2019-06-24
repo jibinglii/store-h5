@@ -12,7 +12,7 @@
     </x-header>
     <ul class="banklist">
       <li
-        @click='redirect("/shop/bankcardview/"+item.id+".html")'
+        @click="$router.push({name: 'banks.view', params: {'id': item.id}})"
         v-for="(item, index) in banklist"
         :key="index"
         :class="item.bank_info.color"

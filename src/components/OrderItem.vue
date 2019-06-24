@@ -130,12 +130,20 @@ export default {
   }
   .t {
     display: block;
+    // height: 2.5rem;
+    // line-height: 2.5rem;
+    padding: .4rem 15px;
     position: relative;
     font-weight: bold;
-    line-height: 50px;
-    padding: 0px 15px;
     border-bottom: solid 1px #eaeaea;
-    font-size: 16px;
+    span {
+      font-size: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
     img {
       position: absolute;
       right: 0;
@@ -174,13 +182,13 @@ export default {
     .status {
       float: left;
       padding-left: 10px;
-      font-size: 0.9rem;
+      font-size: 13px;
       font-weight: bold;
     }
     a,
     button {
       display: inline-block;
-      font-size: 0.8rem;
+      font-size: 12px;
       line-height: 180%;
       padding: 0px 20px;
       margin-right: 8px;

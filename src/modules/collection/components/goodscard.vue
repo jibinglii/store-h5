@@ -5,8 +5,15 @@
       :name="item.uuid"
       :title="item.title"
       :desc="item.game_name"
-      :thumb="item.logo"
     >
+      <van-image
+        slot="thumb"
+        :src="item.logo"
+        width="100%"
+        height="100%"
+        fit="cover"
+      />
+
       <div slot="price">
         <section class="custom-card-bottom">
           <span class="custom-price">
@@ -27,10 +34,11 @@
 <script>
 import Button from "vant/lib/button";
 import Card from "vant/lib/card";
+import Image from "vant/lib/image";
 import "vant/lib/button/style";
 import "vant/lib/card/style";
 export default {
-  name:"goodscard",
+  name: "goodscard",
   props: {
     item: {
       type: Object,
@@ -50,7 +58,8 @@ export default {
   },
   components: {
     [Card.name]: Card,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [Image.name]: Image
   }
 };
 </script>

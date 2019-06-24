@@ -1,7 +1,11 @@
 <template>
   <div>
-
-    <van-swipe-cell :right-width="slideWidth" :left-width="0" :on-close="onClose">
+    <van-swipe-cell
+      :right-width="slideWidth"
+      :left-width="0"
+      :disabled="disabledSlide"
+      :on-close="onClose"
+    >
       <slot name="center"></slot>
       <van-button square slot="right" type="danger" text="取消收藏"/>
     </van-swipe-cell>
@@ -9,8 +13,21 @@
 </template>
 
 <script>
-import { SwipeCell, Button, Dialog } from "vant";
+import SwipeCell from "vant/lib/button";
+import Button from "vant/lib/swipe-cell";
+import "vant/lib/button/style";
+import "vant/lib/swipe-cell/style";
 export default {
+  props: {
+    id: {
+      type: Number,
+      default: 0
+    },
+    disabledSlide: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       slideWidth: 0
@@ -37,28 +54,23 @@ export default {
         case "left":
         case "cell":
         case "outside":
-          // instance.close();
+          instance.close();
           break;
         case "right":
-          Dialog.confirm({
-            message: "确定删除吗？"
-          }).then(() => {
-            instance.close();
-          });
+          this.$emit("onDelete", this.id);
+          instance.close();
           break;
       }
     }
   },
   components: {
     [SwipeCell.name]: SwipeCell,
-    [Button.name]: Button,
-    [Dialog.name]: Dialog,
+    [Button.name]: Button
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~vant/lib/index.css";
 /deep/.van-swipe-cell__right {
   .van-button {
     height: 100%;

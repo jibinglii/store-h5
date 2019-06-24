@@ -1,55 +1,56 @@
 <template>
   <div>
-        <van-card
-          slot="center"
-          :name="item.id"
-          :title="item.title"
-          :desc="item.desc"
-          :thumb="item.thumb"
-        >
-          <div slot="price">
-            <section class="custom-card-bottom">
-              <span class="custom-price">
-                ￥
-                <i>{{item.price}}</i>.00
-              </span>
-              <div class="custom-btn">
-                <van-button>分享</van-button>
-                <van-button>立即购买</van-button>
-              </div>
-            </section>
+    <van-card
+      slot="center"
+      :name="item.id"
+      :title="item.title"
+      :desc="item.desc"
+      :thumb="item.thumb"
+    >
+      <div slot="price">
+        <section class="custom-card-bottom">
+          <span class="custom-price">
+            ￥
+            <i>{{item.price}}</i>.00
+          </span>
+          <div class="custom-btns">
+            <van-button>分享</van-button>
+            <van-button>立即购买</van-button>
           </div>
-        </van-card>
+        </section>
+      </div>
+    </van-card>
   </div>
 </template>
 
 <script>
-import { Button, Card } from "vant";
+import Button from "vant/lib/button";
+import Card from "vant/lib/card";
+import "vant/lib/button/style";
+import "vant/lib/card/style";
 export default {
   name:"goodscard",
   props: {
     item: {
       type: Object,
       default: {}
-    },
+    }
   },
   data() {
     return {
-      result: ["1","2"],
     };
   },
   components: {
     [Card.name]: Card,
-    [Button.name]: Button,
+    [Button.name]: Button
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~vant/lib/index.css";
 /deep/.van-card {
   padding: 0.426667rem 0.512rem;
-  background-color: #fafafa;
+  background-color: #fff;
   margin-top: 0;
   .van-card__thumb {
     width: 4.266667rem;
@@ -104,7 +105,7 @@ export default {
       font-size: 0.768rem;
     }
   }
-  .custom-btn {
+  .custom-btns {
     .van-button {
       height: 1.152rem;
       width: 2.773333rem;

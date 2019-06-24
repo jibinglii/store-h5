@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <x-header
       title="登录"
       back-url="home"
@@ -246,8 +246,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-body {
+<style lang="scss" scoped>
+.body {
   background-color: white;
 }
 .bg {

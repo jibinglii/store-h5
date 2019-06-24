@@ -159,7 +159,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .header {
   height: 9rem;
   background-image: url("/images/shop/me-bg.jpg");

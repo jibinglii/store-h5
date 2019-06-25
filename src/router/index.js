@@ -27,11 +27,32 @@ const routes = [AppRoute, {
       import ('../not-found')
 }]
 
+const scrollBehavior = function (to, from, savedPosition) {
+  if (savedPosition) {
+    return savedPosition
+  } else {
+    if (to.hash) {
+      if (document.querySelector(to.hash)) {
+        return {
+          selector: to.hash
+        }
+      }
+      return false
+    }
+    return new Promise((resolve) => {
+      setTimeout(() => {
+       resolve({ x: 0, y: 0 });
+      }, 0);
+    })
+  }
+}
+
 const router = new Router({
     routes,
     linkActiveClass: 'active',
     linkExactActiveClass: 'active',
-    mode: 'history'
+    mode: 'history',
+    scrollBehavior
 })
 
 router.beforeEach(beforeEach)

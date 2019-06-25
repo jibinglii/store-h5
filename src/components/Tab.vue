@@ -1,6 +1,6 @@
 <template>
-  <div class="fixed-bottom">
-    <div class="weui-tabbar" :style="{paddingBottom: paddingBottom + 'px'}">
+  <div class="fixed-bottom" :style="{paddingBottom:paddingBottom+'px'}">
+    <div class="weui-tabbar" :style="{paddingBottom:paddingBottom+'px'}">
       <div class="weui-tabbar__item">
         <img src="../assets/images/kefu.png" alt class="kefu">
       </div>
@@ -31,8 +31,8 @@ export default {
         if (this.isIPhoneX() && this.isFirst) {
           return 30;
         }
-        return 0;
       }
+      return 0;
     },
     currentUrl() {
       return this.$route.name;
@@ -71,6 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/sass/_variables.scss";
+
 .fixed-bottom {
   margin-bottom: 3.75rem;
   .weui-tabbar {
@@ -84,7 +85,9 @@ export default {
     }
     .weui-tabbar__item {
       border-right: solid 1px #f2f2f2;
+      padding: 0;
       &:nth-child(1) {
+        padding: 5px 0 0;
         flex: 0.8;
       }
       &:nth-child(3) {
@@ -104,8 +107,19 @@ export default {
       text-align: center;
       color: #999;
       font-size: 16px;
-      line-height: 2.8;
+      line-height: 50px;
     }
   }
 }
+// @supports (bottom: constant(safe-area-inset-bottom)) {
+//   .weui-tabbar {
+//     position: fixed;
+//     bottom: constant(safe-area-inset-bottom);
+//   }
+// }
+// @supports (padding-bottom: constant(safe-area-inset-bottom)) {
+//   .fixed-bottom {
+//     padding-bottom: constant(safe-area-inset-bottom);
+//   }
+// }
 </style>

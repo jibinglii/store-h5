@@ -89,7 +89,7 @@
           </div>
           <div class="weui-cell__ft"></div>
         </router-link>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <router-link class="weui-cell weui-cell_access" :to="{name: 'me.opp'}">
           <div class="weui-cell__hd">
             <img src="../../assets/images/liucheng.png">
           </div>
@@ -97,7 +97,7 @@
             <p>操作流程</p>
           </div>
           <div class="weui-cell__ft"></div>
-        </a>
+        </router-link>
         <a class="weui-cell weui-cell_access" href="javascript:;">
           <div class="weui-cell__hd">
             <img src="../../assets/images/xiaoxi.png">
@@ -107,7 +107,7 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <router-link class="weui-cell weui-cell_access" :to="{name: 'me.feedback'}">
           <div class="weui-cell__hd">
             <img src="../../assets/images/fankui.png">
           </div>
@@ -115,8 +115,8 @@
             <p>意见反馈</p>
           </div>
           <div class="weui-cell__ft"></div>
-        </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        </router-link>
+        <router-link class="weui-cell weui-cell_access" :to="{name: 'me.helps'}">
           <div class="weui-cell__hd">
             <img src="../../assets/images/help.png">
           </div>
@@ -124,7 +124,7 @@
             <p>使用帮助</p>
           </div>
           <div class="weui-cell__ft"></div>
-        </a>
+        </router-link>
         <router-link :to="{ name: 'me.accountsetting'}" class="weui-cell weui-cell_access">
           <div class="weui-cell__hd">
             <img src="../../assets/images/seting.png">

@@ -52,4 +52,49 @@ export default [{
   component: () =>
     import('./SetPayPwd')
 },
+{
+  path: 'me/opp',
+  name: 'me.opp',
+  meta: {
+    requiresAuth: true
+  },
+  component: () =>
+    import('./Opp')
+},
+{
+  path: 'me/help',
+  name: 'me.helps',
+  meta: {
+    requiresAuth: false
+  },
+  component: () =>
+    import('./Help')
+},
+{
+  path: 'me/help/view/:id.html',
+  name: 'me.helps.view',
+  meta: {
+    requiresAuth: false
+  },
+  component: () =>
+    import('./HelpInfo')
+},
+{
+  path: 'me/help/list/:id.html',
+  name: 'me.helps.list',
+  meta: {
+    requiresAuth: false
+  },
+  component: () =>
+    import('./HelpList')
+},
+{
+  path: 'me/help/feedback.html',
+  name: 'me.feedback',
+  meta: {
+    requiresAuth: false
+  },
+  component: () =>
+    import('./Feedback')
+},
 ]

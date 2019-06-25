@@ -50,7 +50,7 @@ export default {
     .title{
       height: 2.5rem;
       color: #333;
-      font-size: .8125rem;
+      font-size: .75rem;
       font-weight: 300;
       overflow: hidden;
       text-overflow: ellipsis;

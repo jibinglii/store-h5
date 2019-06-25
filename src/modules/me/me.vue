@@ -2,7 +2,10 @@
   <div class="personCenter">
     <div class="header">
       <div class="user-icon">
-        <img :src="currentUser.avatar" alt>
+        <img
+          :src="currentUser.avatar"
+          alt
+        >
       </div>
       <h3>
         {{ currentUser.nickname }}
@@ -13,129 +16,9 @@
 
       <span>{{ currentUser.sign }}</span>
     </div>
-    <div class="page_item">
-      <div class="weui-cells__title">我是买家</div>
-      <div class="weui-cells">
-        <router-link class="weui-cell weui-cell_access" :to="{name: 'orders'}">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/order.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>我的订单</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </router-link>
-      </div>
-    </div>
-    <div class="page_item">
-      <div class="weui-cells__title">我是卖家</div>
-      <div class="weui-cells">
-        <router-link :to="{ name: 'me.storemanage'}" class="weui-cell weui-cell_access">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/dianpu.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>店铺管理</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </router-link>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/shangpin.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>商品管理</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </a>
-       <router-link :to="{ name: 'distribution.distribution'}" class="weui-cell weui-cell_access">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/fenxiao.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>分销管理</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-       </router-link>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/jiesuan.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>结算管理</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </a>
-      </div>
-    </div>
-    <div class="page_item">
-      <div class="weui-cells__title">常用工具</div>
-      <div class="weui-cells">
-        <a class="weui-cell weui-cell_access" href="javascript:;">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/mai.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>我要卖</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </a>
-       <router-link :to="{ name: 'collection.collection'}" class="weui-cell weui-cell_access">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/shoucang.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>我的收藏</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </router-link>
-        <router-link class="weui-cell weui-cell_access" :to="{name: 'me.opp'}">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/liucheng.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>操作流程</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </router-link>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/xiaoxi.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>我的消息</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </a>
-        <router-link class="weui-cell weui-cell_access" :to="{name: 'me.feedback'}">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/fankui.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>意见反馈</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </router-link>
-        <router-link class="weui-cell weui-cell_access" :to="{name: 'me.helps'}">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/help.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>使用帮助</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </router-link>
-        <router-link :to="{ name: 'me.accountsetting'}" class="weui-cell weui-cell_access">
-          <div class="weui-cell__hd">
-            <img src="../../assets/images/seting.png">
-          </div>
-          <div class="weui-cell__bd">
-            <p>账号设置</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </router-link>
-      </div>
-    </div>
+    <cell-group :title="item.title" v-for="item in list" :key="item.title">
+      <cell :title="inner.title" :img="inner.img" :url="inner.url" v-for="inner in item.sub" :key="inner.title"/>
+    </cell-group>
     <tab></tab>
   </div>
 </template>
@@ -144,14 +27,88 @@
 import Tab from "$components/Tab";
 import XHeader from "$components/XHeader";
 import { mapGetters } from "vuex";
+import CellGroup from './components/CellGroup'
+import Cell from './components/Cell'
 export default {
   name: "storeManage",
   components: {
     Tab,
-    XHeader
+    XHeader,
+    [CellGroup.name]: CellGroup,
+    [Cell.name]: Cell,
   },
   data() {
-    return {};
+    return {
+      list: [
+        {
+          title: '我是买家', sub: [
+            {
+              title: '我的订单',
+              url: 'orders',
+              img: '/images/store/order.png'
+            }
+          ]        },
+        {          title: '我是卖家', sub: [
+            {
+              title: '店铺管理',
+              url: 'me.storemanage',
+              img: '/images/store/dianpu.png'
+            },
+            {
+              title: '商品管理',
+              url: '',
+              img: '/images/store/shangpin.png'
+            },
+            {
+              title: '分销管理',
+              url: 'distribution.distribution',
+              img: '/images/store/fenxiao.png'
+            },
+            {
+              title: '结算管理',
+              url: '',
+              img: '/images/store/jiesuan.png'
+            }
+          ]        },
+        {          title: '常用工具', sub: [
+            {
+              title: '我要卖',
+              url: '',
+              img: '/images/store/mai.png'
+            },
+            {
+              title: '我的收藏',
+              url: 'collection.collection',
+              img: '/images/store/shoucang.png'
+            },
+            {
+              title: '操作流程',
+              url: 'me.opp',
+              img: '/images/store/liucheng.png'
+            },
+            {
+              title: '我的消息',
+              url: '',
+              img: '/images/store/xiaoxi.png'
+            },
+            {
+              title: '意见反馈',
+              url: 'me.feedback',
+              img: '/images/store/fankui.png'
+            },
+            {
+              title: '使用帮助',
+              url: 'me.helps',
+              img: '/images/store/help.png'
+            },
+            {
+              title: '账号设置',
+              url: 'me.accountsetting',
+              img: '/images/store/seting.png'
+            }
+          ]        }
+      ]
+    }
   },
   computed: {
     ...mapGetters(["currentUser"])
@@ -187,7 +144,7 @@ export default {
     img {
       width: 0.853333rem;
       vertical-align: middle;
-      padding-left: .213333rem;
+      padding-left: 0.213333rem;
     }
   }
   span {
@@ -195,28 +152,6 @@ export default {
     line-height: 2;
     color: #999;
     margin-bottom: 24px;
-  }
-}
-.page_item {
-  .weui-cells__title {
-    margin-top: 0.3em;
-  }
-  .weui-cells {
-    margin-top: 0;
-    .weui-cell {
-      padding: 0.512rem 15px;
-      img {
-        width: 1.28rem;
-        margin-right: 0.426667rem;
-        vertical-align: middle;
-      }
-      .weui-cell__bd {
-        p {
-          font-size: 0.682667rem;
-          font-weight: 600;
-        }
-      }
-    }
   }
 }
 </style>

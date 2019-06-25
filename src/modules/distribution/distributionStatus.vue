@@ -32,7 +32,7 @@
 </template>
 <script>
 import XHeader from "$components/XHeader";
-import distributorStatusItem from "./distributorStatusItem";
+import distributorStatusItem from "./components/distributorStatusItem";
 import Tabs from "vant/lib/tabs";
 import Tab from "vant/lib/tab";
 import "vant/lib/tabs/style";

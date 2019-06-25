@@ -1,48 +1,40 @@
 
 <template>
   <div>
-    <x-header
-      title="分销人员管理"
-      back-url="home"
-      back-color="#ffffff"
-      color="#000"
-      underline-color="#f2f2f2"
-    ></x-header>
-    <van-tabs v-model="active">
-      <van-tab
-        :title="item"
-        title-active-color="#000000"
-        v-for="(item, index) in tabs"
-        :key="index"
-      ></van-tab>
-    </van-tabs>
-    <div v-for="(item,key) in goods" :key="key" class="list">
-      <v-slide>
-        <section class="custom-cell" :class="slideDirection" slot="center">
-          <distributor-item :item="item"></distributor-item>
-        </section>
-      </v-slide>
+    <x-header title="分销管理" back-color="#ffffff" color="#000" underline-color="#f2f2f2"></x-header>
+    <div class="store_banner">
+      <div class="store_banner_l">
+        <p>1635.00</p>
+        <span>本月收益</span>
+      </div>
+      <div class="store_banner_r">
+        <p>3635.00</p>
+        <span>累计收益</span>
+      </div>
     </div>
+    <van-cell-group>
+     <van-cell icon="todo-list-o" title="分销任务" is-link to="distributionproducts" />
+     <van-cell icon="bill-o" title="分销人员管理" is-link to="distributor" />
+     <van-cell icon="user-o" title="分销订单管理" is-link to="distributionGoods" />
+    </van-cell-group>
   </div>
 </template>
 <script>
 // https://youzan.github.io/vant/#/zh-CN/tab
 // todo 修改选择样式
 import XHeader from "$components/XHeader";
-import Tabs from "vant/lib/tabs";
-import Tab from "vant/lib/tab";
-import "vant/lib/tabs/style";
-import "vant/lib/tab/style";
-import distributorItem from "./distributorItem";
-import Slide from "./slide";
+import CellGroup from "vant/lib/cell-group";
+import Field from "vant/lib/field";
+import "vant/lib/field/style";
+import Cell from "vant/lib/cell";
+import "vant/lib/cell/style";
 export default {
   name: "store",
   components: {
     XHeader,
-    "van-tabs": Tabs,
-    "van-tab": Tab,
-    "distributor-item": distributorItem,
-    vSlide: Slide
+    "van-cell-group": CellGroup,
+    "van-cell": Cell,
+    "van-field": Field
   },
   data() {
     return {
@@ -68,22 +60,43 @@ export default {
       page: 1
     };
   },
-  methods: {
-
-  }
+  methods: {}
 };
 </script>
 <style lang="scss">
-.van-tabs__line {
-  background-color: #000000;
-  height: 2px;
-}
-.tabsTwo {
-  .van-tabs__line {
-    height: 0px;
+.store_banner {
+  width: 100%;
+  height: 8.533333rem;
+  background-image: url(../../assets/images/bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  line-height: 1.2;
+  .store_banner_l,
+  .store_banner_r {
+    flex: 1;
+    text-align: center;
+    p {
+      font-size: 1.493333rem;
+      &::before {
+        content: "￥";
+        font-size: 0.75rem;
+      }
+    }
+    span {
+      font-size: 0.554667rem;
+      color: #b7b7b7;
+    }
+  }
+  .store_banner_l {
+    border-right: solid 1px #999999;
   }
 }
-.list {
-  overflow: hidden;
+.van-cell-group{
+  .van-cell__title{
+    font-weight: 600;
+  }
 }
 </style>

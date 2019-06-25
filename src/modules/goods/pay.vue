@@ -32,12 +32,12 @@ export default {
           icon:'/images/shop/bank.png',
           checked: true
         },
-        {
-          title:'分期付款',
-          value: 'juhe',
-          icon:'/images/shop/juhefq.png',
-          checked: true
-        },
+        // {
+        //   title:'分期付款',
+        //   value: 'juhe',
+        //   icon:'/images/shop/juhefq.png',
+        //   checked: true
+        // },
         // {
         //   title:'支付宝',
         //   value: 'alipay',
@@ -62,6 +62,16 @@ export default {
     user.getUserInfo(true).then(({data}) => {
       if (!data.user.is_set_paypasswd) {
         // window.location.replace('/shop/set_pay_pwd.html?redirect='+ encodeURIComponent(location.href));
+        this.$alert('您还没有设置支付密码，点击【是】前往设置', {
+          title: "温馨提示",
+          btn: {
+            text: '去设置',
+            style: { overflow: "inherit" },
+          }
+        }).then(() => {
+          let redirect = encodeURIComponent(window.location.href);
+          this.$router.push({ name: 'me.set-pay-pwd', query: {redirect: redirect} })
+        });
       }
     }).catch(error => {
       this.$router.back()

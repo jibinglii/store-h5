@@ -31,4 +31,12 @@ export default [
     },
     component: () => import('./DCPay')
   },
+  {
+    path: 'goods/add.html',
+    name: 'goods.add',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('./add')
+  }
 ]

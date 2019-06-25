@@ -93,7 +93,7 @@ export default {
                 let url = "/shop/bankcardsms.html?id=" + data.card.id + "&m=" + data.card.mobile +
                 "&tssn=" + data.tssn + "&redirect=" + redirect;
                 location.href = url;
-              } else if(redirect != '') {
+              } else if(redirect != '' && redirect != undefined) {
                 redirect = decodeURIComponent(redirect)
                 location.replace(redirect);
               } else {

@@ -34,9 +34,9 @@ export default {
   computed: {
     paddingBottom() {
       if (this.isWechat()) {
-        if (this.isIPhoneX() && this.isFirst) {
-          return 30;
-        }
+        // if (this.isIPhoneX() && this.isFirst) {
+        //   return 30;
+        // }
         return 0;
       }
     },
@@ -97,6 +97,7 @@ body {
     &:nth-child(3){
       flex: 1.5;
     }
+    padding: 3px 0 0 0;
   }
   .weui-tabbar__item:last-child {
     border: none;

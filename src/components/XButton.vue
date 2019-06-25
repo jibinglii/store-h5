@@ -23,14 +23,14 @@ export default {
 .btn {
   width: 100%;
   display: inline-block;
-  height: 2.75rem;
+  height: 44px;
   border: 1px solid #020202;
   border-radius: 4px;
-  line-height: 2.75rem;
+  line-height: 44px;
   box-sizing: border-box;
   color: #020202;
-  font-size: 0.9375rem;
-  padding: 0 1rem;
+  font-size: 15px;
+  padding: 0 14px;
   text-align: center;
   &.btn-primary {
     background-color: #020202;

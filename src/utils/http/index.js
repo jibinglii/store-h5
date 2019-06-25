@@ -7,6 +7,8 @@ const http = axios.create({
   timeout: 30000
 })
 
+window.API_ROOT = process.env.VUE_APP_API_URL
+
 interceptors(http)
 
 /**

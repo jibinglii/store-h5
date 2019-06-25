@@ -2,6 +2,9 @@ export default [
   {
     path: 'goods/:goods.html',
     name: 'goods.view',
+    meta: {
+      requiresAuth: true
+    },
     component: () => import('./goods')
   },
   {

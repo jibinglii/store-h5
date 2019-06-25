@@ -1,7 +1,7 @@
 export default [{
   path: 'bank/list',
   name: 'banks',
-  rmeta: {
+  meta: {
     requiresAuth: true
   },
   component: () =>
@@ -10,7 +10,7 @@ export default [{
 {
   path: 'bank/add',
   name: 'banks.add',
-  rmeta: {
+  meta: {
     requiresAuth: true
   },
   component: () =>
@@ -19,7 +19,7 @@ export default [{
 {
   path: 'bank/view/:id.html',
   name: 'banks.view',
-  rmeta: {
+  meta: {
     requiresAuth: true
   },
   component: () =>

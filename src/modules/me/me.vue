@@ -39,7 +39,7 @@
           </div>
           <div class="weui-cell__ft"></div>
         </router-link>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <router-link :to="{ name: 'goods.operatestatus'}" class="weui-cell weui-cell_access">
           <div class="weui-cell__hd">
             <img src="../../assets/images/shangpin.png">
           </div>
@@ -47,7 +47,7 @@
             <p>商品管理</p>
           </div>
           <div class="weui-cell__ft"></div>
-        </a>
+        </router-link>
        <router-link :to="{ name: 'distribution.distribution'}" class="weui-cell weui-cell_access">
           <div class="weui-cell__hd">
             <img src="../../assets/images/fenxiao.png">

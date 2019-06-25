@@ -5,16 +5,22 @@ export default [{
             import ('../distribution/distribution')
     },
     {
-        path: 'distribution/distributoritem',
-        name: 'distribution.distributoritem',
+        path: 'distribution/distributor',
+        name: 'distribution.distributor',
         component: () =>
-            import ('../distribution/distributorItem')
+            import ('../distribution/distributor')
     },
     {
-        path: 'distribution/distributionmanage',
-        name: 'distribution.distributionmanage',
+        path: 'distribution/distributormanage',
+        name: 'distribution.distributormanage',
         component: () =>
-            import ('../distribution/distributionManage')
+            import ('../distribution/distributorManage')
+    },
+    {
+        path: 'distribution/distributionproducts',
+        name: 'distribution.distributionproducts',
+        component: () =>
+            import ('../distribution/distributionProducts')
     },
     {
         path: 'distribution/distributionstatus',
@@ -23,9 +29,9 @@ export default [{
             import ('../distribution/distributionStatus')
     },
     {
-        path: 'distribution/distributorstatusitem',
-        name: 'distribution.distributorstatusitem',
+        path: 'distribution/distributionGoods',
+        name: 'distribution.distributionGoods',
         component: () =>
-            import ('../distribution/distributorStatusItem')
+            import ('../distribution/distributionGoods')
     }
 ]

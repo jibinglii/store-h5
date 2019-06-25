@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     onclick() {
-      this.$router.push('./distributionManage')
+      this.$router.push('./distributormanage')
     }
   },
   components: {

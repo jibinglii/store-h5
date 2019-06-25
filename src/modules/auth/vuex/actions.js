@@ -24,6 +24,7 @@ export const attemptLoginByCode = ({ dispatch }, payload) =>
     .then(() => dispatch('loadUser'))
 
 export const logout = ({ dispatch }) => {
+  // todo 需要调用退出登录接口
   return localforage
     .removeItem(userTokenStorageKey)
     .then(dispatch('setToken', null))

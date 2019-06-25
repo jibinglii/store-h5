@@ -2,14 +2,13 @@
   <nav-bar
     :title="title"
     :left-text="leftText"
-    :right-text="rightText"
-    left-arrow
+    :left-arrow="leftArrow"
     @click-left="back"
     @click-right="onClickRight"
     :style="{backgroundColor: backColor, color: color, borderBottom: '1px solid ' + underlineColor}"
   >
     <div slot="right">
-      <slot name="right"></slot>
+      <slot name="right">{{rightText}}</slot>
     </div>
   </nav-bar>
 </template>
@@ -49,6 +48,15 @@ export default {
     underlineColor: {
       type: String,
       default: "#ededed"
+    },
+    allowBack: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    leftArrow () {
+      return this.allowBack
     }
   },
   methods: {

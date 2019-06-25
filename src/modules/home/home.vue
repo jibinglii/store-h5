@@ -3,9 +3,6 @@
     <x-header
       title="店铺主页"
       :allow-back="false"
-      back-color="#ffffff"
-      color="#000"
-      underline-color="#f2f2f2"
     ></x-header>
     <div class="top-search">
       <div class="top-search-l">
@@ -18,15 +15,6 @@
           <span>{{ store.desc }}</span>
         </div>
       </div>
-      <a
-        href="javascript:;"
-        class="searchBtn"
-      >
-        <img
-          src="../../assets/images/sousuo.png"
-          alt
-        >搜索
-      </a>
     </div>
     <div class="ads">
       <a :href="item.url != '' ? item.url : 'javascript:void()'" v-for="item in ads" :key="item.id">

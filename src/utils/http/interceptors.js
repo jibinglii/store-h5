@@ -26,8 +26,8 @@ export default http => {
       if (!error['response']) {
         return Promise.reject(error)
       }
-      console.log(error.response)
       switch (error.response.status) {
+        case 400:
         case 422:
           let content = error.response.data.message
           Toast.fail(content)

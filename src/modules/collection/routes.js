@@ -1,6 +1,10 @@
-export default [{
+export default [
+  {
     path: 'collection/collection',
     name: 'collection.collection',
-    component: () =>
-        import ('../collection/collection')
-}]
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('./collection')
+  }
+]

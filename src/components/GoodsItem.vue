@@ -26,16 +26,16 @@ export default {
 
 <style lang="scss">
 .home-goods {
-  width: 9.0625rem;
+  width: 8.5rem;
   box-sizing: border-box;
   display: inline-block;
   position: relative;
   margin-bottom: .625rem;
   &:nth-child(odd) {
-    left: 0;
+    left: .6rem;
   }
   &:nth-child(even) {
-    left: .625rem;
+    left: 1.2rem;
   }
   .img {
     height: 6.25rem;
@@ -50,7 +50,7 @@ export default {
     .title{
       height: 2.5rem;
       color: #333;
-      font-size: .8125rem;
+      font-size: .75rem;
       font-weight: 300;
       overflow: hidden;
       text-overflow: ellipsis;

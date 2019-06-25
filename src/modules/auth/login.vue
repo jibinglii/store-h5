@@ -1,11 +1,8 @@
 <template>
-  <div>
+  <div class="body">
     <x-header
       title="登录"
       back-url="home"
-      back-color="#000000"
-      color="white"
-      underline-color="#000"
     ></x-header>
     <div class="bg">
       <img
@@ -249,8 +246,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-body {
+<style lang="scss" scoped>
+.body {
   background-color: white;
 }
 .bg {
@@ -297,6 +294,7 @@ body {
       border: none;
       background: rgba(0, 0, 0, 0);
       padding-left: 10px;
+      font-size: 16px;
       &.code {
         flex: 4;
       }

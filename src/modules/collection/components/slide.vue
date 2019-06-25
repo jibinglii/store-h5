@@ -20,7 +20,7 @@ import "vant/lib/swipe-cell/style";
 export default {
   props: {
     id: {
-      type: Number,
+      type: String,
       default: 0
     },
     disabledSlide: {
@@ -41,7 +41,7 @@ export default {
       recalc = function() {
         let fs = getComputedStyle(window.document.documentElement)["font-size"];
         fs = fs.substr(0, fs.indexOf("px"));
-        self.slideWidth = (fs * 124) / 46.875;
+        self.slideWidth = (fs * 124) / 40;
       };
     if (!document.addEventListener) return;
     window.addEventListener(resizeEvt, recalc, false);
@@ -75,15 +75,15 @@ export default {
   .van-button {
     height: 100%;
     line-height: 100%;
-    width: 2.645333rem;
+    width: 3.1rem;
   }
   .van-button--square {
     border-radius: 0;
   }
   .van-button--normal {
-    padding: 0 0.632rem;
-    font-size: 0.512rem;
-    line-height: 0.512rem;
+    padding: 0 0.75rem;
+    font-size: 0.6rem;
+    line-height: 0.6rem;
   }
   .van-button--danger {
     color: #fff;

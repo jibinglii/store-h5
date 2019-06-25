@@ -210,6 +210,7 @@ export default {
       }
     },
     async getDetail() {
+      this.$toast.loading({mask: true})
       service.goodsView(this.goodsId, {
         params: {
           include: 'specs.option,game,server',

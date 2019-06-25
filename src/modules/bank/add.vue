@@ -94,6 +94,7 @@ export default {
                 "&tssn=" + data.tssn + "&redirect=" + redirect;
                 location.href = url;
               } else if(redirect != '') {
+                redirect = decodeURIComponent(redirect)
                 location.replace(redirect);
               } else {
                 this.$router.replace({name: 'banks'})

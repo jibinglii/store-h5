@@ -24,6 +24,7 @@
           v-for="(item, index) in items"
           :key="index"
           :order="item"
+          @delete="deleteOrder"
         ></order-item>
         <infinite-loading
           :identifier="infiniteId"
@@ -75,6 +76,11 @@ export default {
       this.items = [];
       this.infiniteId += 1;
       this.status = this.statusTypes[index].id;
+    },
+    deleteOrder(id) {
+      this.page = 1;
+      this.items = [];
+      this.infiniteId += 1;
     },
     infiniteHandler($state) {
       let param = {        params: {

@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <a :href="'/shop/orderview/'+order.id+'.html'">
+    <router-link :to="{name: 'orders.view', params: {'id': order.id}}">
       <div class="t">
         <span>{{order.goods_title}}</span>
         <img
@@ -21,7 +21,7 @@
         </div>
         <div class="clear"></div>
       </div>
-    </a>
+    </router-link>
     <div
       class="b"
       v-if="showBtn"
@@ -34,10 +34,10 @@
         v-else
         class="status"
       >订单已关闭</span>
-      <a
+      <router-link
         class="btn-white"
-        :href="'/shop/orderview/'+ order.id + '.html'"
-      >查看</a>
+        :to="{name: 'orders.view', params: {'id': order.id}}"
+      >查看</router-link>
       <button
         @click="destroy(order.id)"
         v-show="order.status==0"
@@ -82,11 +82,10 @@ export default {
         console.log('“cancel”');
       })
         .catch(() => {
-          axios.delete('api/v1/order/' + id, {}, { loading: true }).then(({ data }) => {
-            this.$toast(data.message);
-            setTimeout(() => {
-              window.location.href = '/shop/order.html'
-            }, 500)
+          this.$toast.loading({mask: true})
+          this.$http.delete('api/v1/order/' + id).then(({ message }) => {
+            this.$toast(message);
+            this.$emit('delete', id)
           })
         });
     },
@@ -132,7 +131,7 @@ export default {
     display: block;
     // height: 2.5rem;
     // line-height: 2.5rem;
-    padding: .4rem 15px;
+    padding: 0.4rem 15px;
     position: relative;
     font-weight: bold;
     border-bottom: solid 1px #eaeaea;
@@ -154,7 +153,8 @@ export default {
     }
   }
   .c {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 10px 12px;
     border-bottom: solid 1px #eaeaea;
     .img {

@@ -89,7 +89,9 @@ export default {
   },
   methods: {
     getOrderInfo() {
+      this.$toast.loading({mask: true})
       order.view(this.orderid).then(({ data }) => {
+        this.$toast.clear()
         this.order = data.order
       })
     },
@@ -100,10 +102,10 @@ export default {
         }
         this.bankcards.push(...data.bank_cards)
       }).catch(({ response }) => {
-        // this.$alert('您还没有添加银行卡，点击前往添加').then(() => {
-        //   let redirect = encodeURIComponent(window.location.href);
-        //   window.location.replace('/shop/bankcardadd.html?redirect=' + redirect)
-        // })
+        this.$alert('您还没有添加银行卡，点击前往添加').then(() => {
+          let redirect = encodeURIComponent(window.location.href);
+          this.$router.replace({name: 'banks.add', query: {redirect: redirect}})
+        })
       })
     },
     pay() {
@@ -116,16 +118,17 @@ export default {
       }
     },
     onInput(key) {
+      console.log(key)
       this.showValue = (this.showValue + key).slice(0, 6);
       if (this.showValue.length == 6) {
         // 验证密码
+        this.$toast.loading({message: '正在验证码支付密码...', mask: true});
         user.veryPPwd(this.showValue, true).then(({ data }) => {
           let param = { bankid: this.bankcards[this.bank.index].id, orderid: this.order.id };
           this.confirmPay(param)
         }).catch(({ response }) => {
-          this.$toast({            message: '支付密码输入错误', onClose: () => {
-              this.showValue = ''
-            }          })
+          this.$toast({message: '支付密码输入错误'})
+          this.showValue = ''
         })
       }
     },
@@ -136,8 +139,10 @@ export default {
       this.isShow = false
     },
     async confirmPay(param) {
-      this.$loading({message: '正在请求支付...', mask: true});
-      location.replace('/api/v1/pay/fuiou-h5/' + param.orderid + '/' + param.bankid + '?token=')
+      this.$toast.loading({message: '正在请求支付...', mask: true});
+      let success = window.location.origin + '/' + this.$route.params.store + '/result/0'
+      let error = window.location.origin + '/' + this.$route.params.store + '/result/1/' + param.orderid
+      location.replace(window.API_ROOT + '/api/v1/pay/fuiou-h5/' + param.orderid + '/' + param.bankid + '?success=' + success + '&error=' + error)
     }
   },
   created() {

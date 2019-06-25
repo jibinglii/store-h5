@@ -61,6 +61,7 @@ export default {
             this.$toast({ message: '设置成功' })
             let redirect = this.$route.query['redirect']
             if (redirect != '' && redirect != undefined) {
+              redirect = decodeURIComponent(redirect)
               location.replace(redirect);
             } else {
               this.$router.push({name: 'me.accountsetting'})

@@ -7,6 +7,7 @@ import { routes as goods } from '$modules/goods'
 import { routes as bank } from '$modules/bank'
 import { routes as order } from '$modules/order'
 import { routes as result } from '$modules/result'
+import { routes as seller } from '$modules/seller'
 import { routes as distribution } from '$modules/distribution'
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -18,7 +19,7 @@ const AppRoute = {
     component: () =>
         import ('../app'),
     children: [...home, ...auth, ...store, ...collection, ...me, ...goods, ...distribution, ...bank, ...order,
-    ...result]
+    ...result, ...seller]
 }
 
 const routes = [AppRoute, {

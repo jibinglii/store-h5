@@ -2,111 +2,108 @@
   <div class="storeManage">
     <x-header
       title="店铺管理"
-      back-url="me.me"
-      back-color="#ffffff"
-      color="#000"
-      underline-color="#f2f2f2"
+      url="me.me"
     ></x-header>
     <div class="store_banner">
       <div class="store_banner_l">
-        <p>1000</p>
+        <p><sup>￥</sup>{{ info.total_sale|formatMoney}}</p>
         <span>累计销售</span>
       </div>
       <div class="store_banner_r">
-        <p>2319</p>
+        <p><sup>￥</sup>{{ info.total_sale_month | formatMoney }}</p>
         <span>本月销售</span>
       </div>
     </div>
     <div class="dl_list">
-      <a href>
+      <router-link :to="{name: 'goods.add'}">
         <dl>
           <dt>
             <img src="../../assets/images/fabu.png" alt>
           </dt>
           <dd>发布商品</dd>
         </dl>
-      </a>
-      <a href>
+      </router-link>
+      <router-link :to="{name: 'home'}">
         <dl>
           <dt>
             <img src="../../assets/images/liulan.png" alt>
           </dt>
           <dd>预览店铺</dd>
         </dl>
-      </a>
+      </router-link>
     </div>
     <div class="store_manage">
       <p>商品管理</p>
       <div class="store_manage_list">
-        <a href>
+        <router-link :to="{name: 'seller/goods', hash: '#1'}">
           <dl>
             <dt>
               <img src="../../assets/images/shenhe.png" alt>
             </dt>
             <dd>待审核</dd>
           </dl>
-        </a>
-        <a href>
+        </router-link>
+        <router-link :to="{name: 'seller/goods', hash: '#3'}">
           <dl>
             <dt>
               <img src="../../assets/images/chushou.png" alt>
             </dt>
             <dd>出售中</dd>
           </dl>
-        </a>
-        <a href>
+        </router-link>
+        <router-link :to="{name: 'seller/goods', hash: '#5'}">
           <dl>
             <dt>
               <img src="../../assets/images/maichu.png" alt>
             </dt>
             <dd>已出售</dd>
           </dl>
-        </a>
-        <a href>
+        </router-link>
+        <router-link :to="{name: 'seller/goods', hash: '#4'}">
           <dl>
             <dt>
               <img src="../../assets/images/xiajia.png" alt>
             </dt>
             <dd>已下架</dd>
           </dl>
-        </a>
+        </router-link>
       </div>
     </div>
     <div class="store_manage">
       <p>订单管理</p>
       <div class="store_manage_list">
-        <a href>
+        <router-link :to="{name: 'seller/orders', hash: '#1'}">
           <dl>
             <dt>
               <img src="../../assets/images/df.png" alt>
             </dt>
             <dd>待发货</dd>
           </dl>
-        </a>
-        <a href>
+        </router-link>
+        <router-link :to="{name: 'seller/orders', hash: '#2'}">
           <dl>
             <dt>
               <img src="../../assets/images/ds.png" alt>
             </dt>
             <dd>待收货</dd>
           </dl>
-        </a>
-        <a href>
+        </router-link>
+        <router-link :to="{name: 'seller/orders', hash: '#3'}">
           <dl>
             <dt>
               <img src="../../assets/images/jywc.png" alt>
             </dt>
             <dd>交易成功</dd>
           </dl>
-        </a>
-        <a href>
+        </router-link>
+        <router-link :to="{name: 'seller/orders', hash: '#4'}">
           <dl>
             <dt>
               <img src="../../assets/images/th.png" alt>
             </dt>
             <dd>退货/维权</dd>
           </dl>
-        </a>
+        </router-link>
       </div>
       <a class="weui-cell weui-cell_access" href="javascript:;">
         <div class="weui-cell__bd">
@@ -126,7 +123,19 @@ export default {
     XHeader
   },
   data() {
-    return {};
+    return {
+      info: {}
+    }
+  },
+  created () {
+    this.getInfo()
+  },
+  methods: {
+    async getInfo() {
+      await this.$http.get('api/v1/seller/total').then(({data}) => {
+        this.info = data
+      });
+    }
   }
 };
 </script>
@@ -151,9 +160,14 @@ export default {
       text-align: center;
       p {
         font-size: 1.408rem;
+        font-weight: 200;
+        sup{
+          font-size: .8rem;
+        }
       }
       span {
-        font-size: .554667rem;
+        font-size: .7rem;
+        font-weight: 200;
       }
     }
     .store_banner_l {
@@ -199,7 +213,7 @@ export default {
             width: 1.28rem;
           }
           dd {
-            font-size: .597333rem;
+            font-size: .65rem;
           }
         }
       }

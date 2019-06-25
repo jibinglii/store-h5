@@ -7,6 +7,7 @@ import { routes as goods } from '$modules/goods'
 import { routes as bank } from '$modules/bank'
 import { routes as order } from '$modules/order'
 import { routes as result } from '$modules/result'
+import { routes as seller } from '$modules/seller'
 import { routes as distribution } from '$modules/distribution'
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -18,7 +19,7 @@ const AppRoute = {
     component: () =>
         import ('../app'),
     children: [...home, ...auth, ...store, ...collection, ...me, ...goods, ...distribution, ...bank, ...order,
-    ...result]
+    ...result, ...seller]
 }
 
 const routes = [AppRoute, {
@@ -27,11 +28,32 @@ const routes = [AppRoute, {
       import ('../not-found')
 }]
 
+const scrollBehavior = function (to, from, savedPosition) {
+  if (savedPosition) {
+    return savedPosition
+  } else {
+    if (to.hash) {
+      if (document.querySelector(to.hash)) {
+        return {
+          selector: to.hash
+        }
+      }
+      return false
+    }
+    return new Promise((resolve) => {
+      setTimeout(() => {
+       resolve({ x: 0, y: 0 });
+      }, 0);
+    })
+  }
+}
+
 const router = new Router({
     routes,
     linkActiveClass: 'active',
     linkExactActiveClass: 'active',
-    mode: 'history'
+    mode: 'history',
+    scrollBehavior
 })
 
 router.beforeEach(beforeEach)

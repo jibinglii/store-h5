@@ -4,7 +4,6 @@
       <van-checkbox
         name="selectall"
         v-model="isAllSelected"
-        @change="selectCheckBox(isAllSelected)"
       >
         全选
         <img slot="icon" slot-scope="props" :src="props.checked ? icon.active : icon.inactive">
@@ -35,7 +34,6 @@ export default {
   },
   data() {
     return {
-      _checkedGoods: [],
       icon: {
         active: "https://img.yzcdn.cn/vant/user-active.png",
         inactive: "https://img.yzcdn.cn/vant/user-inactive.png"
@@ -54,7 +52,6 @@ export default {
     }
   },
   methods: {
-    selectCheckBox(checked) {},
     oneKeyClean() {
       this.$emit("oneKeyClean");
     },

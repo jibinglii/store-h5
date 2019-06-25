@@ -35,12 +35,12 @@ export default [{
             import ('./DCPay')
     },
     {
-        path: 'goods/operatestatus',
-        name: 'goods.operatestatus',
+        path: 'goods/add.html',
+        name: 'goods.add',
         meta: {
             requiresAuth: true
         },
         component: () =>
-            import ('../goods/operateStatus')
+            import ('./add')
     }
 ]

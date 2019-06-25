@@ -1,7 +1,7 @@
 <template>
   <div class="collection">
     <x-header title="我的收藏" :rightText="manageText" @click-right="onClickRight"></x-header>
-    <van-checkbox-group class="container" v-model="checkedGoods">
+    <van-checkbox-group class="container" v-model="checkedGoods" :max="100">
       <section class="card-goods" v-for="(item, key) in goods" :key="key">
         <v-slide :id="item.uuid" :disabledSlide="disabledSlide" @onDelete="onDelete">
           <section class="custom-cell" :class="slideDirection" slot="center">
@@ -13,6 +13,13 @@
         </v-slide>
       </section>
     </van-checkbox-group>
+    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId">
+      <div slot="spinner">
+        <van-loading type="spinner">加载中...</van-loading>
+      </div>
+      <div slot="no-more">没有更多数据啦...</div>
+      <div slot="no-results">没有数据</div>
+    </infinite-loading>
     <select-delete
       v-if="manageState"
       :goodsLength="goods.length"
@@ -37,18 +44,19 @@ import XHeader from "$components/XHeader";
 import Slide from "./components/slide";
 import GoodsCard from "./components/goodscard";
 import SelectDelete from "./components/selectdelete";
+import InfiniteLoading from "vue-infinite-loading";
+import Loading from "vant/lib/loading";
 import * as service from "$modules/collection/services";
 export default {
   data() {
     return {
+      page: 1,
       goods: [],
       checkedGoods: [],
       manageState: false,
-      slideDirection: ""
+      slideDirection: "",
+      infiniteId: +new Date()
     };
-  },
-  created() {
-    this.getCollectionGoods();
   },
   computed: {
     manageText() {
@@ -59,14 +67,23 @@ export default {
     }
   },
   methods: {
-    async getCollectionGoods() {
-      service
-        .getCollectionGoods()
-        .then(({ data }) => {
-          console.log(data.data);
-          this.goods = data.data.data;
-        })
-        .catch(() => {});
+    infiniteHandler($state) {
+      let param = {
+        params: {
+          page: this.page
+        }
+      };
+      service.getCollectionGoods(param).then(({ data }) => {
+        console.log("TCL: infiniteHandler -> data", data);
+        if (data.data.data.length > 0) {
+          this.page += 1;
+          this.goods.push(...data.data.data);
+          $state.loaded();
+        }
+        if (data.data.per_page > data.data.data.length) {
+          $state.complete();
+        }
+      });
     },
     onClickRight() {
       if (!this.goods || this.goods.length === 0) return;
@@ -76,18 +93,37 @@ export default {
     updateCheckedGoods(checked) {
       let dt = [];
       if (checked) {
-        for (let i = 0, l = this.goods.length; i < l; i++) {
+        let l = this.goods.length;
+        if (l >= 100) {
+          this.$toast.fail("一次最多只能删除100条");
+          l = 100;
+        }
+        for (let i = 0; i < l; i++) {
           const e = this.goods[i];
           dt.push(e.uuid);
         }
       }
       this.checkedGoods = dt;
     },
+    onReset() {
+      this.page = 1;
+      this.goods = [];
+      this.checkedGoods = [];
+      this.manageState = false;
+      this.slideDirection = "";
+      this.infiniteId += 1;
+    },
     oneKeyClean() {
-      let self = this;
+      let self = this,
+        l = self.goods.length,
+        msgStr = "";
+      if (l >= 100) {
+        l = 100;
+        msgStr = "一次最多只能删除100条,";
+      }
       Dialog.confirm({
         title: "温馨提示",
-        message: "您确定要一键清除商品？",
+        message: msgStr + "您确定要一键清除商品？",
         cancelButtonText: "否",
         cancelButtonColor: "#007AFF",
         confirmButtonText: "是",
@@ -95,13 +131,13 @@ export default {
       })
         .then(() => {
           const cb = function() {
-            self.goods = [];
-            self.checkedGoods = [];
-            self.manageState = false;
+            self.onReset();
             self.$toast.success("删除成功");
           };
           let waitDeleteArr = [];
-          for (let index = 0; index < self.goods.length; index++) {
+          let l = self.goods.length;
+          l = l < 1 ? l : 1;
+          for (let index = 0; index < l; index++) {
             const element = self.goods[index];
             waitDeleteArr.push(element.uuid);
           }
@@ -123,20 +159,7 @@ export default {
       })
         .then(() => {
           const cb = function() {
-            waitDeleteArr.some(function(item, index, array) {
-              for (let i = 0; i < self.goods.length; i++) {
-                let element = self.goods[i];
-                if (element.uuid == item) {
-                  self.goods.splice(i, 1);
-                }
-              }
-            });
-            self.checkedGoods = [];
-            if (!id) {
-              self.manageState = self.manageState
-                ? self.goods.length > 0
-                : false;
-            }
+            self.onReset();
             self.$toast.success("删除成功");
           };
           self.deleteInterface(waitDeleteArr, cb);
@@ -175,10 +198,12 @@ export default {
     [NavBar.name]: NavBar,
     [Checkbox.name]: Checkbox,
     [CheckboxGroup.name]: CheckboxGroup,
+    [Loading.name]: Loading,
     vSlide: Slide,
     GoodsCard,
     SelectDelete,
-    XHeader
+    XHeader,
+    InfiniteLoading
   }
 };
 </script>

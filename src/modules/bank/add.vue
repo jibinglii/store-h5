@@ -1,0 +1,140 @@
+<template>
+  <div class="page-box">
+    <x-header title="添加银行卡" back-url="/shop/bankcard.html"></x-header>
+
+    <div class="tips" @click="help">
+      请填写您本人的的银行卡
+      <i class="weui-icon-info weui-icon_msg"></i>
+    </div>
+    <x-cell-group>
+      <info-cell v-if="hasRealname" title="姓名">{{bankinfo.realname}}</info-cell>
+      <input-cell v-if="!hasRealname" v-model="bankinfo.realname" title="姓名" placeholder="请输入您的姓名"></input-cell>
+      <input-cell type="number" v-model="bankinfo.id_card" title="身份证号" placeholder="请输入您的身份证号"></input-cell>
+      <input-cell type="number" v-model="bankinfo.bankno" title="银行卡号" placeholder="请输入卡号"></input-cell>
+      <input-cell type="number" v-model="bankinfo.mobile" title="预留手机号" placeholder="请输入手机号"></input-cell>
+    </x-cell-group>
+
+    <label for="weuiAgree" class="weui-agree">
+      <input id="weuiAgree" type="checkbox" v-model="isagree" checked class="weui-agree__checkbox">
+      <span class="weui-agree__text">
+        同意
+        <a @click="showAgree" href="javascript:void(0)">《绑卡服务协议》</a>
+      </span>
+    </label>
+
+    <agree title="绑卡服务协议" ref="agree" :content="protocol"/>
+
+    <div class="op" @click="next()">
+      <x-button type="primary" text="下一步"></x-button>
+    </div>
+  </div>
+</template>
+
+<script>
+import XHeader from "$components/XHeader";
+import XCellGroup from "$components/XCellGroup";
+import InputCell from "$components/InputCell";
+import InfoCell from "$components/InfoCell";
+import XButton from "$components/XButton";
+import Agree from "$components/Agree";
+import protocol from '$api/protocol';
+export default {
+  components: {
+    XHeader,
+    XCellGroup,
+    InputCell,
+    InfoCell,
+    XButton,
+    Agree
+  },
+  data() {
+    return {
+      hasRealname: 0,
+      isagree: false,
+      saving: false,
+      bankinfo:{
+        bankno: "6217998200001637184",
+        realname: "尤敬强",
+        mobile: "17693355155",
+        id_card: "622727199004107136",
+        is_default: 1
+      },
+      protocol: ''
+    }
+  },
+  created () {
+    this.getProtocol()
+  },
+  methods: {
+    next() {
+      let validate = true;
+      if (!this.isagree) {
+        this.$alert("请勾选《绑卡服务协议》");
+      } else {
+        for (var index in this.bankinfo){
+          if(this.bankinfo[index]==""){
+            validate = false;
+            break;
+          }
+        }
+        if(!validate){
+          this.$alert("您填写的信息不完整");
+        }
+        if (!this.saving && validate) {
+          this.saving = true;
+          this.$toast.loading('信息保存中');
+          this.$http
+            .post("api/v1/bankcard", this.bankinfo)
+            .then(({data}) => {
+              this.saving = false;
+              let redirect = this.$route.query['redirect']
+              if (data.need_confirm){
+                // todo fuyou
+                let url = "/shop/bankcardsms.html?id=" + data.card.id + "&m=" + data.card.mobile +
+                "&tssn=" + data.tssn + "&redirect=" + redirect;
+                location.href = url;
+              } else if(redirect != '') {
+                redirect = decodeURIComponent(redirect)
+                location.replace(redirect);
+              } else {
+                this.$router.replace({name: 'banks'})
+              }
+            })
+        }
+      }
+
+    },
+    showAgree() {
+      this.$refs.agree.show();
+    },
+    help() {
+      this.$alert({
+        title: "持卡人说明",
+        content: "为保证账户资金安全，只能绑定认证用户本人的银行卡（储蓄卡）"
+      });
+    },
+    getProtocol () {
+      protocol.getProtocol('store_add_band').then(({data}) => {
+        this.protocol = data.content
+      })
+    },
+  }
+};
+</script>
+
+<style lang="scss">
+.page-box {
+  position: relative;
+}
+.tips {
+  position: relative;
+  padding: 10px 10px 0 10px;
+  font-size: 14px;
+  i {
+    font-size: 15px;
+  }
+}
+.op {
+  padding: 20px 20px;
+}
+</style>

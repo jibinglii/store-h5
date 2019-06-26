@@ -77,6 +77,7 @@ export default {
 
   .van-card__title {
     width: 100%;
+    max-height: none;
     height: 0.7rem;
     margin-top: 0.2rem;
     font-size: 0.7rem;

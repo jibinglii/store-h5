@@ -1,6 +1,6 @@
 <template>
-  <div class="fixed-bottom" :style="{paddingBottom:paddingBottom+'px'}">
-    <div class="weui-tabbar" :style="{paddingBottom:paddingBottom+'px'}">
+  <div class="fixed-bottom">
+    <div class="weui-tabbar">
       <div class="weui-tabbar__item">
         <img src="../assets/images/kefu.png" alt class="kefu">
       </div>
@@ -26,14 +26,6 @@ export default {
     }
   },
   computed: {
-    paddingBottom() {
-      if (this.isWechat()) {
-        if (this.isIPhoneX() && this.isFirst) {
-          return 30;
-        }
-      }
-      return 0;
-    },
     currentUrl() {
       return this.$route.name;
     }
@@ -61,10 +53,6 @@ export default {
       ],
       isFirst: true
     };
-  },
-  mounted() {
-    // if (this.isWechat()) {
-    // }
   }
 };
 </script>
@@ -111,15 +99,18 @@ export default {
     }
   }
 }
-// @supports (bottom: constant(safe-area-inset-bottom)) {
-//   .weui-tabbar {
-//     position: fixed;
-//     bottom: constant(safe-area-inset-bottom);
-//   }
-// }
-// @supports (padding-bottom: constant(safe-area-inset-bottom)) {
-//   .fixed-bottom {
-//     padding-bottom: constant(safe-area-inset-bottom);
-//   }
-// }
+@supports (bottom: constant(safe-area-inset-bottom)) {
+  .fixed-bottom {
+    .weui-tabbar {
+      padding-bottom: constant(safe-area-inset-bottom);
+    }
+  }
+}
+@supports (bottom: env(safe-area-inset-bottom)) {
+  .fixed-bottom {
+    .weui-tabbar {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+}
 </style>

@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~vant/lib/index.css";
 .card {
   background-color: #ffffff;

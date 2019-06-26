@@ -63,7 +63,7 @@ export default {
   methods: {}
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .store_banner {
   width: 100%;
   height: 8.533333rem;

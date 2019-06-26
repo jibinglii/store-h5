@@ -153,7 +153,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .pay {
   height: 50px;
   line-height: 50px;

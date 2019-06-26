@@ -48,7 +48,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .trade-desc {
   .item {
     height: 3.125rem;

@@ -16,8 +16,19 @@
 
       <span>{{ currentUser.sign }}</span>
     </div>
-    <cell-group :title="item.title" v-for="item in list" :key="item.title">
-      <cell :title="inner.title" :img="inner.img" :url="inner.url" v-for="inner in item.sub" :key="inner.title"/>
+    <cell-group
+      :title="item.title"
+      v-for="item in list"
+      :key="item.title"
+    >
+      <cell
+        :title="inner.title"
+        :img="inner.img"
+        :url="inner.url"
+        v-for="inner in item.sub"
+        :key="inner.title"
+        v-show="inner.show"
+      />
     </cell-group>
     <tab></tab>
   </div>
@@ -45,68 +56,87 @@ export default {
             {
               title: '我的订单',
               url: 'orders',
-              img: '/images/store/order.png'
+              img: '/images/store/order.png',
+              show: true
             }
-          ]        },
-        {          title: '我是卖家', sub: [
+          ]
+        },
+        {
+          title: '我是卖家',
+          sub: [
             {
               title: '店铺管理',
               url: 'me.storemanage',
-              img: '/images/store/dianpu.png'
+              img: '/images/store/dianpu.png',
+              show: true
             },
             {
               title: '商品管理',
               url: 'seller/goods',
-              img: '/images/store/shangpin.png'
+              img: '/images/store/shangpin.png',
+              show: true
             },
             {
               title: '分销管理',
               url: 'distribution.distribution',
-              img: '/images/store/fenxiao.png'
+              img: '/images/store/fenxiao.png',
+              show: this.$user().roles.join(',').indexOf('渠道店铺') !== -1
             },
             {
               title: '结算管理',
               url: '',
-              img: '/images/store/jiesuan.png'
+              img: '/images/store/jiesuan.png',
+              show: true
             }
-          ]        },
-        {          title: '常用工具', sub: [
+          ]
+        },
+        {
+          title: '常用工具',
+          sub: [
             {
               title: '我要卖',
               url: '',
-              img: '/images/store/mai.png'
+              img: '/images/store/mai.png',
+              show: true
             },
             {
               title: '我的收藏',
               url: 'collection.collection',
-              img: '/images/store/shoucang.png'
+              img: '/images/store/shoucang.png',
+              show: true
             },
             {
               title: '操作流程',
               url: 'me.opp',
-              img: '/images/store/liucheng.png'
+              img: '/images/store/liucheng.png',
+              show: true
             },
             {
               title: '我的消息',
               url: '',
-              img: '/images/store/xiaoxi.png'
+              img: '/images/store/xiaoxi.png',
+              show: true
             },
             {
               title: '意见反馈',
               url: 'me.feedback',
-              img: '/images/store/fankui.png'
+              img: '/images/store/fankui.png',
+              show: true
             },
             {
               title: '使用帮助',
               url: 'me.helps',
-              img: '/images/store/help.png'
+              img: '/images/store/help.png',
+              show: true
             },
             {
               title: '账号设置',
               url: 'me.accountsetting',
-              img: '/images/store/seting.png'
+              img: '/images/store/seting.png',
+              show: true
             }
-          ]        }
+          ]
+        }
       ]
     }
   },
@@ -141,6 +171,13 @@ export default {
     margin-bottom: -8px;
     display: flex;
     align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    padding: 0 30px;
+    position: relative;
     img {
       width: 0.853333rem;
       vertical-align: middle;
@@ -151,7 +188,12 @@ export default {
     font-size: 14px;
     line-height: 2;
     color: #999;
-    margin-bottom: 24px;
+    padding: 0 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
 }
 </style>

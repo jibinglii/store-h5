@@ -80,7 +80,6 @@ export default {
     height: 0.7rem;
     margin-top: 0.2rem;
     font-size: 0.7rem;
-    font-family: PingFang-SC-Medium;
     font-weight: 500;
     color: #000;
     line-height: 1;
@@ -139,7 +138,6 @@ export default {
     .van-button--normal {
       padding: 0;
       font-size: 0.6rem;
-      font-family: PingFang-SC-Medium;
       font-weight: 500;
     }
 

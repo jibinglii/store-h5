@@ -4,11 +4,11 @@
     <x-header title="分销管理" back-color="#ffffff" color="#000" underline-color="#f2f2f2"></x-header>
     <div class="store_banner">
       <div class="store_banner_l">
-        <p>1635.00</p>
+        <p><sup>￥</sup>1635.00</p>
         <span>本月收益</span>
       </div>
       <div class="store_banner_r">
-        <p>3635.00</p>
+        <p><sup>￥</sup>3635.00</p>
         <span>累计收益</span>
       </div>
     </div>
@@ -63,7 +63,7 @@ export default {
   methods: {}
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .store_banner {
   width: 100%;
   height: 8.533333rem;
@@ -79,11 +79,11 @@ export default {
     flex: 1;
     text-align: center;
     p {
-      font-size: 1.493333rem;
-      &::before {
-        content: "￥";
-        font-size: 0.75rem;
+      sup{
+        font-size: .8rem;
+        font-weight: 200;
       }
+      font-size: 1.493333rem;
     }
     span {
       font-size: 0.554667rem;

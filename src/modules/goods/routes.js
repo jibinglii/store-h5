@@ -37,10 +37,16 @@ export default [{
     {
         path: 'goods/add.html',
         name: 'goods.add',
+        component: () =>
+            import ('./add')
+    },
+    {
+        path: 'goods/goodsort.html',
+        name: 'goods.goodsort',
         meta: {
             requiresAuth: true
         },
         component: () =>
-            import ('./add')
+            import ('./goodSort')
     }
 ]

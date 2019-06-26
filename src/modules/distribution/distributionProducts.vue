@@ -60,8 +60,8 @@ export default {
   methods: {}
 };
 </script>
-<style lang="scss">
-.van-tabs__line{
+<style lang="scss" scoped>
+/deep/.van-tabs__line{
   background-color: #000;
   height: 2px;
 }

@@ -50,7 +50,7 @@ export default {
   methods: {}
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .btn {
   text-align: center;
   .van-button {

@@ -2,10 +2,7 @@
   <div class="personCenter">
     <div class="header">
       <div class="user-icon">
-        <img
-          :src="currentUser.avatar"
-          alt
-        >
+        <img :src="currentUser.avatar" alt>
       </div>
       <h3>
         {{ currentUser.nickname }}
@@ -17,7 +14,13 @@
       <span>{{ currentUser.sign }}</span>
     </div>
     <cell-group :title="item.title" v-for="item in list" :key="item.title">
-      <cell :title="inner.title" :img="inner.img" :url="inner.url" v-for="inner in item.sub" :key="inner.title"/>
+      <cell
+        :title="inner.title"
+        :img="inner.img"
+        :url="inner.url"
+        v-for="inner in item.sub"
+        :key="inner.title"
+      />
     </cell-group>
     <tab></tab>
   </div>
@@ -27,88 +30,91 @@
 import Tab from "$components/Tab";
 import XHeader from "$components/XHeader";
 import { mapGetters } from "vuex";
-import CellGroup from './components/CellGroup'
-import Cell from './components/Cell'
+import CellGroup from "./components/CellGroup";
+import Cell from "./components/Cell";
 export default {
   name: "storeManage",
   components: {
     Tab,
     XHeader,
     [CellGroup.name]: CellGroup,
-    [Cell.name]: Cell,
+    [Cell.name]: Cell
   },
   data() {
     return {
       list: [
         {
-          title: '我是买家', sub: [
+          title: "我是买家",
+          sub: [
             {
-              title: '我的订单',
-              url: 'orders',
-              img: '/images/store/order.png'
+              title: "我的订单",
+              url: "orders",
+              img: "/images/store/order.png"
             }
-          ]        },
-        {          title: '我是卖家', sub: [
+          ]
+        },
+        {
+          title: "我是卖家",
+          sub: [
             {
-              title: '店铺管理',
-              url: 'me.storemanage',
-              img: '/images/store/dianpu.png'
+              title: "店铺管理",
+              url: "me.storemanage",
+              img: "/images/store/dianpu.png"
             },
             {
-              title: '商品管理',
-              url: '',
-              img: '/images/store/shangpin.png'
+              title: "商品管理",
+              url: "",
+              img: "/images/store/shangpin.png"
             },
             {
-              title: '分销管理',
-              url: 'distribution.distribution',
-              img: '/images/store/fenxiao.png'
+              title: "分销管理",
+              url: "distribution.distribution",
+              img: "/images/store/fenxiao.png"
             },
             {
-              title: '结算管理',
-              url: '',
-              img: '/images/store/jiesuan.png'
+              title: "结算管理",
+              url: "",
+              img: "/images/store/jiesuan.png"
             }
-          ]        },
-        {          title: '常用工具', sub: [
+          ]
+        },
+        {
+          title: "常用工具",
+          sub: [
             {
-              title: '我要卖',
-              url: '',
-              img: '/images/store/mai.png'
+              title: "我的收藏",
+              url: "collection.collection",
+              img: "/images/store/shoucang.png"
             },
             {
-              title: '我的收藏',
-              url: 'collection.collection',
-              img: '/images/store/shoucang.png'
+              title: "操作流程",
+              url: "me.opp",
+              img: "/images/store/liucheng.png"
             },
             {
-              title: '操作流程',
-              url: 'me.opp',
-              img: '/images/store/liucheng.png'
+              title: "我的消息",
+              url: "",
+              img: "/images/store/xiaoxi.png"
             },
             {
-              title: '我的消息',
-              url: '',
-              img: '/images/store/xiaoxi.png'
+              title: "意见反馈",
+              url: "me.feedback",
+              img: "/images/store/fankui.png"
             },
             {
-              title: '意见反馈',
-              url: 'me.feedback',
-              img: '/images/store/fankui.png'
+              title: "使用帮助",
+              url: "me.helps",
+              img: "/images/store/help.png"
             },
             {
-              title: '使用帮助',
-              url: 'me.helps',
-              img: '/images/store/help.png'
-            },
-            {
-              title: '账号设置',
-              url: 'me.accountsetting',
-              img: '/images/store/seting.png'
+              title: "账号设置",
+              url: "me.accountsetting",
+              img: "/images/store/seting.png"
             }
-          ]        }
+          ]
+        }
       ]
-    }
+    };
   },
   computed: {
     ...mapGetters(["currentUser"])

@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="dl_list">
-      <router-link :to="{name: 'goods.add'}">
+      <router-link :to="{name: 'goods.goodsort'}">
         <dl>
           <dt>
             <img src="../../assets/images/fabu.png" alt>

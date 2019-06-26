@@ -31,7 +31,7 @@ Vue.prototype.$user = () => {
 }
 
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
+    Vue.filter(key, filters[key])
 });
 
 FastClick.attach(document.body)

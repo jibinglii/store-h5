@@ -24,7 +24,6 @@
       > 加载中... </van-loading>
       <div class="content">
         <router-link
-          :href="'/shop/helpinfo/'+item.id+'.html'"
           class="c-item faq-item"
           v-for="item in faqs"
           :key="item.id"

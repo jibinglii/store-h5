@@ -4,6 +4,7 @@
     <x-header
       title="店铺主页"
       back-url="home"
+      :allow-back=false
     ></x-header>
     <van-tabs v-model="active" @click="onTabClickTop">
       <van-tab

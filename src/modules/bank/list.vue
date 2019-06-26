@@ -58,9 +58,6 @@ export default {
     this.getBankCards();
   },
   methods: {
-    redirect(url) {
-      location.href = url;
-    },
     getBankCards() {
       this.$toast.loading({mask: true, message: '正在加载...'})
       this.$http.get('/api/v1/bankcard', { loading: true }).then(({ data }) => {
@@ -225,6 +222,7 @@ export default {
 
   .add {
     color: #000;
+    font-size: 16px;
     img {
       width: 47px;
       margin: 15px 0px 2px 0px;

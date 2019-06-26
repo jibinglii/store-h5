@@ -221,7 +221,7 @@ export default {
         .then(({ data }) => {
           this.goods = data.goods;
           window.document.title = this.goods.title;
-          // this.$previewRefresh();
+          this.$toast.clear()
         }).catch(({ response }) => {
           if (response.status == 404) {
             window.location.href = '/shop/index.html'

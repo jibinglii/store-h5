@@ -253,7 +253,6 @@ export default {
     color: #000;
     font-weight: bold;
     font-size: 0.9rem;
-    font-family: PingFang-SC-Bold;
   }
   .van-icon {
     color: #000;
@@ -264,7 +263,6 @@ export default {
   }
   .van-nav-bar__text {
     font-size: 0.65rem;
-    font-family: PingFang-SC-Medium;
     font-weight: 500;
     color: #000;
   }

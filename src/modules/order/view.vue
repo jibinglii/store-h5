@@ -177,9 +177,10 @@ export default {
             amount: this.order.goods_price
           };
           this.goods = goods;
+          this.$toast.clear()
         }).catch(({ response }) => {
           if (response.status == 404) {
-            window.location.href = '/shop/index.html'
+            this.$router.back()
           }
         });
     },

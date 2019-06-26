@@ -35,11 +35,9 @@
 import NavBar from "vant/lib/nav-bar";
 import Checkbox from "vant/lib/checkbox";
 import CheckboxGroup from "vant/lib/checkbox-group";
-import Dialog from "vant/lib/dialog";
 import "vant/lib/nav-bar/style";
 import "vant/lib/checkbox/style";
 import "vant/lib/checkbox-group/style";
-import "vant/lib/dialog/style";
 import XHeader from "$components/XHeader";
 import Slide from "./components/slide";
 import GoodsCard from "./components/goodscard";
@@ -121,15 +119,17 @@ export default {
         l = 100;
         msgStr = "一次最多只能删除100条,";
       }
-      Dialog.confirm({
-        title: "温馨提示",
-        message: msgStr + "您确定要一键清除商品？",
-        cancelButtonText: "否",
-        cancelButtonColor: "#007AFF",
-        confirmButtonText: "是",
-        confirmButtonColor: "#007AFF"
-      })
-        .then(() => {
+      self
+        .$confirm({
+          title: "温馨提示",
+          content: msgStr + "您确定要一键清除商品？",
+          yesText: "否",
+          yesStyle: { overflow: "inherit" },
+          noText: "是",
+          noStyle: { overflow: "inherit" }
+        })
+        .then(() => {})
+        .catch(() => {
           const cb = function() {
             self.onReset();
             self.$toast.success("删除成功");
@@ -142,33 +142,32 @@ export default {
             waitDeleteArr.push(element.uuid);
           }
           self.deleteInterface(waitDeleteArr, cb);
-        })
-        .catch(() => {});
+        });
     },
     onDelete(id) {
       let self = this;
       let waitDeleteArr = id ? [id] : self.checkedGoods;
       if (waitDeleteArr.length == 0) return;
-      Dialog.confirm({
-        title: "温馨提示",
-        message: "您确定要取消收藏？",
-        cancelButtonText: "否",
-        cancelButtonColor: "#007AFF",
-        confirmButtonText: "是",
-        confirmButtonColor: "#007AFF"
-      })
-        .then(() => {
+      self
+        .$confirm({
+          title: "温馨提示",
+          content: "您确定要取消收藏？",
+          yesText: "否",
+          yesStyle: { overflow: "inherit" },
+          noText: "是",
+          noStyle: { overflow: "inherit" }
+        })
+        .then(() => {})
+        .catch(() => {
           const cb = function() {
             self.onReset();
             self.$toast.success("删除成功");
           };
           self.deleteInterface(waitDeleteArr, cb);
-        })
-        .catch(() => {});
+        });
     },
     deleteInterface(waitDeleteArr, cb) {
       let self = this;
-
       if (waitDeleteArr.length === 1) {
         service
           .deleteCollectionGoods(waitDeleteArr[0])

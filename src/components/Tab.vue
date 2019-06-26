@@ -99,14 +99,14 @@ export default {
     }
   }
 }
-@supports (bottom: constant(safe-area-inset-bottom)) {
+@supports (padding-bottom: constant(safe-area-inset-bottom)) {
   .fixed-bottom {
     .weui-tabbar {
       padding-bottom: constant(safe-area-inset-bottom);
     }
   }
 }
-@supports (bottom: env(safe-area-inset-bottom)) {
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
   .fixed-bottom {
     .weui-tabbar {
       padding-bottom: env(safe-area-inset-bottom);

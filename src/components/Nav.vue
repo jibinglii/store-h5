@@ -2,15 +2,16 @@
   <div class="nav-block">
     <div class="nav">
       <div class="nav-link">
-        <a href="">店铺主页</a>
+        <a href=""></a>
+        <router-link :to="{name: 'home'}">店铺主页</router-link>
       </div>
       <span class="explode">|</span>
       <div class="nav-link">
-        <a href="">个人中心</a>
+        <router-link :to="{name: 'me.me'}">个人中心</router-link>
       </div>
       <span class="explode">|</span>
       <div class="nav-link">
-        <a href="">商城首页</a>
+        <router-link :to="{name: 'home'}">商城首页</router-link>
       </div>
     </div>
     <div class="logo">

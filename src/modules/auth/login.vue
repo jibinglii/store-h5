@@ -108,6 +108,7 @@
       ref="agree"
       :content="registerProtocol"
     />
+    <nav-block></nav-block>
   </div>
 </template>
 <script>
@@ -115,10 +116,11 @@ import { mapActions, mapGetters } from 'vuex'
 import XHeader from "$components/XHeader"
 import Agree from "$components/Agree"
 import Tcaptcha from '$utils/tcaptcha'
-import protocol from '$api/protocol';
+import protocol from '$api/protocol'
+import Nav from "$components/Nav"
 export default {
   components: {
-    XHeader, Agree
+    XHeader, Agree, 'nav-block': Nav
   },
   data() {
     return {

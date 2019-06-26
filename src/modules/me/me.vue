@@ -56,7 +56,7 @@ export default {
             },
             {
               title: '商品管理',
-              url: '',
+              url: 'seller/goods',
               img: '/images/store/shangpin.png'
             },
             {

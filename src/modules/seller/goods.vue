@@ -6,7 +6,6 @@
     >
     </x-header>
     <van-tabs
-      class="tabsTwo"
       @click="filterData"
       v-model="tabIndex"
     >
@@ -22,6 +21,7 @@
           v-for="(item, index) in items"
           :key="index"
           :goods="item"
+          @update="filterData(tabIndex)"
         ></goods-item>
         <infinite-loading
           :identifier="infiniteId"
@@ -37,7 +37,7 @@
 </template>
 <script>
 import XHeader from '$components/XHeader'
-import GoodsItem from '$components/GoodsItem'
+import GoodsItem from './components/GoodsItem'
 import Tabs from 'vant/lib/tabs'
 import Tab from 'vant/lib/tab'
 import 'vant/lib/tabs/style'
@@ -56,7 +56,7 @@ export default {
       tabIndex: 0,
       statusTypes: [
         { id: "-1", title: '全部' },
-        { id: "0", title: "审核中" },
+        { id: "1", title: "审核中" },
         { id: "3", title: "审核退回" },
         { id: "4", title: "在售中" },
         { id: "5", title: "已下架" },
@@ -102,3 +102,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+/deep/.van-tabs__line{
+  background-color: #020202;
+}
+</style>

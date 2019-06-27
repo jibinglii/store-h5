@@ -1,24 +1,32 @@
 <template>
   <div>
     <x-header title="选择分类" back-url="me.me"></x-header>
-    <div class="goods-sort" >
-      <dl v-for="(item) in goodSort" :key="item.id" @click="onClick(item.id)">
-        <dt>
-          <img :src="item.img" alt>
-        </dt>
-        <dd>{{item.dec}}</dd>
-      </dl>
-    </div>
+    <van-row class="goods-sort" gutter="10">
+      <van-col span="12" v-for="(item) in goodSort" :key="item.id">
+        <dl  @click="onClick(item.dec)">
+          <dt>
+            <img :src="item.img" alt>
+          </dt>
+          <dd>{{item.dec}}</dd>
+        </dl>
+      </van-col>
+    </van-row>
   </div>
 </template>
 
 <script>
 import XHeader from "$components/XHeader";
+import Row from "vant/lib/row";
+import "vant/lib/row/style";
+import Col from "vant/lib/col";
+import "vant/lib/col/style";
 
 export default {
   name: "goods-sort",
   components: {
-    XHeader
+    XHeader,
+    "van-row":Row,
+    "van-col":Col,
   },
   data() {
     return {
@@ -47,11 +55,11 @@ export default {
     };
   },
   methods: {
-    onClick(id) {
+    onClick(dec) {
       this.$router.push({
         name: "goods.add",
         params: {
-          id: id
+          dec: dec
         }
       });
     }
@@ -65,9 +73,6 @@ export default {
   dl {
     background-color: #ffffff;
     text-align: center;
-    float: left;
-    width: 49%;
-    margin-right: 2%;
     font-size: 0.682667rem;
     padding: 1.493333rem 0;
     margin-bottom: 0.426667rem;

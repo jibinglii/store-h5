@@ -82,7 +82,7 @@ export default {
             },
             {
               title: '结算管理',
-              url: '',
+              url: 'me.settlemanage',
               img: '/images/store/jiesuan.png',
               show: true
             }
@@ -91,12 +91,6 @@ export default {
         {
           title: '常用工具',
           sub: [
-            {
-              title: '我要卖',
-              url: '',
-              img: '/images/store/mai.png',
-              show: true
-            },
             {
               title: '我的收藏',
               url: 'collection.collection',

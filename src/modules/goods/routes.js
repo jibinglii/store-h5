@@ -35,13 +35,13 @@ export default [{
             import ('./DCPay')
     },
     {
-        path: 'goods/add.html',
+        path: 'goods/add',
         name: 'goods.add',
         component: () =>
             import ('./add')
     },
     {
-        path: 'goods/goodsort.html',
+        path: 'goods/goodsort',
         name: 'goods.goodsort',
         meta: {
             requiresAuth: true

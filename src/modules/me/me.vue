@@ -78,7 +78,7 @@ export default {
               title: '分销管理',
               url: 'distribution.distribution',
               img: '/images/store/fenxiao.png',
-              show: this.$user().roles.join(',').indexOf('渠道店铺') !== -1
+              show: _.indexOf(this.$currentStore().roles,'渠道店铺') != -1
             },
             {
               title: '结算管理',

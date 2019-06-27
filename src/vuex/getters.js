@@ -1,3 +1,3 @@
 export const isToggled = ({ toggled }) => toggled
 
-export const store = ({store}) => store
+export const currentStore = ({store}) => store

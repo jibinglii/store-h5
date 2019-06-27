@@ -105,12 +105,12 @@
           </dl>
         </router-link>
       </div>
-      <a class="weui-cell weui-cell_access" href="javascript:;">
+      <router-link class="weui-cell weui-cell_access" :to="{name: 'store.setting'}">
         <div class="weui-cell__bd">
           <span>店铺设置</span>
         </div>
         <div class="weui-cell__ft"></div>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>

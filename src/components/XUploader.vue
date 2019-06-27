@@ -71,9 +71,13 @@ export default {
       default: () => []
     },
   },
+  computed: {
+    canUpload () {
+      return this.fileList.length < this.limit
+    }
+  },
   data() {
     return {
-      canUpload: true
     }
   },
   mounted() {
@@ -85,11 +89,6 @@ export default {
     fileList(val) {
       if (this.previews.length == 0) {
         this.previews.push(...val)
-      }
-      if (val.length >= this.limit) {
-        this.canUpload = false
-      } else {
-        this.canUpload = true
       }
     }
   },
@@ -199,7 +198,7 @@ $item-size: 64px;
   font-size: 16px;
   color: #888;
 }
-.weui-uploader__info{
+.weui-uploader__title,.weui-uploader__info{
   font-size: 14px;
 }
 </style>

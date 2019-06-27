@@ -92,9 +92,18 @@ export default [{
   path: 'me/help/feedback.html',
   name: 'me.feedback',
   meta: {
-    requiresAuth: false
+    requiresAuth: true
   },
   component: () =>
     import('./Feedback')
+},
+{
+  path: 'store/setting.html',
+  name: 'store.setting',
+  meta: {
+    requiresAuth: true
+  },
+  component: () =>
+    import('./StoreSetting')
 },
 ]

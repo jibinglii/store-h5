@@ -2,7 +2,7 @@
   <div>
     <x-header title="选择分类" back-url="me.me"></x-header>
     <div class="goods-sort" >
-      <dl v-for="(item) in goodSort" :key="item.id" @click="onClick()">
+      <dl v-for="(item) in goodSort" :key="item.id" @click="onClick(item.id)">
         <dt>
           <img :src="item.img" alt>
         </dt>
@@ -47,10 +47,11 @@ export default {
     };
   },
   methods: {
-    onClick() {
+    onClick(id) {
       this.$router.push({
         name: "goods.add",
         params: {
+          id: id
         }
       });
     }

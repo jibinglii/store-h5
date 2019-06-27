@@ -124,14 +124,9 @@ export default {
     };
   },
   created() {
-    // let routerParams = this.$route.params;
-    // console.log(routerParams)
-    // this.goodsType = routerParams;
-    // this.$http.get("api/v1/goods").then(({ data }) => {
-    //   console.log(data.goods.data[0].game_name);
-    //   var result = data.goods.data[0].game_name;
-    //   this.serverName = result;
-    // });
+    let routerParams = this.$route.params;
+    console.log(routerParams)
+    this.goodsType = routerParams;
   },
 
   methods: {

@@ -134,6 +134,7 @@ export default {
             receiver_mobile: this.receiver_mobile,
             express_type: 0,
             insure: this.serviceValue.index,
+            spread_id: this.$route.query['spread_id']
           };
           this.$toast.loading({mask: true})
           this.$http.post('api/v1/order/' + this.goodsId, param).then(({ data }) => {

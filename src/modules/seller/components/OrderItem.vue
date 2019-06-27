@@ -23,10 +23,10 @@
     </router-link>
     <div class="b">
       <span class="status">{{order.status_label}}</span>
-      <a
+      <router-link
         class="btn-white"
-        :href="'/shop/store_orderview/'+ order.id + '.html'"
-      >查看</a>
+        :to="{name: 'seller/orders/view', params: {'order': order.id}}"
+      >查看</router-link>
       <button
         @click="shipping(order.id)"
         v-show="order.status==1"

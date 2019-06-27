@@ -168,11 +168,13 @@ export default {
       align-items: center;
 
       img {
-        padding-right: 10px;
         width: 3.125rem;
         height: 3.125rem;
+        flex: 2;
       }
       .top-search-text {
+        padding-left: 10px;
+        flex: 10;
         h4 {
           font-size: 0.8125rem;
           font-weight: 400;
@@ -180,6 +182,11 @@ export default {
         span {
           font-size: 0.6rem;
           color: #999999;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
       }
     }

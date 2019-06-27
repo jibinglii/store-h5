@@ -6,12 +6,12 @@
     ></x-header>
     <div class="bg">
       <img
-        :src="store.logo"
+        :src="currentStore.logo"
         alt=""
       >
       <div>
-      <h4>{{ store.name }}</h4>
-      <p>{{ store.desc }}</p>
+      <h4>{{ currentStore.name }}</h4>
+      <p>{{ currentStore.desc }}</p>
       </div>
 
     </div>
@@ -141,7 +141,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['store'])
+    ...mapGetters(['currentStore'])
   },
   // components: {  },
   methods: {

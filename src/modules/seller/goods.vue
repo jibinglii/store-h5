@@ -2,7 +2,6 @@
   <div class="pagebox">
     <x-header
       title="商品管理"
-      url="me.storemanage"
     >
     </x-header>
     <van-tabs

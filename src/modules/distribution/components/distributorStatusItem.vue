@@ -61,9 +61,10 @@ export default {
   }
 
   .van-card__content {
+    line-height: 2;
     .title {
       font-size: 0.597333rem;
-      padding: 0.426667rem 0 0.426667rem 0;
+      padding: 0.426667rem 0 0 0;
       p {
         padding: 0 0.426667rem;
         background-color: #000;

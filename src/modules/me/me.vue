@@ -2,10 +2,7 @@
   <div class="personCenter">
     <div class="header">
       <div class="user-icon">
-        <img
-          :src="currentUser.avatar"
-          alt
-        >
+        <img :src="currentUser.avatar" alt>
       </div>
       <h3>
         {{ currentUser.nickname }}
@@ -38,21 +35,22 @@
 import Tab from "$components/Tab";
 import XHeader from "$components/XHeader";
 import { mapGetters } from "vuex";
-import CellGroup from './components/CellGroup'
-import Cell from './components/Cell'
+import CellGroup from "./components/CellGroup";
+import Cell from "./components/Cell";
 export default {
   name: "storeManage",
   components: {
     Tab,
     XHeader,
     [CellGroup.name]: CellGroup,
-    [Cell.name]: Cell,
+    [Cell.name]: Cell
   },
   data() {
     return {
       list: [
         {
-          title: '我是买家', sub: [
+          title: "我是买家",
+          sub: [
             {
               title: '我的订单',
               url: 'orders',
@@ -84,7 +82,7 @@ export default {
             },
             {
               title: '结算管理',
-              url: '',
+              url: 'me.settlemanage',
               img: '/images/store/jiesuan.png',
               show: true
             }
@@ -93,12 +91,6 @@ export default {
         {
           title: '常用工具',
           sub: [
-            {
-              title: '我要卖',
-              url: '',
-              img: '/images/store/mai.png',
-              show: true
-            },
             {
               title: '我的收藏',
               url: 'collection.collection',
@@ -138,7 +130,7 @@ export default {
           ]
         }
       ]
-    }
+    };
   },
   computed: {
     ...mapGetters(["currentUser"])

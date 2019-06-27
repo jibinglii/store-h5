@@ -30,8 +30,8 @@ export default {
     [Image.name]: Image
   },
   methods: {
-    click () {
-      this.$router.push('./distributionStatus')
+    click() {
+      this.$router.push("./distributionStatus");
     }
   }
 };

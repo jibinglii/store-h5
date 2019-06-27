@@ -27,21 +27,21 @@ Vue.prototype.$toast = Toast
 Vue.prototype.$notify = Notify
 Vue.prototype.$http = http
 Vue.prototype.$user = () => {
-  return store.getters.currentUser
+    return store.getters.currentUser
 }
 Vue.prototype.$currentStore = () => {
-  return store.getters.currentStore
+    return store.getters.currentStore
 }
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
+    Vue.filter(key, filters[key])
 });
 
 FastClick.attach(document.body)
 store.dispatch('storeInfo')
 setTimeout(() => {
-  new Vue({
-    store,
-    router,
-    render: h => h(Root)
-  }).$mount('#app')
+    new Vue({
+        store,
+        router,
+        render: h => h(Root)
+    }).$mount('#app')
 }, 200)

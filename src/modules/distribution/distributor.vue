@@ -60,4 +60,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+/deep/.van-tabs__line {
+  background-color: #000000;
+  height: 2px;
+}
+.tabsTwo {
+  .van-tabs__line {
+    height: 0px;
+  }
+}
+.list {
+  overflow: hidden;
+}
 </style>

@@ -83,7 +83,7 @@ export default {
   .van-button--normal {
     padding: 0 0.75rem;
     font-size: 0.6rem;
-    line-height: 0.6rem;
+    line-height: 0.65rem;
   }
   .van-button--danger {
     color: #fff;

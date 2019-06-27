@@ -1,19 +1,10 @@
 <template>
   <div class="page-box">
-    <x-header title="订单详情"></x-header>
+    <x-header title="商家订单详情"></x-header>
     <div class="status">
-      <div
-        class="info"
-        v-if="!order.closed"
-      >
+      <div class="info">
         {{order_status[order.status].status_desc_1}}<br />
         <span>{{order_status[order.status].status_desc_2}}</span>
-      </div>
-      <div
-        class="info"
-        v-else
-      >
-        订单已关闭
       </div>
       <div class="icon">
         <img :src="order_status[order.status].icon" />
@@ -28,22 +19,15 @@
     </div>
 
     <x-cell-group>
-      <info-cell title="数量">{{order.num}}</info-cell>
-      <info-cell title="商品总价">¥ {{order.goods_price|formatMoney}}</info-cell>
-      <info-cell
-        title="担保无忧"
-        v-if="order.insure_name != ''"
-      >{{order.insure_name}}</info-cell>
-      <info-cell
-        title="担保费"
-        v-if="order.insure_fee != ''"
-      >¥ {{order.insure_fee|formatMoney}}</info-cell>
+      <info-cell title="商品总价">{{order.goods_price}}</info-cell>
+      <info-cell title="担保无忧">{{order.insure_name}}</info-cell>
+      <info-cell title="担保费">{{order.insure_fee}}</info-cell>
     </x-cell-group>
 
     <x-cell-group>
       <we-info-cell
         title="实付款"
-        :desc="'¥ ' + this.formatMoney(order.total_amount)"
+        :desc="order.total_amount"
       ></we-info-cell>
     </x-cell-group>
 
@@ -51,10 +35,7 @@
       <we-info-cell title="订单信息"></we-info-cell>
       <info-cell title="订单编号">{{order.id}}</info-cell>
       <info-cell title="创建时间">{{order.created_at}}</info-cell>
-      <info-cell
-        title="付款时间"
-        v-if="order.payment_time != ''"
-      >{{order.payment_time}}</info-cell>
+      <info-cell title="付款时间" v-show="order.payment_time">{{order.payment_time}}</info-cell>
     </x-cell-group>
 
     <x-cell-group v-if="order.status>1">
@@ -64,34 +45,17 @@
 
     <x-cell-group>
       <div class="btns">
-        <div v-if="order.closed">
-          <x-button text="订单已关闭"></x-button>
-        </div>
-        <div v-if="!order.closed">
+        <div v-if="order.status==1">
           <x-button
-            @click.native="connectSaler(order.goods_id, order.goods_user_id)"
-            text="联系卖家"
-          ></x-button>
-        </div>
-        <div v-if="!order.closed && order.status==2">
-          <x-button
-            @click.native="confirm(order.id)"
-            text="确认收货"
+            @click.native="shipping(order.id)"
+            text="确认发货"
             type="primary"
           ></x-button>
         </div>
-        <div v-if="!order.closed && order.status==0">
+        <div v-if="order.status!=1">
           <x-button
-            @click.native="destroy(order.id)"
-            text="取消订单"
-            type="primary"
-          ></x-button>
-        </div>
-        <div v-if="!order.closed && order.status==0">
-          <x-button
-            @click.native="pay(order.id)"
-            text="去付款"
-            type="primary"
+            @click.native="$router.back()"
+            text="返回"
           ></x-button>
         </div>
       </div>
@@ -126,27 +90,27 @@ export default {
         },
         0: {
           status_desc_1: "待支付",
-          status_desc_2: "30分钟未支付订单将自动取消",
+          status_desc_2: "24小时未支付订单将自动取消",
           icon: '/images/shop/order-dfk.png'
         },
         1: {
           status_desc_1: "待发货",
-          status_desc_2: "你已付款成功，等待商家发货",
-          icon: '/images/shop/order-dfh.png'
+          status_desc_2: "买家付款成功，等待商家发货",
+          icon: '/images/shop/order-dsh.png'
         },
         2: {
           status_desc_1: "待收货",
-          status_desc_2: "24小时未处理订单将自动确认收货",
+          status_desc_2: "24小时买家未处理，将自动收货",
           icon: '/images/shop/order-dsh.png'
         },
         3: {
           status_desc_1: "已完成",
-          status_desc_2: "交易已完成，如需售后请联系客服",
-          icon: '/images/shop/order-ywc.png'
+          status_desc_2: "交易已完成",
+          icon: '/images/shop/order-dsh.png'
         },
         4: {
           status_desc_1: "退货中",
-          status_desc_2: "协商处理中，请及时关注订单状态",
+          status_desc_2: "协商处理中",
           icon: '/images/shop/order-thh.png'
         },
       },
@@ -156,14 +120,15 @@ export default {
     }
   },
   mounted() {
-    this.id = this.$route.params.id
+    this.id = this.$route.params.order
     this.getDetail();
   },
   methods: {
     async getDetail() {
       this.$toast.loading({mask: true})
-      this.$http.get('/api/v1/order/' + this.id, { loading: true })
+      this.$http.get('/api/v1/seller-order/' + this.id)
         .then(({ data }) => {
+          this.$toast.clear()
           this.order = data.order;
           let index = this.order.goods_title.indexOf(' ');
           let title = this.order.goods_title.substr(index+1)
@@ -176,46 +141,16 @@ export default {
             server_name: this.order.goods_server,
             amount: this.order.goods_price
           };
-          this.goods = goods;
-          this.$toast.clear()
+          this.goods = goods
         }).catch(({ response }) => {
-          if (response.status == 404) {
-            this.$router.back()
-          }
+          this.$router.back()
         });
     },
-    connectSaler(goodsId, user_id) {
-      // 联系卖家
-      this.downloadApp();
-      if (this.$cookies.get('connect:goods:' + goodsId)) {
-        window.soogua.postMessage(JSON.stringify({ "action": "route", "params": JSON.stringify({ "url": "message/" + user_id + "/6" }) }))
-      } else {
-        window.soogua.postMessage(JSON.stringify({ "action": "route", "params": JSON.stringify({ "url": "message/" + user_id + "/6/" + this.goodsId }) }));
-        this.$cookies.set('connect:goods:' + goodsId, true)
-      }
+    redirect(url) {
+      location.href = url;
     },
-    async destroy(id) {
-      let message = "您确定要[取消]该订单吗？";
-      await this.$confirm({
-        title: "温馨提示",
-        content: message,
-        yesText: "否", // 左边按钮文本,
-        yesStyle: { overflow: "inherit" },
-        noText: "是", // 设置右边按钮文本,
-        noStyle: { overflow: "inherit" } // 设置右边按钮样式,
-      }).then(function () {
-        console.log('“cancel”');
-      })
-        .catch(() => {
-          this.$toast.loading({mask: true})
-          this.$http.post('api/v1/order/' + id + '/close', {}, { loading: true }).then(({ message }) => {
-            this.$toast(message);
-            this.$router.back()
-          })
-        });
-    },
-    confirm(id) {
-      let message = "您确定要[确认收货]该订单吗？";
+    shipping(id) {
+      let message = "您确定要[确认发货]该订单吗？";
       this.$confirm({
         title: "温馨提示",
         content: message,
@@ -227,17 +162,11 @@ export default {
         console.log('“cancel”');
       })
         .catch(() => {
-          this.$toast.loading({mask: true})
-          this.$http.post('api/v1/order/confirm/' + id, {}, { loading: true }).then(({ message }) => {
-            this.$toast(message);
-            setTimeout(() => {
-              window.location.reload()
-            }, 500)
+          this.$http.post('api/v1/order/shipping/' + id, {}, { loading: true }).then(({ data }) => {
+            this.$toast(data.message);
+            this.getDetail()
           })
         });
-    },
-    pay(id) {
-      this.$router.push({name: 'pay.type', params: {'order': id}})
     }
   }
 }
@@ -261,8 +190,9 @@ export default {
     line-height: 30px;
     text-align: left;
     padding-top: 25px;
+    font-size: .875rem;
     span {
-      font-size: 0.6rem;
+      font-size: 0.7rem;
     }
   }
   .icon {

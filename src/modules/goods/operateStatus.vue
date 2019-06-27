@@ -89,7 +89,7 @@ export default {
   methods: {}
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .van-tabs__line {
   background-color: #000;
   height: 2px;

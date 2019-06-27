@@ -6,11 +6,11 @@
     ></x-header>
     <div class="store_banner">
       <div class="store_banner_l">
-        <p><sup>￥</sup>{{ info.total_sale|formatMoney}}</p>
+        <p>{{ info.total_sale|formatMoney}}</p>
         <span>累计销售</span>
       </div>
       <div class="store_banner_r">
-        <p><sup>￥</sup>{{ info.total_sale_month | formatMoney }}</p>
+        <p>{{ info.total_sale_month | formatMoney }}</p>
         <span>本月销售</span>
       </div>
     </div>
@@ -140,7 +140,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .storeManage {
   .right-box {
     display: none;
@@ -161,8 +161,9 @@ export default {
       p {
         font-size: 1.408rem;
         font-weight: 200;
-        sup{
-          font-size: .8rem;
+        &::before {
+          content: "￥";
+          font-size: 0.75rem;
         }
       }
       span {

@@ -8,7 +8,6 @@
       </div>
     </x-header>
     <van-tabs
-      class="tabsTwo"
       @click="filterData"
     >
       <van-tab
@@ -105,39 +104,8 @@ export default {
 }
 </script>
 
-
-<style lang="scss">
-.titlebar {
-  line-height: 50px;
-  text-align: center;
-  background-color: #ffffff;
-  border-bottom: solid 1px #eaeaea;
-  position: relative;
-  a {
-    position: absolute;
-    left: 10px;
-    font-size: 20px;
-  }
-}
-.tab-bar {
-  overflow: hidden;
-  overflow-x: scroll;
-  white-space: nowrap;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  line-height: 50px;
-  background-color: #ffffff;
-  li {
-    display: inline;
-    font-size: 0.9rem;
-    padding: 0 1.2rem;
-    &.active span {
-      font-weight: 500;
-      border-bottom: 2px #000 solid;
-      padding-bottom: 0.375rem;
-      display: inline;
-    }
-  }
+<style lang="scss" scoped>
+/deep/.van-tabs__line{
+  background-color: #020202;
 }
 </style>

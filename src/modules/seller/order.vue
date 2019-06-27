@@ -21,6 +21,7 @@
 
     <div class="tab-content">
       <div class="tab-content-item">
+        <order-item v-for="(item, index) in items" :key="index" :order="item"></order-item>
         <infinite-loading
           :identifier="infiniteId"
           @infinite="infiniteHandler"
@@ -39,6 +40,7 @@ import Tabs from 'vant/lib/tabs'
 import Tab from 'vant/lib/tab'
 import 'vant/lib/tabs/style'
 import 'vant/lib/tab/style'
+import OrderItem from './components/OrderItem'
 import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
@@ -46,6 +48,7 @@ export default {
     XHeader, InfiniteLoading,
     'van-tabs': Tabs,
     'van-tab': Tab,
+    [OrderItem.name]: OrderItem
   },
   data() {
     return {
@@ -69,7 +72,7 @@ export default {
     this.status = this.statusTypes[this.tabIndex].id
   },
   methods: {
-    filterData(item) {
+    filterData(index, title) {
       this.page = 1;
       this.items = [];
       this.infiniteId += 1;
@@ -100,6 +103,8 @@ export default {
 </script>
 
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+/deep/.van-tabs__line{
+  background-color: #020202;
+}
 </style>

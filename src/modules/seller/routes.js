@@ -15,5 +15,14 @@ export default [{
   },
   component: () =>
     import('./order')
+},
+{
+  path: 'seller/orders/:order.html',
+  name: 'seller/orders/view',
+  meta: {
+    requiresAuth: true
+  },
+  component: () =>
+    import('./order-view')
 }
 ]

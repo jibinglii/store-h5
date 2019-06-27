@@ -8,7 +8,10 @@ const http = axios.create({
 })
 
 window.API_ROOT = process.env.VUE_APP_API_URL
-
+let url = window.location.pathname
+url.match(/^\/?(\w+)\/?.*$/)
+let store = RegExp.$1
+window.STORE_ID = store
 interceptors(http)
 
 /**
@@ -18,9 +21,6 @@ export function setToken (token) {
   http.defaults.headers.common.Authorization = `Bearer ${token}`
 }
 
-let url = window.location.pathname
-url.match(/^\/?(\w+)\/?.*$/)
-let store = RegExp.$1
 http.defaults.headers['X-Store-Id'] = `${store}`
 http.defaults.headers['Accept'] = 'application/json'
 

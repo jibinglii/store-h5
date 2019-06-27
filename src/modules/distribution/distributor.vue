@@ -7,15 +7,9 @@
       back-color="#ffffff"
       color="#000"
       underline-color="#f2f2f2"
+      right-text="添加"
+      @click-right="add"
     ></x-header>
-    <van-tabs v-model="active">
-      <van-tab
-        :title="item"
-        title-active-color="#000000"
-        v-for="(item, index) in tabs"
-        :key="index"
-      ></van-tab>
-    </van-tabs>
     <div v-for="(item,key) in goods" :key="key" class="list">
       <v-slide>
         <section class="custom-cell" :class="slideDirection" slot="center">
@@ -29,25 +23,17 @@
 // https://youzan.github.io/vant/#/zh-CN/tab
 // todo 修改选择样式
 import XHeader from "$components/XHeader";
-import Tabs from "vant/lib/tabs";
-import Tab from "vant/lib/tab";
-import "vant/lib/tabs/style";
-import "vant/lib/tab/style";
 import distributorItem from "./components/distributorItem";
 import Slide from "./components/slide";
 export default {
   name: "store",
   components: {
     XHeader,
-    "van-tabs": Tabs,
-    "van-tab": Tab,
     "distributor-item": distributorItem,
     vSlide: Slide
   },
   data() {
     return {
-      tabs: ["全部", "已启用", "未启用"],
-      active: 0,
       slideDirection: "",
       goods: [
         {
@@ -69,7 +55,9 @@ export default {
     };
   },
   methods: {
+    add () {
 
+    }
   }
 };
 </script>

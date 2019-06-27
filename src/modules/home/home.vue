@@ -128,7 +128,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .ads{
   margin: 10px 0;
   font-size: 0;

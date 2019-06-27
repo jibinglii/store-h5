@@ -4,6 +4,7 @@
     <x-header
       title="店铺主页"
       back-url="home"
+      :allow-back=false
     ></x-header>
     <van-tabs v-model="active" @click="onTabClickTop">
       <van-tab
@@ -125,13 +126,13 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-.van-tabs__line{
+<style lang="scss" scoped>
+/deep/.van-tabs__line{
   background-color: #000000;
   height: 2px;
 }
 .tabsTwo{
- .van-tabs__line{
+ /deep/.van-tabs__line{
    height: 0px;
  }
 }

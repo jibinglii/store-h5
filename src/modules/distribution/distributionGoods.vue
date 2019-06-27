@@ -9,7 +9,6 @@
         :key="index"
       ></van-tab>
     </van-tabs>
-    <van-search placeholder="请输入搜索关键词" v-model="search"/>
     <div v-for="(item,key) in goods" :key="key" class="list">
       <goods-item :item="item"></goods-item>
     </div>
@@ -70,8 +69,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.van-tabs__line {
-  background-color: #000;
+/deep/.van-tabs__line {
+  background-color: #020202;
   height: 2px;
 }
 </style>

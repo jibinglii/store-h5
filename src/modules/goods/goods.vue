@@ -162,9 +162,9 @@ import TradeDesc from './components/TradeDesc'
 import GoodsKeep from './components/GoodsKeep'
 import GoodsTips from './components/GoodsTips'
 import * as service from '$modules/goods/services'
-import VueClipboard from 'vue-clipboard2';
+import VueClipboard from 'vue-clipboard2'
 
-VueClipboard.config.autoSetContainer = true;
+VueClipboard.config.autoSetContainer = true
 Vue.use(VueClipboard);
 export default {
   components: {

@@ -1,25 +1,39 @@
 <template>
-  <van-card slot="center" :name="item.id" :thumb="item.thumb" @click="click">
+  <van-card
+    slot="center"
+    :name="item.id"
+    :thumb="item.logo"
+  >
     <div slot="title">
       <h3 class="title">{{item.title}}</h3>
-      <p>佣金: {{item.commission}}</p>
-      <p>价格: {{item.price}}</p>
+      <p>分润比例: {{item.seller.profit_rate}}</p>
+      <p>价格: {{item.amount|formatMoney}}</p>
     </div>
     <div slot="footer">
       <span>
         <i>店铺：</i>
-        {{item.shop}}
+        {{item.store.name}}
       </span>
-      <van-button size="small" hairline type="primary">{{item.copy}}</van-button>
+      <van-button
+        size="small"
+        hairline
+        type="primary"
+        @click="copy"
+      >复制链接</van-button>
     </div>
   </van-card>
 </template>
 
 <script>
+import Vue from 'vue'
 import Card from "vant/lib/card";
 import Button from "vant/lib/button";
 import "vant/lib/card/style";
 import "vant/lib/button/style";
+import VueClipboard from 'vue-clipboard2'
+
+VueClipboard.config.autoSetContainer = true
+Vue.use(VueClipboard);
 export default {
   props: {
     item: {
@@ -37,8 +51,13 @@ export default {
     "van-button": Button
   },
   methods: {
-    click() {
-
+    copy() {
+      let url = location.origin + '/' + window.STORE_ID + '/goods/' + this.item.uuid + '.html?spread_id=' + this.$user().id
+      this.$copyText(url).then((e) => {
+        this.$toast('复制成功，赶快去微信、QQ粘贴分享给你的好友吧');
+        this.showShare = false
+      }, function (e) {
+      })
     }
   }
 };
@@ -47,15 +66,15 @@ export default {
 <style lang="scss" scoped>
 .van-card {
   background-color: #ffffff;
-  margin-bottom: 0.426667rem;
+  margin-bottom: 8px;
   margin-top: 0;
   padding: 0;
   .van-card__header {
     align-items: center;
-    padding: 0.341333rem 0.64rem;
+    padding: 6px 8px;
     .van-card__thumb {
-      width: 3.2rem;
-      height: 3.2rem;
+      width: 64px;
+      height: 64px;
       img {
         width: 100%;
       }
@@ -65,12 +84,12 @@ export default {
   .van-card__content {
     line-height: 2;
     .title {
-      font-size: 0.597333rem;
-      padding: 0.426667rem 0 0 0;
+      font-size: 14px;
+      padding: 8px 0 0 0;
       p {
-        padding: 0 0.426667rem;
+        padding: 0 8px;
         background-color: #000;
-        font-size: 0.512rem;
+        font-size: 10px;
         color: #fff;
         border-radius: 0.170667rem;
       }
@@ -78,7 +97,7 @@ export default {
   }
   .van-card__footer {
     position: relative;
-    padding: 0.426667rem 0.64rem;
+    padding: 6px 8px;
     text-align: left;
     div {
       display: flex;

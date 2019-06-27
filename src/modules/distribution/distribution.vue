@@ -38,27 +38,7 @@ export default {
   },
   data() {
     return {
-      tabs: ["全部", "已启用", "未启用"],
-      active: 0,
-      slideDirection: "",
-      goods: [
-        {
-          id: "ID：1524123",
-          title: "火影忍者超级无敌号",
-          desc: "正常",
-          thumb:
-            "https://img.yzcdn.cn/public_files/2017/10/24/f6aabd6ac5521195e01e8e89ee9fc63f.jpeg"
-        },
-        {
-          id: "ID：1524123",
-          title: "火影忍者超级无敌号",
-          desc: "停用",
-          thumb:
-            "https://img.yzcdn.cn/public_files/2017/10/24/f6aabd6ac5521195e01e8e89ee9fc63f.jpeg"
-        }
-      ],
-      page: 1
-    };
+    }
   },
   methods: {}
 };

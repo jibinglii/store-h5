@@ -107,5 +107,6 @@ export default {
 <style lang="scss" scoped>
 /deep/.van-tabs__line{
   background-color: #020202;
+  height: 2px;
 }
 </style>

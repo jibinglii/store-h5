@@ -63,7 +63,7 @@ export default {
     return {
       nickname: this.$user().nickname,
       sign: this.$user().sign,
-      avatar: [],
+      avatar: [this.$user().avatar],
     }
   },
   computed: {

@@ -3,64 +3,61 @@
   <div>
     <x-header
       title="分销人员管理"
-      back-url="home"
-      back-color="#ffffff"
-      color="#000"
-      underline-color="#f2f2f2"
       right-text="添加"
-      @click-right="add"
+      @click-right="$router.push({name: 'distribution.distributormanage'})"
     ></x-header>
-    <div v-for="(item,key) in goods" :key="key" class="list">
-      <v-slide>
-        <section class="custom-cell" :class="slideDirection" slot="center">
-          <distributor-item :item="item"></distributor-item>
-        </section>
-      </v-slide>
+    <div class="list">
+      <distributor-item
+        :item="item"
+        v-for="(item,key) in users"
+        :key="key"
+        @click.native="$router.push({name: 'distribution.distributormanage', params: {'id': item.id}, query: {'profit_rate': item.sellers.profit_rate}})"
+      ></distributor-item>
     </div>
+    <infinite-loading
+      @infinite="infiniteHandler"
+      spinner="spiral"
+    >
+      <div slot="no-more">没有更多数据啦...</div>
+      <div slot="no-results">没有数据</div>
+    </infinite-loading>
   </div>
 </template>
 <script>
 // https://youzan.github.io/vant/#/zh-CN/tab
 // todo 修改选择样式
-import XHeader from "$components/XHeader";
-import distributorItem from "./components/distributorItem";
-import Slide from "./components/slide";
+import XHeader from "$components/XHeader"
+import distributorItem from "./components/distributorItem"
+import InfiniteLoading from 'vue-infinite-loading';
 export default {
   name: "store",
   components: {
     XHeader,
     "distributor-item": distributorItem,
-    vSlide: Slide
+    InfiniteLoading
   },
   data() {
     return {
       slideDirection: "",
-      goods: [
-        {
-          id: "ID：1524123",
-          title: "火影忍者超级无敌号",
-          desc: "正常",
-          thumb:
-            "https://img.yzcdn.cn/public_files/2017/10/24/f6aabd6ac5521195e01e8e89ee9fc63f.jpeg"
-        },
-        {
-          id: "ID：1524123",
-          title: "火影忍者超级无敌号",
-          desc: "停用",
-          thumb:
-            "https://img.yzcdn.cn/public_files/2017/10/24/f6aabd6ac5521195e01e8e89ee9fc63f.jpeg"
-        }
-      ],
+      users: [],
       page: 1
-    };
+    }
   },
   methods: {
-    add () {
-
+    infiniteHandler($state) {
+      this.$http.get('api/v2/store/sellers').then(({ data }) => {
+        if (data.sellers.data.length > 0) {
+          this.page += 1;
+          this.users.push(...data.sellers.data);
+          $state.loaded();
+        }
+        if (data.sellers.per_page > data.sellers.data.length) {
+          $state.complete();
+        }
+      })
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
-
 </style>

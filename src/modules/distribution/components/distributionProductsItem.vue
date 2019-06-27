@@ -45,7 +45,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~vant/lib/index.css";
 .van-card {
   background-color: #ffffff;
   margin-bottom: 0.426667rem;

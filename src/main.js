@@ -29,7 +29,9 @@ Vue.prototype.$http = http
 Vue.prototype.$user = () => {
     return store.getters.currentUser
 }
-
+Vue.prototype.$currentStore = () => {
+    return store.getters.currentStore
+}
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 });

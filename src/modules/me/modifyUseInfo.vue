@@ -63,7 +63,7 @@ export default {
     return {
       nickname: this.$user().nickname,
       sign: this.$user().sign,
-      avatar: [],
+      avatar: [this.$user().avatar],
     }
   },
   computed: {
@@ -114,27 +114,6 @@ export default {
     }
     .signature:not(:last-child)::after {
       border: none;
-    }
-  }
-  .camera {
-    .defaultImg {
-      width: 2.773333rem;
-      padding: 0 0.64rem 0.64rem;
-    }
-    .van-cell:not(:last-child)::after {
-      border: none;
-    }
-    .van-uploader {
-      padding: 0.426667rem;
-    }
-  }
-  .van-cell {
-    padding: 0.426667rem 0.64rem;
-    .van-cell__title {
-      span {
-        font-size: 0.682667rem;
-        font-weight: 600;
-      }
     }
   }
   .btn {

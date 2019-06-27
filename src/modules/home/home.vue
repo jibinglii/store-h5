@@ -7,12 +7,12 @@
     <div class="top-search">
       <div class="top-search-l">
         <img
-          :src="store.logo"
+          :src="currentStore.logo"
           alt
         >
         <div class="top-search-text">
-          <h4>{{ store.name }}</h4>
-          <span>{{ store.desc }}</span>
+          <h4>{{ currentStore.name }}</h4>
+          <span>{{ currentStore.desc }}</span>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['store'])
+    ...mapGetters(['currentStore'])
   },
   created() {
     this.getAds()

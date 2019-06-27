@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~vant/lib/index.css";
+
 /deep/.van-swipe-cell__right {
   .van-button {
     height: 100%;

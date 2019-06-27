@@ -1,24 +1,18 @@
 <template>
-  <div>
-    <van-card slot="center" :name="item.id" :thumb="item.thumb" @click="click">
-      <div slot="title">
-        <p class="title">
-          {{item.title}}
-          <span>{{item.desc}}</span>
-        </p>
-      </div>
-      <div slot="price">
-        <section class="custom-card-bottom">
-          <i>{{item.id}}</i>
-        </section>
-      </div>
-    </van-card>
+  <div class="item">
+    <div class="img">
+      <van-image slot="thumb" :src="item.avatar" fit="cover" width="100%" height="100%"></van-image>
+    </div>
+    <div class="info">
+      <h4>{{ item.nickname }}</h4>
+      <p>ID: {{ item.id }} / 分润比例: {{ item.sellers.profit_rate }}</p>
+    </div>
   </div>
 </template>
 
 <script>
-import Card from "vant/lib/card";
-import "vant/lib/card/style";
+import Image from "vant/lib/image"
+import "vant/lib/image/style"
 export default {
   name: "distributorItem",
   props: {
@@ -33,7 +27,7 @@ export default {
     };
   },
   components: {
-    [Card.name]: Card
+    [Image.name]: Image
   },
   methods: {
     click() {
@@ -44,47 +38,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~vant/lib/index.css";
-.van-card {
-  background-color: #ffffff;
-  border-bottom: solid 1px #f2f2f2;
-  margin-top: 0;
-  padding: 0.469333rem 0.64rem;
-  .van-card__header {
-    align-items: center;
-    .van-card__thumb {
-      width: 2.346667rem;
-      height: 2.346667rem;
-      img {
-        border-radius: 50%;
-        padding: 0.426667rem 0.426667rem 0 0;
-      }
-    }
-    .van-card__content {
-      min-height: 70px;
-      .title {
-        font-size: 0.597333rem;
-        padding: 0.426667rem 0 0.426667rem 0;
-        span {
-          padding: 0 0.426667rem;
-          background-color: #000;
-          font-size: 0.512rem;
-          color: #fff;
-          border-radius: 0.170667rem;
-        }
-      }
-    }
-  }
-}
-.custom-card-bottom {
+.item{
   display: flex;
-  flex: 1;
-  justify-content: space-between;
-
-  i {
-    font-style: normal;
-    font-size: 0.512rem;
-    color: #999;
+  background-color: white;
+  padding: 10px;
+  align-items: center;
+  border-bottom: 1px #f2f2f2 solid;
+  .img{
+    height: 2.2rem;
+    width: 2.2rem;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .info{
+    padding-left: 10px;
+    h4{
+      font-size: 14px;
+      font-weight: 400;
+    }
+    p{
+      font-size: 12px;
+      color: #999;
+    }
   }
 }
 </style>

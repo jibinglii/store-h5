@@ -17,7 +17,7 @@ export default [{
     import('../distribution/distributor')
 },
 {
-  path: 'distribution/distributormanage',
+  path: 'distribution/distributormanage/:id?',
   name: 'distribution.distributormanage',
   meta: {
     requiresAuth: true

@@ -31,7 +31,7 @@ export default {
   .weui-cell__bd {
     p {
       font-size: 0.682667rem;
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 }

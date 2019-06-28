@@ -9,6 +9,7 @@ import { routes as order } from '$modules/order'
 import { routes as result } from '$modules/result'
 import { routes as seller } from '$modules/seller'
 import { routes as distribution } from '$modules/distribution'
+import { routes as withdraw } from '$modules/withdraw'
 import Vue from 'vue'
 import Router from 'vue-router'
 import beforeEach from './beforeEach'
@@ -19,33 +20,34 @@ const AppRoute = {
     component: () =>
         import ('../app'),
     children: [...home, ...auth, ...store, ...collection, ...me, ...goods, ...distribution, ...bank, ...order,
-    ...result, ...seller]
+        ...result, ...seller, ...withdraw
+    ]
 }
 
 const routes = [AppRoute, {
-  path: '*',
-  component: () =>
-      import ('../not-found')
+    path: '*',
+    component: () =>
+        import ('../not-found')
 }]
 
-const scrollBehavior = function (to, from, savedPosition) {
-  if (savedPosition) {
-    return savedPosition
-  } else {
-    if (to.hash) {
-      if (document.querySelector(to.hash)) {
-        return {
-          selector: to.hash
+const scrollBehavior = function(to, from, savedPosition) {
+    if (savedPosition) {
+        return savedPosition
+    } else {
+        if (to.hash) {
+            if (document.querySelector(to.hash)) {
+                return {
+                    selector: to.hash
+                }
+            }
+            return false
         }
-      }
-      return false
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({ x: 0, y: 0 });
+            }, 0);
+        })
     }
-    return new Promise((resolve) => {
-      setTimeout(() => {
-       resolve({ x: 0, y: 0 });
-      }, 0);
-    })
-  }
 }
 
 const router = new Router({

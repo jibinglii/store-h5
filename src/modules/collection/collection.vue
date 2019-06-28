@@ -6,7 +6,14 @@
         <v-slide :id="item.uuid" :disabledSlide="disabledSlide" @onDelete="onDelete">
           <section class="custom-cell" :class="slideDirection" slot="center">
             <div class="custom-checkbox">
-              <van-checkbox :name="item.uuid"/>
+              <van-checkbox :name="item.uuid">
+                <i
+                  slot="icon"
+                  slot-scope="props"
+                  class="iconfont"
+                  :class="props.checked ? 'icon-radio-active' : 'icon-radio'"
+                />
+              </van-checkbox>
             </div>
             <goods-card :item="item"></goods-card>
           </section>
@@ -72,7 +79,6 @@ export default {
         }
       };
       service.getCollectionGoods(param).then(({ data }) => {
-        console.log("TCL: infiniteHandler -> data", data);
         if (data.data.data.length > 0) {
           this.page += 1;
           this.goods.push(...data.data.data);

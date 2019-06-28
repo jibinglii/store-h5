@@ -1,12 +1,14 @@
 <template>
   <transition name="fade">
     <div class="select-content">
-      <van-checkbox
-        name="selectall"
-        v-model="isAllSelected"
-      >
+      <van-checkbox name="selectall" v-model="isAllSelected">
         全选
-        <img slot="icon" slot-scope="props" :src="props.checked ? icon.active : icon.inactive">
+        <i
+          slot="icon"
+          slot-scope="props"
+          class="iconfont"
+          :class="props.checked ? 'icon-radio-active' : 'icon-radio'"
+        />
       </van-checkbox>
       <section class="custom-btn">
         <van-button @click="oneKeyClean">一键清除</van-button>
@@ -67,11 +69,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .3s
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
 }
-.fade-enter, .fade-leave-active {
-  opacity: 0
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 .select-content {
   display: flex;
@@ -91,10 +95,6 @@ export default {
       height: 0.825rem;
       font-size: 0.825rem;
       line-height: 0.825rem;
-      img {
-        width: 100%;
-        height: auto;
-      }
     }
     .van-checkbox__label {
       font-size: 0.7rem;

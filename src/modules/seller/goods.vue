@@ -1,8 +1,6 @@
 <template>
   <div class="pagebox">
-    <x-header
-      title="商品管理"
-    >
+    <x-header title="商品管理">
     </x-header>
     <van-tabs
       @click="filterData"
@@ -21,6 +19,7 @@
           :key="index"
           :goods="item"
           @update="filterData(tabIndex)"
+          @assign="assign"
         ></goods-item>
         <infinite-loading
           :identifier="infiniteId"
@@ -32,6 +31,36 @@
         </infinite-loading>
       </div>
     </div>
+    <van-action-sheet
+      v-model="showAssign"
+      title="分配推广员"
+    >
+      <van-cell-group>
+        <van-field
+          v-model="assignUserId"
+          label="推广员ID"
+          type="tel"
+          input-align="right"
+          placeholder="请输入推广员ID"
+        />
+        <van-field
+          v-model="assignRate"
+          type="number"
+          label="推广费用比例"
+          autosize
+          input-align="right"
+          placeholder="请编辑推广费用比例"
+        />
+      </van-cell-group>
+      <div class="btn">
+        <van-button
+          type="primary"
+          hairline
+          size="large"
+          @click="assignSubmit"
+        >保存</van-button>
+      </div>
+    </van-action-sheet>
   </div>
 </template>
 <script>
@@ -42,12 +71,24 @@ import Tab from 'vant/lib/tab'
 import 'vant/lib/tabs/style'
 import 'vant/lib/tab/style'
 import InfiniteLoading from 'vue-infinite-loading';
+import ActionSheet from 'vant/lib/action-sheet'
+import 'vant/lib/action-sheet/style'
+import Button from 'vant/lib/button'
+import CellGroup from 'vant/lib/cell-group'
+import Field from 'vant/lib/field'
+import 'vant/lib/cell/style'
+import 'vant/lib/field/style'
+import 'vant/lib/button/style'
 
 export default {
   components: {
     XHeader, GoodsItem, InfiniteLoading,
     'van-tabs': Tabs,
     'van-tab': Tab,
+    [ActionSheet.name]: ActionSheet,
+    'van-cell-group': CellGroup,
+    'van-field': Field,
+    'van-button': Button
   },
   data() {
     return {
@@ -65,10 +106,14 @@ export default {
       page: 1,
       status: -1,
       infiniteId: new Date(),
+      showAssign: false,
+      assignUserId: '',
+      assignRate: '',
+      currentGoods: {}
     }
   },
-  mounted () {
-    this.tabIndex = location.hash.substr(1)
+  mounted() {
+    this.tabIndex = location.hash.substr(1) || 0
     this.status = this.statusTypes[this.tabIndex].id
   },
   methods: {
@@ -98,12 +143,35 @@ export default {
         }
       })
     },
+    assign(goods) {
+      this.showAssign = true
+      this.currentGoods = goods
+    },
+    assignSubmit(){
+      let params = {goods_id: this.currentGoods.uuid, spread_id: this.assignUserId, profit_rate: this.assignRate}
+      this.$toast.loading({mask: true})
+      this.$http.post('api/v2/store/sellers/my-drp-goods/add', params).then(({data}) => {
+        this.showAssign = false
+        this.currentGoods = {}
+        this.$toast.clear()
+        this.$toast.success('分配成功')
+      })
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-/deep/.van-tabs__line{
+/deep/.van-tabs__line {
   background-color: #020202;
+}
+/deep/.btn{
+  text-align: center;
+}
+/deep/.van-button {
+  width: 90%;
+  margin: 2.133333rem auto;
+  background: #000;
+  color: #ffffff;
 }
 </style>

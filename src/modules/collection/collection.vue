@@ -11,7 +11,7 @@
                   slot="icon"
                   slot-scope="props"
                   class="iconfont"
-                  :class="props.checked ? 'icon-radio-active' : 'icon-radio'"
+                  :class="props.checked ? 'icon-check' : 'icon-radio'"
                 />
               </van-checkbox>
             </div>

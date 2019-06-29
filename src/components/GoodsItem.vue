@@ -1,7 +1,7 @@
 <template>
   <div class="home-goods" @click="onClick">
-    <div class="img" :style="{backgroundImage: 'url('+goods.logo+')'}">
-      <div></div>
+    <div class="img">
+      <van-image :src="goods.logo" fit="cover"></van-image>
     </div>
     <div class="info">
       <h4 class="title">{{ goods.title }}</h4>
@@ -11,8 +11,13 @@
 </template>
 
 <script>
+  import Image from 'vant/lib/image'
+  import 'vant/lib/image/style'
 export default {
   name: 'goods-item',
+  components: {
+    [Image.name]: Image
+  },
   props: {
     goods: Object
   },
@@ -40,9 +45,9 @@ export default {
   .img {
     height: 6.25rem;
     overflow: hidden;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
+    .van-image{
+      height: 100%;
+    }
   }
   .info{
     background-color: white;

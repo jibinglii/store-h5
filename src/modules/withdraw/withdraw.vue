@@ -6,16 +6,20 @@
       <van-cell-group>
         <van-cell title="到账银行卡">
           <span @click="showlist()" class="default_text">
-            <img :src="imgsrc">
-            {{box_text}}
+            <img :src="bankImg">
+            {{bankName}}
             <van-icon name="arrow" v-show="downIcon"/>
             <van-icon name="arrow-down" v-show="!downIcon"/>
           </span>
         </van-cell>
         <ul v-show="falg" class="select_box">
-          <li @click="checkThis(item.text,item.str)" v-for="(item) in message" :key="item.text">
-            <img :src="item.str">
-            <a href="javascript:void(0);">{{item.text}}</a>
+          <li
+            @click="checkThis(item.bank_info.bankName,item.bank_info.bankImg)"
+            v-for="(item, index) in bank_cards"
+            :key="index"
+          >
+            <img :src="item.bank_info.bankImg">
+            <a href="javascript:void(0);">{{item.bank_info.bankName}}</a>
           </li>
         </ul>
       </van-cell-group>
@@ -25,7 +29,7 @@
       </van-cell-group>
       <div class="dec" v-if="showBalance">
         钱包余额
-        <span>￥{{balance}}</span>
+        <span>￥{{currentUser.wallet.amount|formatMoney}}</span>
         <a @click="withdrawBtn">全部提现</a>
       </div>
       <div class="dec" v-if="showDec">
@@ -51,10 +55,6 @@ import CellGroup from "vant/lib/cell-group";
 import "vant/lib/cell-group/style";
 import Cell from "vant/lib/cell";
 import "vant/lib/cell/style";
-import DropdownMenu from "vant/lib/dropdown-menu";
-import "vant/lib/dropdown-menu/style";
-import DropdownItem from "vant/lib/dropdown-item";
-import "vant/lib/dropdown-item/style";
 import Field from "vant/lib/field";
 import "vant/lib/field/style";
 import Checkbox from "vant/lib/checkbox";
@@ -63,6 +63,7 @@ import Button from "vant/lib/button";
 import "vant/lib/button/style";
 import Icon from "vant/lib/icon";
 import "vant/lib/icon/style";
+import { mapGetters } from "vuex";
 
 export default {
   name: "withdraw",
@@ -71,45 +72,25 @@ export default {
     "van-button": Button,
     "van-cell-group": CellGroup,
     "van-cell": Cell,
-    "van-dropdown-menu": DropdownMenu,
-    "van-dropdown-item": DropdownItem,
     "van-field": Field,
     "van-checkbox": Checkbox,
     "van-icon": Icon
   },
   data() {
     return {
-      message: [
-        {
-          text: "中国银行",
-          str:
-            "http://img5.imgtn.bdimg.com/it/u=3770348613,1753312176&fm=200&gp=0.jpg"
-        },
-        {
-          text: "中国工商银行",
-          str:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3664982702,95222591&fm=27&gp=0.jpg"
-        },
-        {
-          text: "邮政银行",
-          str: "https://f11.baidu.com/it/u=166974344,852423378&fm=72"
-        },
-        {
-          text: "招商银行（2371）",
-          str: require("../../assets/images/zhaoshang.png")
-        }
-      ],
       falg: false,
-      box_text: "招商银行（2371）",
-      imgsrc: require("../../assets/images/zhaoshang.png"),
+      bank_cards: [],
       amount: "",
+      bankName: "请选择",
+      bankImg: "",
       showBalance: true,
       showDec: false,
-      balance: 6000,
       downIcon: true
     };
   },
+
   computed: {
+    ...mapGetters(["currentUser"]),
     canSubmit() {
       if (this.amount != "") {
         return true;
@@ -117,25 +98,35 @@ export default {
       return false;
     }
   },
+  created() {
+    this.$http
+      .get("/api/v1/bankcard/", { loading: true })
+      .then(({ data }) => {
+        this.bank_cards = data.bank_cards;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
   methods: {
     showlist: function() {
       this.falg = !this.falg;
       this.downIcon = !this.downIcon;
     },
-    checkThis: function(text, str) {
-      this.box_text = text;
-      this.imgsrc = str;
+    checkThis: function(bankName, bankImg) {
+      this.bankName = bankName;
+      this.bankImg = bankImg;
       this.falg = !this.falg;
       this.downIcon = !this.downIcon;
     },
     withdrawBtn() {
       this.showBalance = false;
       this.showDec = true;
-      this.amount = this.balance;
+      this.amount = this.currentUser.wallet.amount;
     },
     next() {
       this.$router.push({
-        name: "withdraw.paypwd",
+        name: "withdraw.paypwd"
       });
     }
   }
@@ -176,8 +167,8 @@ export default {
           align-items: center;
           justify-content: flex-end;
           img {
-            width: 0.64rem;
-            height: 0.64rem;
+            width: 0.853333rem;
+            height: 0.853333rem;
             padding-right: 0.426667rem;
           }
           .van-icon {
@@ -187,11 +178,11 @@ export default {
       }
     }
     .select_box {
-      background-color: #ffffff;
       width: 100%;
       position: absolute;
       z-index: 99999;
       padding: 0 0 0.426667rem 0;
+      background-color: #ffffff;
       li {
         display: flex;
         align-items: center;

@@ -23,10 +23,9 @@
     </div>
     <div class="store">
       <div class="store_title">
-        <img
-          src="../../assets/images/title_img.png"
-          alt
-        >
+        <div class="iconfont icon-new-icon"></div>
+        <div class="title">最新商品</div>
+        <div class="iconfont icon-new-icon right"></div>
       </div>
       <div class="list">
         <van-skeleton
@@ -166,7 +165,7 @@ export default {
     .top-search-l {
       display: flex;
       align-items: center;
-
+      width: 100%;
       img {
         width: 3.125rem;
         height: 3.125rem;
@@ -208,6 +207,16 @@ export default {
       line-height: 60px;
       justify-content: center;
       align-items: center;
+      .title{
+        font-size: 18px;
+      }
+      .iconfont{
+        font-size: 18px;
+        margin: 0 4px;
+        &.right{
+          transform: rotate(180deg);
+        }
+      }
     }
     .list {
       position: relative;

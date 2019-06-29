@@ -1,7 +1,7 @@
 <template>
   <div class="home-goods" @click="onClick">
     <div class="img">
-      <van-image :src="goods.logo+1" fit="cover"></van-image>
+      <van-image :src="goods.logo" fit="cover"></van-image>
     </div>
     <div class="info">
       <h4 class="title">{{ goods.title }}</h4>

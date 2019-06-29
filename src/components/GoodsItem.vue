@@ -1,7 +1,7 @@
 <template>
   <div class="home-goods" @click="onClick">
     <div class="img">
-      <van-image :src="goods.logo" fit="cover"></van-image>
+      <van-image :src="goods.logo+1" fit="cover"></van-image>
     </div>
     <div class="info">
       <h4 class="title">{{ goods.title }}</h4>
@@ -47,6 +47,10 @@ export default {
     overflow: hidden;
     .van-image{
       height: 100%;
+      width: 100%;
+      .van-image__error{
+        background-color: rgba(0,0,0,.25);
+      }
     }
   }
   .info{

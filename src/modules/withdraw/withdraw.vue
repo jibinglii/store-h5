@@ -99,12 +99,14 @@ export default {
     }
   },
   created() {
-    this.$http.get("/api/v1/bankcard/", { loading: true }).then(({ data }) => {
-      this.bank_cards = data.bank_cards;
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    this.$http
+      .get("/api/v1/bankcard/", { loading: true })
+      .then(({ data }) => {
+        this.bank_cards = data.bank_cards;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
   methods: {
     showlist: function() {
@@ -165,8 +167,8 @@ export default {
           align-items: center;
           justify-content: flex-end;
           img {
-            width: .853333rem;
-            height: .853333rem;
+            width: 0.853333rem;
+            height: 0.853333rem;
             padding-right: 0.426667rem;
           }
           .van-icon {

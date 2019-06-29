@@ -81,6 +81,7 @@
     <van-action-sheet
       v-model="showUpdate"
       title="修改分润比例"
+      :close-on-click-overlay="false"
     >
       <van-cell-group>
         <van-field
@@ -90,6 +91,7 @@
           autosize
           input-align="right"
           placeholder="请编辑推广费用比例"
+          id="profit_rate_goods"
         />
       </van-cell-group>
       <div class="btn">
@@ -154,6 +156,9 @@
         this.current = item
         this.profit_rate_goods = item.seller.profit_rate
         this.showUpdate = true
+        this.$nextTick(function () {
+          document.getElementById("profit_rate_goods").focus()
+        })
       },
       save(){
         this.$toast.loading({mask: true})
@@ -225,6 +230,9 @@
   };
 </script>
 <style lang="scss" scoped>
+  /deep/.van-field__control:disabled{
+    color: #333;
+  }
   .btn {
     text-align: center;
 

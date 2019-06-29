@@ -5,8 +5,7 @@
       url="me.me"
       right-text="提现记录"
       @click-right="$router.push({name: 'withdraw.history'})"
-    >
-    </x-header>
+    ></x-header>
     <div class="store_banner">
       <div class="store_banner_t">
         <span>可提现金额</span>
@@ -14,13 +13,7 @@
           <sup>￥</sup>
           {{ currentUser.wallet.amount|formatMoney }}
         </p>
-        <van-button
-          plain
-          hairline
-          type="primary"
-          class="withdraw"
-          @click="withdraw"
-        >申请提现</van-button>
+        <van-button plain hairline type="primary" class="withdraw" @click="withdraw">申请提现</van-button>
       </div>
     </div>
     <div class="settle">
@@ -31,10 +24,7 @@
       <div class="title">
         {{ month }}
         <div class="select">
-          <select
-            v-model="month"
-            @change="changeMonth"
-          >
+          <select v-model="month" @change="changeMonth">
             <option value="201906">201906</option>
             <option value="201905">201905</option>
             <option value="201904">201904</option>
@@ -42,16 +32,8 @@
         </div>
       </div>
       <div class="list">
-        <distributor-status-item
-          :item="item"
-          v-for="item in items"
-          :key="item.id"
-        ></distributor-status-item>
-        <infinite-loading
-          :identifier="infiniteId"
-          @infinite="infiniteHandler"
-          spinner="spiral"
-        >
+        <distributor-status-item :item="item" v-for="item in items" :key="item.id"></distributor-status-item>
+        <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="spiral">
           <div slot="no-more">没有更多数据啦...</div>
           <div slot="no-results">没有数据</div>
         </infinite-loading>
@@ -65,8 +47,10 @@ import distributorStatusItem from "./components/distributorStatusItem";
 import XHeader from "$components/XHeader";
 import Button from "vant/lib/button";
 import "vant/lib/button/style";
-import { mapGetters } from 'vuex'
-import InfiniteLoading from 'vue-infinite-loading';
+import DatetimePicker from "vant/lib/button";
+import "vant/lib/button/style";
+import { mapGetters } from "vuex";
+import InfiniteLoading from "vue-infinite-loading";
 export default {
   name: "settleManage",
   components: {
@@ -76,32 +60,32 @@ export default {
     InfiniteLoading
   },
   computed: {
-    ...mapGetters(['currentUser'])
+    ...mapGetters(["currentUser"])
   },
   data() {
     return {
       info: {},
       items: [],
       page: 1,
-      month: '201906',
-      infiniteId: +new Date(),
+      month: "201906",
+      infiniteId: +new Date()
     };
   },
   created() {
     this.getInfo();
-    this.$store.dispatch('loadUser')
+    this.$store.dispatch("loadUser");
   },
   methods: {
     changeMonth() {
-      console.log(1)
-      this.items = []
-      this.page = 1
+      console.log(1);
+      this.items = [];
+      this.page = 1;
       this.infiniteId += 1;
     },
     withdraw() {
       this.$router.push({
         name: "withdraw.withdraw"
-      })
+      });
     },
     async getInfo() {
       await this.$http.get("api/v2/user/settles/total").then(({ data }) => {
@@ -113,13 +97,13 @@ export default {
         params: {
           month: this.month,
           page: this.page,
-          include: 'order'
+          include: "order"
         },
         headers: {
-          'X-Store-Id': ''
+          "X-Store-Id": ""
         }
       };
-      this.$http.get('api/v2/user/settles', param).then(({ data }) => {
+      this.$http.get("api/v2/user/settles", param).then(({ data }) => {
         if (data.settles.data.length > 0) {
           this.page += 1;
           this.items.push(...data.settles.data);
@@ -128,7 +112,7 @@ export default {
         if (data.settles.per_page > data.settles.data.length) {
           $state.complete();
         }
-      })
+      });
     }
   }
 };
@@ -191,8 +175,15 @@ export default {
   background-color: white;
   padding: 10px 15px;
   margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   .select {
-    display: inline-block;
+    select {
+      padding: 10px;
+      border: solid 1px #f2f2f2;
+      outline: none;
+    }
   }
 }
 </style>

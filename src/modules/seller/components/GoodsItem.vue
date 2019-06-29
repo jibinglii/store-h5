@@ -39,6 +39,7 @@
         class="btn-white"
         @click="updateStatus(goods.uuid, 'delete')"
       >删除</button>
+
       <button
         v-if="goods.status == 5"
         class="btn-black"
@@ -49,11 +50,17 @@
         class="btn-black"
         @click="copy(goods)"
       >复制链接</button>
+
       <button
         v-if="goods.status == 4"
         class="btn-white"
         @click="updateStatus(goods.uuid, 'down')"
       >下架</button>
+      <button
+        v-if="goods.status == 4"
+        class="btn-black"
+        @click="assign"
+      >分配推广员</button>
       <a
         v-if="goods.status == 0"
         class="goods-btn btn-black"
@@ -107,6 +114,9 @@ export default {
         }, function (e) {
         })
       }
+    },
+    assign(){
+      this.$emit('assign', this.goods)
     }
   }
 }

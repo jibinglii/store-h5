@@ -1,111 +1,134 @@
 <template>
   <div class="storeManage">
-    <x-header title="结算管理" url="me.me"></x-header>
+    <x-header
+      title="结算管理"
+      url="me.me"
+      right-text="提现记录"
+      @click-right="$router.push({name: 'withdraw.history'})"
+    >
+    </x-header>
     <div class="store_banner">
       <div class="store_banner_t">
         <span>可提现金额</span>
         <p>
-          <sup>￥</sup>1635.00
+          <sup>￥</sup>
+          {{ currentUser.wallet.amount|formatMoney }}
         </p>
-        <van-button plain hairline type="primary" class="withdraw" @click="withdraw">申请提现</van-button>
-      </div>
-      <div class="store_banner_b">
-        <div class="store_banner_l">
-          <p>
-            <sup>￥</sup>
-            {{ info.total_sale|formatMoney}}
-          </p>
-          <span>已完成交易</span>
-        </div>
-        <div class="store_banner_r">
-          <p>
-            <sup>￥</sup>
-            {{ info.total_sale_month | formatMoney }}
-          </p>
-          <span>未完成交易</span>
-        </div>
+        <van-button
+          plain
+          hairline
+          type="primary"
+          class="withdraw"
+          @click="withdraw"
+        >申请提现</van-button>
       </div>
     </div>
-    <van-tabs v-model="active">
-      <van-tab
-        :title="item"
-        title-active-color="#000000"
-        v-for="(item, index) in tabs"
-        :key="index"
-      ></van-tab>
-    </van-tabs>
-    <div class="list">
-      <div class="date-select">
-        <p>2019年3月</p>
+    <div class="settle">
+      <div class="total">
+        <h6>总金额</h6>
+        <span>￥{{ info.settled|formatMoney }}</span>
       </div>
-      <div v-for="(item,key) in goods" :key="key">
-        <distributor-status-item :item="item"></distributor-status-item>
+      <div class="title">
+        {{ month }}
+        <div class="select">
+          <select
+            v-model="month"
+            @change="changeMonth"
+          >
+            <option value="201906">201906</option>
+            <option value="201905">201905</option>
+            <option value="201904">201904</option>
+          </select>
+        </div>
+      </div>
+      <div class="list">
+        <distributor-status-item
+          :item="item"
+          v-for="item in items"
+          :key="item.id"
+        ></distributor-status-item>
+        <infinite-loading
+          :identifier="infiniteId"
+          @infinite="infiniteHandler"
+          spinner="spiral"
+        >
+          <div slot="no-more">没有更多数据啦...</div>
+          <div slot="no-results">没有数据</div>
+        </infinite-loading>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import distributorStatusItem from "../distribution/components/distributorStatusItem";
+import distributorStatusItem from "./components/distributorStatusItem";
 import XHeader from "$components/XHeader";
 import Button from "vant/lib/button";
 import "vant/lib/button/style";
-import Tabs from "vant/lib/tabs";
-import Tab from "vant/lib/tab";
-import "vant/lib/tabs/style";
-import "vant/lib/tab/style";
-
+import { mapGetters } from 'vuex'
+import InfiniteLoading from 'vue-infinite-loading';
 export default {
-  name: "storeManage",
+  name: "settleManage",
   components: {
     XHeader,
     "van-button": Button,
-    "van-tabs": Tabs,
-    "van-tab": Tab,
-    "distributor-status-item": distributorStatusItem
+    "distributor-status-item": distributorStatusItem,
+    InfiniteLoading
+  },
+  computed: {
+    ...mapGetters(['currentUser'])
   },
   data() {
     return {
       info: {},
-      tabs: ["全部", "已结算", "未结算"],
-      active: 0,
-      goods: [
-        {
-          id: "ID：1524123",
-          title: "王者荣耀-全区全服-全区全服",
-          status: "已结算",
-          price: "100元",
-          transacDate: "2019-03-27 23:37:35",
-          settlementDate: "2019-06-27 23:37:35",
-          thumb:
-            "https://img.yzcdn.cn/public_files/2017/10/24/f6aabd6ac5521195e01e8e89ee9fc63f.jpeg"
-        },
-        {
-          id: "ID：1524123",
-          title: "王者荣耀-全区全服-全区全服",
-          status: "未结算",
-          price: "100元",
-          transacDate: "2019-03-27 23:37:35",
-          settlementDate: "2019-06-27 23:37:35",
-          thumb:
-            "https://img.yzcdn.cn/public_files/2017/10/24/f6aabd6ac5521195e01e8e89ee9fc63f.jpeg"
-        }
-      ]
+      items: [],
+      page: 1,
+      month: '201906',
+      infiniteId: +new Date(),
     };
   },
   created() {
     this.getInfo();
+    this.$store.dispatch('loadUser')
   },
   methods: {
-    withdraw () {
+    changeMonth() {
+      console.log(1)
+      this.items = []
+      this.page = 1
+      this.infiniteId += 1;
+    },
+    withdraw() {
       this.$router.push({
         name: "withdraw.withdraw"
       })
     },
     async getInfo() {
-      await this.$http.get("api/v1/seller/total").then(({ data }) => {
+      await this.$http.get("api/v2/user/settles/total").then(({ data }) => {
         this.info = data;
       });
+    },
+    async infiniteHandler($state) {
+      let param = {
+        params: {
+          month: this.month,
+          page: this.page,
+          include: 'order'
+        },
+        headers: {
+          'X-Store-Id': ''
+        }
+      };
+      this.$http.get('api/v2/user/settles', param).then(({ data }) => {
+        if (data.settles.data.length > 0) {
+          this.page += 1;
+          this.items.push(...data.settles.data);
+          $state.loaded();
+        }
+        if (data.settles.per_page > data.settles.data.length) {
+          $state.complete();
+        }
+      })
     }
   }
 };
@@ -118,18 +141,16 @@ export default {
   }
   .store_banner {
     width: 100%;
-    height: 8.533333rem;
     background-image: url(../../assets/images/bg.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     text-align: center;
-    padding: 0.853333rem 0;
     color: #ffffff;
     .store_banner_t {
       line-height: 1.4;
       padding: 0.426667rem 0;
       span {
-        font-size: 0.512rem;
+        font-size: 0.7rem;
         color: #b7b7b7;
       }
       p {
@@ -149,42 +170,29 @@ export default {
         border-radius: 0.213333rem;
       }
     }
-    .store_banner_b {
-      display: flex;
-      align-items: center;
-      .store_banner_l,
-      .store_banner_r {
-        flex: 1;
-        text-align: center;
-        line-height: 1.1;
-        p {
-          font-size: 0.853333rem;
-
-          sup {
-            font-size: 0.597333rem;
-            font-weight: 400;
-          }
-        }
-        span {
-          font-size: 0.512rem;
-          font-weight: 200;
-          color: #b7b7b7;
-        }
-      }
+  }
+}
+.settle {
+  .total {
+    background-color: white;
+    margin: 0 0 5px 0;
+    padding: 10px 15px;
+    h6 {
+      font-size: 12px;
+      font-weight: 200;
+      padding-left: 4px;
+    }
+    span {
+      color: #ff0000;
     }
   }
-  /deep/.van-tabs__line {
-    background-color: #000000;
-    height: 2px;
-  }
-  .list {
-    .date-select {
-      p {
-        font-size: 0.682667rem;
-        font-weight: 600;
-        padding: 0.426667rem 0.64rem;
-      }
-    }
+}
+.title {
+  background-color: white;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  .select {
+    display: inline-block;
   }
 }
 </style>

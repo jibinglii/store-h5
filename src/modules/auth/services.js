@@ -21,4 +21,4 @@ export const postLoginByCode = ({ username, code }) => {
         })
     }
     // get current user's data
-export const loadUserData = () => http.get('api/v1/auth/me', { params: { include: 'store' } }).catch(() => {})
+export const loadUserData = () => http.get('api/v1/auth/me', { params: { include: 'store,wallet' } }).catch(() => {})

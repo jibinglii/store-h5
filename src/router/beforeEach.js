@@ -15,7 +15,7 @@ const beforeEach = (to, from, next) => {
     .dispatch('checkUserToken')
     .then(() => {
       if (vuex.getters.isLogged && to.path.indexOf('auth') > 0) {
-        return next({ name: 'home' })
+        return next({ name: 'home', params: {store: window.STORE_ID} })
       }
       return next()
     })

@@ -51,10 +51,6 @@ import CellGroup from "vant/lib/cell-group";
 import "vant/lib/cell-group/style";
 import Cell from "vant/lib/cell";
 import "vant/lib/cell/style";
-import DropdownMenu from "vant/lib/dropdown-menu";
-import "vant/lib/dropdown-menu/style";
-import DropdownItem from "vant/lib/dropdown-item";
-import "vant/lib/dropdown-item/style";
 import Field from "vant/lib/field";
 import "vant/lib/field/style";
 import Checkbox from "vant/lib/checkbox";
@@ -71,8 +67,6 @@ export default {
     "van-button": Button,
     "van-cell-group": CellGroup,
     "van-cell": Cell,
-    "van-dropdown-menu": DropdownMenu,
-    "van-dropdown-item": DropdownItem,
     "van-field": Field,
     "van-checkbox": Checkbox,
     "van-icon": Icon
@@ -135,7 +129,7 @@ export default {
     },
     next() {
       this.$router.push({
-        name: "withdraw.paypwd",
+        name: "withdraw.paypwd"
       });
     }
   }
@@ -187,11 +181,11 @@ export default {
       }
     }
     .select_box {
-      background-color: #ffffff;
       width: 100%;
       position: absolute;
       z-index: 99999;
       padding: 0 0 0.426667rem 0;
+      background-color: #ffffff;
       li {
         display: flex;
         align-items: center;

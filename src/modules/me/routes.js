@@ -106,4 +106,13 @@ export default [{
         component: () =>
             import ('./StoreSetting')
     },
+    {
+        path: 'me/settlemanage',
+        name: 'me.settlemanage',
+        meta: {
+            requiresAuth: true
+        },
+        component: () =>
+            import ('./settleManage')
+    },
 ]

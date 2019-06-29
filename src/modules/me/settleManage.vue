@@ -7,7 +7,7 @@
         <p>
           <sup>￥</sup>1635.00
         </p>
-        <van-button plain hairline type="primary" class="withdraw">申请提现</van-button>
+        <van-button plain hairline type="primary" class="withdraw" @click="withdraw">申请提现</van-button>
       </div>
       <div class="store_banner_b">
         <div class="store_banner_l">
@@ -97,6 +97,11 @@ export default {
     this.getInfo();
   },
   methods: {
+    withdraw () {
+      this.$router.push({
+        name: "withdraw.withdraw"
+      })
+    },
     async getInfo() {
       await this.$http.get("api/v1/seller/total").then(({ data }) => {
         this.info = data;

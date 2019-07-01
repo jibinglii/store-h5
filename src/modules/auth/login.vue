@@ -129,8 +129,8 @@ export default {
       isagree: true,
       type: 'code',
       param: {
-        username: '17693355155',
-        password: '123456a.',
+        username: '',
+        password: '',
         code: ''
       },
       vCount: null,

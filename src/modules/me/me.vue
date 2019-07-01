@@ -17,6 +17,7 @@
       :title="item.title"
       v-for="item in list"
       :key="item.title"
+      v-if="item.show"
     >
       <cell
         :title="inner.title"
@@ -50,6 +51,7 @@ export default {
       list: [
         {
           title: "我是买家",
+          show: true,
           sub: [
             {
               title: '我的订单',
@@ -61,6 +63,7 @@ export default {
         },
         {
           title: '我是卖家',
+          show: this.$currentStore().user_id == this.$user().id,
           sub: [
             {
               title: '店铺管理',
@@ -90,6 +93,7 @@ export default {
         },
         {
           title: '常用工具',
+          show: true,
           sub: [
             {
               title: '我的收藏',
@@ -107,7 +111,7 @@ export default {
               title: '我的消息',
               url: '',
               img: '/images/store/xiaoxi.png',
-              show: true
+              show: false
             },
             {
               title: '意见反馈',
@@ -133,7 +137,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["currentUser"])
+    ...mapGetters(["currentUser", "currentStore"])
   }
 };
 </script>

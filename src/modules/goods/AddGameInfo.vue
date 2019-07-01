@@ -82,12 +82,12 @@
       return {
         serverName: "...",
         param: {
-          title: "Test",
-          content: "Test",
+          title: "",
+          content: "",
           game_id: this.$route.params.id,
-          amount: "5",
+          amount: "",
           store_nums: 1,
-          images: ['https://aixuexue-back.oss-cn-beijing.aliyuncs.com/20190523/722a5a8732820bf4/df7de331dbfa9b17.jpeg'],
+          images: [],
           server_id: 0,
           type2: 0,
           device: 0

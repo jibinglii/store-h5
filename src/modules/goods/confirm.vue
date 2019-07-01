@@ -93,8 +93,8 @@ export default {
       goods: {},
       serviceColumns: [],
       defaultIndex: 1,
-      receiver_name: 'yjq',
-      receiver_mobile: '17693355155',
+      receiver_name: '',
+      receiver_mobile: '',
       services: [{"name":"30天担保产品","value":"1","day":30,"rate":0.1},{"name":"60天担保产品","value":"2","day":60,"rate":0.15},{"name":"不参与担保服务","value":"0","day":0,"rate":0}],
       serviceValue: {
         value: '',
@@ -116,7 +116,7 @@ export default {
   created() {
     this.goodsId = this.$route.params.goods
     this.getDetail();
-    // this.getSaleProtocol();
+    this.getSaleProtocol();
   },
   methods: {
     next() {
@@ -183,8 +183,8 @@ export default {
       this.$refs.agree.show()
     },
     getSaleProtocol() {
-      protocol.getProtocol('insure').then(res => {
-        this.insureContent = res.data.data.content
+      protocol.getProtocol('insure').then(data => {
+        this.insureContent = data.data.content
       })
     },
   }

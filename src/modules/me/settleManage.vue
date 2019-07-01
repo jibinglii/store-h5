@@ -31,7 +31,7 @@
           </select>
         </div>
       </div> -->
-      <van-field-data v-model="month"></van-field-data>
+      <settle-filter @confirm="confirm"></settle-filter>
       <div class="list">
         <distributor-status-item :item="item" v-for="item in items" :key="item.id"></distributor-status-item>
         <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="spiral">
@@ -45,20 +45,20 @@
 
 <script>
 import distributorStatusItem from "./components/distributorStatusItem";
-import VantFieldDate from "$components/VantFieldDate";
 import XHeader from "$components/XHeader";
 import Button from "vant/lib/button";
 import "vant/lib/button/style";
 import { mapGetters } from "vuex";
 import InfiniteLoading from "vue-infinite-loading";
+import SettleFilter from './components/SettleFilter'
 export default {
   name: "settleManage",
   components: {
     XHeader,
     "van-button": Button,
-    "van-field-data": VantFieldDate,
     "distributor-status-item": distributorStatusItem,
-    InfiniteLoading
+    InfiniteLoading,
+    SettleFilter
   },
   computed: {
     ...mapGetters(["currentUser"])
@@ -78,8 +78,11 @@ export default {
     this.$store.dispatch("loadUser");
   },
   methods: {
+    confirm (date) {
+      this.month = date
+      this.changeMonth()
+    },
     changeMonth() {
-      console.log(1);
       this.items = [];
       this.page = 1;
       this.infiniteId += 1;
@@ -106,7 +109,6 @@ export default {
         }
       };
       this.$http.get("api/v2/user/settles", param).then(({ data }) => {
-        console.log(data)
         if (data.settles.data.length > 0) {
           this.page += 1;
           this.items.push(...data.settles.data);

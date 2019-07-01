@@ -31,7 +31,7 @@
           text="查看已发布商品"
           style="width:80%"
           type="primary"
-          @click.native="redirect('/shop/store.html')"
+          @click.native="$router.push({name: 'seller/goods'})"
         ></x-button>
         <x-button
           v-if="id==3"
@@ -99,13 +99,13 @@ export default {
     if (id != undefined) {
       this.getFuiouH5(id)
     } else {
-      this.getDetail();
+      this.getDetail(id);
     }
   },
   mounted() {
     if (this.id == 2) {
       user.getAuthStatus().then(({ data }) => {
-        if (data.data.auth_status.is_auth == 0 || data.data.auth_status.is_auth == 4) {
+        if (data.auth_status.is_auth == 0 || data.auth_status.is_auth == 4) {
           this.$alert({ 'title': '提示', content: "您还没有认证，请前往认证" }).then(() => {
             window.soogua.postMessage(JSON.stringify({
               "action": "route",
@@ -136,16 +136,18 @@ export default {
         this.order = data.order;
       })
     },
-    async getDetail() {
+    async getDetail(id) {
       let orderId = this.$route.params.id
-      this.$http.get('/api/v1/order/' + orderId, {
-        params: {
-          include: 'goods',
-          'fields[goods]': 'id,title,server_name,game_name,amount,images'
-        }, loading: true
-      }).then(({ data }) => {
-        this.order = data.order;
-      })
+      if (id != undefined){
+        this.$http.get('/api/v1/order/' + orderId, {
+          params: {
+            include: 'goods',
+            'fields[goods]': 'id,title,server_name,game_name,amount,images'
+          }, loading: true
+        }).then(({ data }) => {
+          this.order = data.order;
+        })
+      }
     },
     connectSaler(goodsId, user_id) {
       // 联系卖家

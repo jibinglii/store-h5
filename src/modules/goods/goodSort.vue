@@ -1,13 +1,13 @@
 <template>
   <div>
     <x-header title="选择分类" back-url="me.me"></x-header>
-    <van-row class="goods-sort" gutter="10">
+    <van-row class="goods-sort">
       <van-col span="12" v-for="(item) in goodSort" :key="item.id">
-        <dl  @click="onClick(item.dec)">
+        <dl  @click="onClick(item)">
           <dt>
             <img :src="item.img" alt>
           </dt>
-          <dd>{{item.dec}}</dd>
+          <dd>{{item.desc}}</dd>
         </dl>
       </van-col>
     </van-row>
@@ -32,36 +32,43 @@ export default {
     return {
       goodSort: [
         {
-          id: "1",
-          img: require("../../assets/images/liuliang.png"),
-          dec: "流量"
-        },
-        {
           id: "2",
-          img: require("../../assets/images/zhanghao.png"),
-          dec: "账号"
+          img: require("../../assets/images/liuliang.png"),
+          desc: "流量"
         },
         {
           id: "3",
-          img: require("../../assets/images/youxi.png"),
-          dec: "游戏"
+          img: require("../../assets/images/zhanghao.png"),
+          desc: "账号"
         },
         {
           id: "4",
+          img: require("../../assets/images/youxi.png"),
+          desc: "游戏"
+        },
+        {
+          id: "5",
           img: require("../../assets/images/fuwu.png"),
-          dec: "服务"
+          desc: "服务"
         }
       ]
     };
   },
   methods: {
-    onClick(dec) {
-      this.$router.push({
-        name: "goods.add",
-        params: {
-          dec: dec
-        }
-      });
+    onClick(item) {
+      if (_.indexOf(["4", "5"], item.id) !== -1){
+        this.$router.push({
+          name: "goods.add.game"
+        });
+      } else {
+        this.$router.push({
+          name: "goods.add",
+          query: {
+            id: item.id,
+            desc: item.desc
+          }
+        });
+      }
     }
   }
 };
@@ -70,6 +77,11 @@ export default {
 <style lang="scss" scoped>
 .goods-sort {
   padding: 0.426667rem;
+  .van-col{
+    &:nth-child(odd){
+      padding-right: 10px;
+    }
+  }
   dl {
     background-color: #ffffff;
     text-align: center;

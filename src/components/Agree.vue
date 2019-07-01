@@ -54,7 +54,7 @@ export default {
   line-height: 180%;
 
   .xy-title{
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: bold;
     line-height: 60px;
     border-bottom: solid 1px #f2f2f2;
@@ -64,6 +64,7 @@ export default {
   .xy-content{
     padding:20px;
     margin-bottom:60px;
+    font-size: 15px;
   }
 }
 
@@ -78,7 +79,7 @@ export default {
   background-color: white;
 //   border:solid 1px #f2f2f2;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 16px;
   color: #020202;
   border-top: 1px solid #f2f2f2;
 }

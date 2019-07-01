@@ -61,11 +61,12 @@
         class="btn-black"
         @click="assign"
       >分配推广员</button>
-      <a
+      <router-link
         v-if="goods.status == 0"
         class="goods-btn btn-black"
-        :href="'/shop/goods_info_edit/'+ goods.uuid + '.html'"
-      >修改</a>
+        :to="{name: 'goods.edit.game.info', params: {id: goods.uuid}}"
+        replace
+      >修改</router-link>
     </div>
   </div>
 </template>

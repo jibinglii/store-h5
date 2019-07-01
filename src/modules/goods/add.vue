@@ -2,287 +2,348 @@
   <div class="add">
     <x-header title="添加商品"></x-header>
     <van-cell-group>
-      <van-cell title="商品类型">{{goodsType}}</van-cell>
-    </van-cell-group>
-    <van-cell-group>
-      <van-field v-model="params.gameName" label="游戏名称" placeholder="请输入游戏名称" class="gameName"/>
-    </van-cell-group>
-    <van-cell-group>
-      <van-cell title="平台类型" is-link>
+      <van-cell title="商品类型">{{$route.query.desc}}</van-cell>
+      <van-cell title="交易类型" is-link>
         <van-dropdown-menu>
-          <van-dropdown-item v-model="currentMobileType" :options="mobileTypeOption"/>
+          <van-dropdown-item v-model="param.type2" :options="typeOptions"/>
         </van-dropdown-menu>
       </van-cell>
-    </van-cell-group>
-    <van-cell-group>
-      <van-cell title="商品品类" is-link>
+      <van-cell title="Game" is-link>
         <van-dropdown-menu>
-          <van-dropdown-item v-model="producType" :options="producTypeOption"/>
+          <van-dropdown-item v-model="param.game_id" :options="gamesOptions" @change="loadServer"/>
         </van-dropdown-menu>
       </van-cell>
-    </van-cell-group>
-    <van-cell-group>
-      <van-field v-model="params.goodsTitle" label="商品标题" placeholder="请输入商品标题"/>
-    </van-cell-group>
-    <van-cell-group>
-      <van-cell title="游戏区服" is-link>
-        <van-dropdown-menu>
-          <van-dropdown-item v-model="value3" :options="option3"/>
-        </van-dropdown-menu>
+      <van-cell title="Server" is-link v-show="param.game_id != 0" @click="show=true">
+        {{ serverName }}
       </van-cell>
     </van-cell-group>
-    <van-cell-group>
-      <van-field v-model="params.price" label="商品价格" placeholder="请输入商品价格" class="price"/>
-    </van-cell-group>
-    <van-cell-group>
-      <van-field v-model="params.stock" label="商品库存" placeholder="请输入商品库存" class="stock"/>
-    </van-cell-group>
-    <van-cell-group>
-      <uploader title="商品图片" :limit="15" v-model="params.images"></uploader>
-    </van-cell-group>
-    <van-cell-group class="intro-cell">
-      <van-cell title="商品介绍"/>
-      <van-field
-        v-model="params.content"
-        type="textarea"
-        autosize
-        placeholder="请输入商品介绍"
-        class="intro"
-      />
-    </van-cell-group>
-    <div class="agreement">
-      <label for="weuiAgree" class="weui-agree">
-        <van-checkbox v-model="isagree"></van-checkbox>
-        <span class="weui-agree__text">
-          我已阅读并同意
-          <a @click="onClick" href="javascript:void(0)">《商品发布协议》</a>
-        </span>
-      </label>
-      <agree title="商品发布协议" ref="agree" :content="saleProtocol"/>
-    </div>
+    <x-cell-group :footer-title="'您当前商品成交后，所需服务费为' + formatMoney(serviceFee) + '元'" title="基本信息">
+      <input-cell v-model="param.title" title="商品标题" placeholder="一句话介绍下商品吧" :maxlength="20"></input-cell>
+      <input-cell
+        v-model="param.amount"
+        title="发布价格"
+        type="number"
+        placeholder="5元-100万之间"
+        unit="元"
+        :min="5"
+        :max="1000000"
+      ></input-cell>
+      <input-cell
+        v-model.number="param.store_nums"
+        title="发布数量"
+        type="number"
+        placeholder="请输入数量"
+        unit="件"
+        :min="1"
+      ></input-cell>
+    </x-cell-group>
+
+    <x-cell-group footer-title="一次最多可选15张，可以上传你认为有卖点的商品图片，请勿添加联系方式和其他平台信息，否则将导致商品下架。" footer-title-size="12px">
+      <text-cell v-model="param.content" text placeholder="在这里描述您的商品" rows="5"/>
+      <uploader title="商品效果图" v-model="param.images" :limit="15"></uploader>
+    </x-cell-group>
+
+    <label for="weuiAgree" class="weui-agree">
+      <input id="weuiAgree" type="checkbox" v-model="isagree" checked class="weui-agree__checkbox">
+      <span class="weui-agree__text">
+        我同意
+        <a @click="showAgree" href="javascript:void(0)">《商品寄售服务协议》</a>
+      </span>
+    </label>
+    <agree title="商品寄售服务协议" ref="agree" :content="saleProtocol"/>
     <div class="btn">
       <van-button type="primary" hairline size="large" @click="next()">提交审核</van-button>
     </div>
+    <van-popup v-model="show" position="bottom" :overlay="true" :style="{ height: '100%' }">
+      <van-tree-select
+        :items="items"
+        :main-active-index="mainActiveIndex"
+        :active-id="param.server_id"
+        @itemclick="checkServer"
+        @navclick="onNavClick"
+      >
+
+      </van-tree-select>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import XHeader from "$components/XHeader";
-import Agree from "$components/Agree";
-import CellGroup from "vant/lib/cell-group";
-import Cell from "vant/lib/cell";
-import "vant/lib/cell/style";
-import DropdownMenu from "vant/lib/dropdown-menu";
-import "vant/lib/dropdown-menu/style";
-import DropdownItem from "vant/lib/dropdown-item";
-import "vant/lib/dropdown-item/style";
-import Field from "vant/lib/field";
-import "vant/lib/field/style";
-import Checkbox from "vant/lib/checkbox";
-import "vant/lib/checkbox/style";
-import Button from "vant/lib/button";
-import "vant/lib/button/style";
-import XUploader from "$components/XUploader";
-// import protocol from '../api/protocol';
+  import XHeader from "$components/XHeader";
+  import XPicker from "$components/XPicker";
+  import Agree from "$components/Agree";
+  import CellGroup from "vant/lib/cell-group";
+  import Cell from "vant/lib/cell";
+  import "vant/lib/cell/style";
+  import DropdownMenu from "vant/lib/dropdown-menu";
+  import "vant/lib/dropdown-menu/style";
+  import DropdownItem from "vant/lib/dropdown-item";
+  import "vant/lib/dropdown-item/style";
+  import Button from "vant/lib/button";
+  import "vant/lib/button/style";
+  import XUploader from "$components/XUploader";
+  import protocol from '$api/protocol'
+  import XCellGroup from "$components/XCellGroup";
+  import InputCell from "$components/InputCell";
+  import TextCell from "$components/TextCell";
+  import {mapGetters} from 'vuex'
+  import Popup from 'vant/lib/popup';
+  import 'vant/lib/popup/style';
 
-export default {
-  name: "goods-sort",
-  components: {
-    XHeader,
-    "van-button": Button,
-    "van-cell-group": CellGroup,
-    "van-cell": Cell,
-    "van-dropdown-menu": DropdownMenu,
-    "van-dropdown-item": DropdownItem,
-    "van-field": Field,
-    "van-checkbox": Checkbox,
-    [XUploader.name]: XUploader,
-    Agree
-  },
-  data() {
-    return {
-      params: {
-        goodsTitle: "",
-        gameName: "",
-        content: "",
-        price: "",
-        stock: "",
-        images: []
+  import TreeSelect from 'vant/lib/tree-select'
+  import 'vant/lib/tree-select/style'
+  export default {
+    name: "goods-sort",
+    components: {
+      XHeader,
+      "van-button": Button,
+      "van-cell-group": CellGroup,
+      "van-cell": Cell,
+      "van-dropdown-menu": DropdownMenu,
+      "van-dropdown-item": DropdownItem,
+      [XUploader.name]: XUploader,
+      Agree,
+      XPicker, XCellGroup, InputCell, TextCell,
+      [Popup.name]: Popup,
+      [TreeSelect.name]: TreeSelect
+    },
+    computed: {
+      ...mapGetters(['currentUser']),
+      serviceFee() {
+        return this.param.amount * this.currentUser.service_fee;
       },
-      goodsType: "",
-      currentMobileType: 0,
-      producType: 0,
-      value3: 0,
-      avatar: [],
-      isagree: true,
-      saleProtocol: "",
-      mobileTypeOption: [
-        { text: "苹果端", value: 0 },
-        { text: "安卓端", value: 1 },
-        { text: "PC端", value: 2 }
-      ],
-      producTypeOption: [
-        { text: "游戏", value: 0 },
-        { text: "流量", value: 1 },
-        { text: "账号", value: 2 },
-        { text: "服务", value: 3 }
-      ],
-      option3: [
-        { text: "1区", value: 0 },
-        { text: "2区", value: 1 },
-        { text: "3区", value: 2 }
-      ]
-    };
-  },
-  created() {
-    this.goodsType = this.$route.params.dec;
-  },
-  methods: {
-    onClick() {},
-    next() {
-      if (this.params.goodsTitle == "") {
-        this.$toast({ message: "商品标题不能为空" });
-      } else if (this.params.price == "") {
-        this.$toast({ message: "商品价格不能为空" });
-      } else if (this.params.stock == "") {
-        this.$toast({ message: "商品库存不能为空" });
-      } else if (this.params.gameName == "") {
-        this.$toast({ message: "商品名称不能为空" });
-      }
-      if (!this.isagree) {
-        this.$toast("请勾选《商品发布协议》");
-      } else {
-        if (!this.saving) {
-          this.saving = true;
-          // this.$loading.show("商品保存中");
-          this.$http
-            .post("api/v1/goods", this.param)
-            .then(response => {
-              this.saving = false;
-              this.$loading.hide();
-              if (this.hasSpec) {
-                let uuid = response.data.data.uuid;
-                let url =
-                  "/shop/goods_spec_add/" +
-                  this.param.game_id +
-                  ".html?id=" +
-                  uuid +
-                  "&server_name=" +
-                  this.gameName;
-                location.href = url;
-              } else {
-                let url = "/shop/result/2.html";
-                location.href = url;
+      typeOptions() {
+        return this.types[this.$route.query.id]
+      },
+      gamesOptions() {
+        let re = []
+        this.games.forEach(item => {
+          re.push({text: item.name, value: item.id})
+        })
+        return re
+      },
+      hasSpec() {
+        return this.spec.length > 0
+      },
+      items () {
+        let items = []
+        Object.keys(this.servers).forEach(top => {
+          let item = {text: top, children: []}
+          Object.keys(this.servers[top]).forEach(sec => {
+            item.children.push(
+              {
+                id: this.servers[top][sec],
+                text: sec
               }
-            })
-            .catch(fail => {
-              this.$toast(fail.response.data.message);
-              this.saving = false;
-              this.$loading.hide();
-            });
+            )
+          })
+          items.push(item)
+        })
+        return items
+      }
+    },
+    data() {
+      return {
+        serverName: '点击选择',
+        mainActiveIndex: 0,
+        types: {
+          "2": [
+            {"value": "301", "text": "社群流量"},
+            {"value": "300", "text": "媒体流量"},
+            {"value": "302", "text": "站点流量"}
+          ],
+          "3": [
+            {"value": "401", "text": "自媒体账号"},
+            {"value": "400", "text": "网店账号"},
+            {"value": "402", "text": "社交账号"},
+            {"value": "403", "text": "视频账号"}
+          ]
+        },
+        games: [],
+        serversColumns: {},
+        saleProtocol: '',
+        param: {
+          game_id: '',
+          title: "Test",
+          content: "Test",
+          amount: "5",
+          store_nums: 1,
+          images: ['https://aixuexue-back.oss-cn-beijing.aliyuncs.com/20190523/722a5a8732820bf4/df7de331dbfa9b17.jpeg'],
+          server_id: 0,
+          type2: '',
+        },
+        isagree: true,
+        saving: false,
+        service_fee: 0,
+        game: {},
+        spec: [],
+        servers: [],
+        show: false,
+      };
+    },
+    created() {
+      if (this.$route.query.id == undefined) {
+        this.$router.back()
+      }
+      this.loadGame()
+      this.getSaleProtocol();
+    },
+    methods: {
+      onNavClick(index) {
+        this.mainActiveIndex = index;
+      },
+      checkServer (data) {
+        this.param.server_id = data.id
+        this.show = false
+        this.serverName = data.text
+      },
+      showAgree() {
+        this.$refs.agree.show();
+      },
+      getSaleProtocol() {
+        protocol.getProtocol('transaction').then(({data}) => {
+          this.saleProtocol = data.content
+        })
+      },
+      loadGame() {
+        this.$http.get('api/v1/games', {params: {type: this.$route.query.id}}).then(({data}) => {
+          this.games = data.games.data
+        })
+      },
+      loadServer(game_id) {
+        this.$http.get('api/v1/game/' + game_id).then(({data}) => {
+          this.servers = data.gameServer
+          this.game = data.game
+          this.spec = data.spec
+        })
+      },
+      next() {
+        let params = this.param
+        // 参数验证
+        if (this.param.type2 == ""){
+          this.$toast.fail('请选择交易类型')
+          return
+        }
+        if (this.param.game_id == ""){
+          this.$toast.fail('请选择Game')
+          return
+        }
+        if (!this.isagree) {
+          this.$alert("请勾选《商品寄售服务协议》");
+        } else {
+          if (!this.saving) {
+            this.saving = true;
+            this.$toast.loading({message: '商品保存中', mask: true});
+            this.$http
+              .post("api/v1/goods", params)
+              .then(response => {
+                this.saving = false;
+                this.$toast.clear()
+                if (this.hasSpec) {
+                  let uuid = response.data.uuid;
+                  this.$router.replace({
+                    name: 'goods.add.game.spec',
+                    params: {id: this.param.game_id},
+                    query: {
+                      id: uuid,
+                      server_name: this.serverName
+                    }
+                  })
+                } else {
+                  this.$router.replace({
+                    name: 'result',
+                    params: {
+                      'status': 2
+                    }
+                  })
+                }
+              })
+              .catch(fail => {
+                this.$alert(fail.response.data.message);
+                this.saving = false;
+                this.$toast.clear()
+              });
+          }
+
         }
       }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.add {
-  /deep/.van-cell-group {
-    .van-cell__title {
-      font-weight: 600;
-      font-size: 0.682667rem;
-    }
-    .van-dropdown-menu {
-      height: 24px;
-      .van-dropdown-menu__item {
-        display: block;
+  .add {
+    /deep/ .van-cell-group {
+      .van-cell__title {
+        font-weight: 600;
       }
+
+      .van-dropdown-menu {
+        height: 24px;
+
+        .van-dropdown-menu__item {
+          display: inline-block;
+        }
+
+        .van-hairline--top-bottom::after {
+          border-width: 0px;
+        }
+
+        .van-dropdown-menu__title::after {
+          display: none;
+        }
+
+        .van-cell__title {
+          text-align: left;
+          font-weight: normal;
+        }
+      }
+
       .van-hairline--top-bottom::after {
         border-width: 0px;
       }
-      .van-dropdown-menu__title {
-        font-size: .64rem;
-      }
-      .van-dropdown-menu__title::after {
-        border: none;
-      }
-      .van-cell__title {
-        text-align: left;
-      }
-    }
-    .van-hairline--top-bottom::after {
-      border-width: 0px;
-    }
-    .van-cell__value {
-      color: #000;
-      font-size: .64rem;
-    }
-    .van-field__control {
-      text-align: right;
-    }
-    .van-field__label {
-      font-weight: 600;
-    }
-    .price,
-    .stock {
-      position: relative;
-      input {
-        width: 89%;
-      }
-    }
-    .price::after {
-      content: "元";
-      position: absolute;
-      right: 0.853333rem;
-    }
-    .stock::after {
-      content: "件";
-      position: absolute;
-      right: 0.853333rem;
-    }
-    .weui-uploader__title {
-      font-size: 0.682667rem;
-      color: #000;
-      font-weight: 600;
-    }
-  }
-  /deep/.intro-cell {
-    .van-cell:not(:last-child)::after {
-      border: none;
-    }
-    .intro {
-      .van-field__control {
-        text-align: left;
-      }
-    }
-  }
-  /deep/.agreement {
-    .weui-agree {
-      display: flex;
-      .van-checkbox__icon--checked .van-icon {
-        background-color: #000;
-        border-color: #000;
-      }
-      .van-checkbox {
-        padding-right: 0.426667rem;
-      }
-      a {
+
+      .van-cell__value {
         color: #000;
       }
+
+      .van-field__control {
+        text-align: right;
+      }
+
+      .van-field__label {
+        font-weight: 600;
+      }
+
+      .weui-uploader__title {
+        color: #000;
+        font-weight: 600;
+      }
+    }
+
+    /deep/ .intro-cell {
+      .van-cell:not(:last-child)::after {
+        border: none;
+      }
+
+      .intro {
+        .van-field__control {
+          text-align: left;
+        }
+      }
+    }
+
+    .btn {
+      text-align: center;
+
+      .van-button {
+        width: 90%;
+        margin: 2.133333rem auto;
+        background: #000;
+        color: #ffffff;
+      }
     }
   }
-  .btn {
-    text-align: center;
-    .van-button {
-      width: 90%;
-      margin: 2.133333rem auto;
-      background: #000;
-      color: #ffffff;
-    }
-  }
-}
 </style>
 
 

@@ -21,8 +21,8 @@
         <h6>总金额</h6>
         <span>￥{{ info.settled|formatMoney }}</span>
       </div>
-      <div class="title">
-        {{ month }}
+      <!-- <div class="title">
+        {{ currentDate }}
         <div class="select">
           <select v-model="month" @change="changeMonth">
             <option value="201906">201906</option>
@@ -30,7 +30,8 @@
             <option value="201904">201904</option>
           </select>
         </div>
-      </div>
+      </div> -->
+      <van-field-data v-model="month"></van-field-data>
       <div class="list">
         <distributor-status-item :item="item" v-for="item in items" :key="item.id"></distributor-status-item>
         <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="spiral">
@@ -44,10 +45,9 @@
 
 <script>
 import distributorStatusItem from "./components/distributorStatusItem";
+import VantFieldDate from "$components/VantFieldDate";
 import XHeader from "$components/XHeader";
 import Button from "vant/lib/button";
-import "vant/lib/button/style";
-import DatetimePicker from "vant/lib/button";
 import "vant/lib/button/style";
 import { mapGetters } from "vuex";
 import InfiniteLoading from "vue-infinite-loading";
@@ -56,6 +56,7 @@ export default {
   components: {
     XHeader,
     "van-button": Button,
+    "van-field-data": VantFieldDate,
     "distributor-status-item": distributorStatusItem,
     InfiniteLoading
   },
@@ -67,7 +68,8 @@ export default {
       info: {},
       items: [],
       page: 1,
-      month: "201906",
+      currentDate: "",
+      month: "",
       infiniteId: +new Date()
     };
   },
@@ -104,6 +106,7 @@ export default {
         }
       };
       this.$http.get("api/v2/user/settles", param).then(({ data }) => {
+        console.log(data)
         if (data.settles.data.length > 0) {
           this.page += 1;
           this.items.push(...data.settles.data);

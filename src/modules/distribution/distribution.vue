@@ -13,9 +13,9 @@
 <!--      </div>-->
 <!--    </div>-->
     <van-cell-group>
-     <van-cell icon="todo-list-o" title="分销任务" is-link to="distributionproducts" />
-     <van-cell icon="bill-o" title="分销人员管理" is-link to="distributor" />
-     <van-cell icon="user-o" title="分销订单管理" is-link :to="{name: 'seller/orders'}" />
+     <van-cell icon="todo-list-o" title="分销任务" is-link to="distributionproducts"/>
+     <van-cell icon="bill-o" title="分销人员管理" is-link to="distributor" v-if="showPeople"/>
+     <van-cell icon="user-o" title="分销订单管理" is-link :to="{name: 'seller/orders'}" v-if="showPeople"/>
     </van-cell-group>
   </div>
 </template>
@@ -36,11 +36,11 @@ export default {
     "van-cell": Cell,
     "van-field": Field
   },
-  data() {
-    return {
+  computed: {
+    showPeople () {
+      return !(_.indexOf(this.$currentStore().roles,'推广员') != -1)
     }
   },
-  methods: {}
 };
 </script>
 <style lang="scss" scoped>

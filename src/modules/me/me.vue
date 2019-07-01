@@ -69,7 +69,7 @@ export default {
               title: '店铺管理',
               url: 'me.storemanage',
               img: '/images/store/dianpu.png',
-              show: true
+              show: _.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1
             },
             {
               title: '商品管理',
@@ -81,7 +81,7 @@ export default {
               title: '分销管理',
               url: 'distribution.distribution',
               img: '/images/store/fenxiao.png',
-              show: _.indexOf(this.$currentStore().roles,'渠道店铺') != -1
+              show: true,
             },
             {
               title: '结算管理',

@@ -6,20 +6,20 @@
       <van-cell-group>
         <van-cell title="到账银行卡">
           <span @click="showlist()" class="default_text">
-            <img :src="bankImg">
+            <i class="iconfont" :class="'icon-' + bankImg"></i>
             {{bankName}}
             <van-icon name="arrow" v-show="downIcon"/>
             <van-icon name="arrow-down" v-show="!downIcon"/>
           </span>
         </van-cell>
-        <ul v-show="falg" class="select_box">
+        <ul v-show="flag" class="select_box">
           <li
-            @click="checkThis(item.bank_info.bankName,item.bank_info.bankImg)"
+            @click="checkThis(item)"
             v-for="(item, index) in bank_cards"
             :key="index"
           >
-            <img :src="item.bank_info.bankImg">
-            <a href="javascript:void(0);">{{item.bank_info.bankName}}</a>
+            <i class="iconfont" :class="'icon-' + item.bank"></i>
+            <a href="javascript:void(0);">{{item.bank_info.bankName}} {{item.bankno_last4}}</a>
           </li>
         </ul>
       </van-cell-group>
@@ -41,12 +41,36 @@
           type="primary"
           hairline
           size="large"
-          @click="next()"
+          @click="pay"
           :class="{disabled: !canSubmit}"
         >预计24小时内到账，确认提现</van-button>
       </div>
     </div>
-    <a href class="quesBotm">常见问题</a>
+    <router-link :to="{name: 'me.helps'}" class="quesBotm">常见问题</router-link>
+    <van-popup
+      v-model="isShow"
+      position="bottom"
+      :overlay="true"
+    >
+      <div class="password-zone">
+        <div
+          class="close"
+          @click="close()"
+        ><i class="iconfont icon-close"></i></div>
+        <div class="title">请输入支付密码</div>
+        <van-password-input
+          :value="showValue"
+          :info="info"
+          @focus="showKeyboard = true"
+        />
+        <!-- 数字键盘 -->
+        <van-number-keyboard
+          :show="showKeyboard"
+          @input="onInput"
+          @delete="onDelete"
+        />
+      </div>
+    </van-popup>
   </div>
 </template>
 <script>
@@ -64,6 +88,14 @@ import "vant/lib/button/style";
 import Icon from "vant/lib/icon";
 import "vant/lib/icon/style";
 import { mapGetters } from "vuex";
+import Popup from 'vant/lib/popup';
+import 'vant/lib/popup/style';
+import PasswordInput from 'vant/lib/password-input'
+import NumberKeyBoard from 'vant/lib/number-keyboard'
+import 'vant/lib/password-input/style';
+import 'vant/lib/number-keyboard/style';
+
+import user from '$api/user'
 
 export default {
   name: "withdraw",
@@ -74,18 +106,26 @@ export default {
     "van-cell": Cell,
     "van-field": Field,
     "van-checkbox": Checkbox,
-    "van-icon": Icon
+    "van-icon": Icon,
+    [Popup.name]: Popup,
+    [PasswordInput.name]: PasswordInput,
+    [NumberKeyBoard.name]: NumberKeyBoard
   },
   data() {
     return {
-      falg: false,
+      flag: false,
       bank_cards: [],
       amount: "",
       bankName: "请选择",
       bankImg: "",
       showBalance: true,
       showDec: false,
-      downIcon: true
+      downIcon: true,
+      isShow: false,
+      showKeyboard: true,
+      showValue: '',
+      info: '',
+      bank: ''
     };
   },
 
@@ -103,31 +143,66 @@ export default {
       .get("/api/v1/bankcard/", { loading: true })
       .then(({ data }) => {
         this.bank_cards = data.bank_cards;
+        if (this.bank_cards.length == 0){
+          this.$alert('您还没有添加银行卡，点击前往添加').then(() => {
+            let redirect = encodeURIComponent(window.location.href);
+            this.$router.replace({name: 'banks.add', query: {redirect: redirect}})
+          })
+        }
       })
-      .catch(error => {
-        console.log(error);
-      });
   },
   methods: {
+    onInput(key) {
+      this.showValue = (this.showValue + key).slice(0, 6);
+      if (this.showValue.length == 6) {
+        // 验证密码
+        this.$toast.loading({message: '正在验证码支付密码...', mask: true});
+        user.veryPPwd(this.showValue, true).then(({ data }) => {
+          this.confirm()
+        }).catch(({ response }) => {
+          this.$toast({message: '支付密码输入错误'})
+          this.showValue = ''
+        })
+      }
+    },
+    onDelete() {
+      this.showValue = this.showValue.slice(0, this.showValue.length - 1);
+    },
+    close() {
+      this.isShow = false
+    },
     showlist: function() {
-      this.falg = !this.falg;
+      this.flag = !this.flag;
       this.downIcon = !this.downIcon;
     },
-    checkThis: function(bankName, bankImg) {
-      this.bankName = bankName;
-      this.bankImg = bankImg;
-      this.falg = !this.falg;
+    checkThis: function(bank) {
+      this.bankName = bank.bank_info.bankName + bank.bankno_last4;
+      this.bankImg = bank.bank;
+      this.flag = !this.flag;
       this.downIcon = !this.downIcon;
+      this.bank = bank
     },
     withdrawBtn() {
       this.showBalance = false;
       this.showDec = true;
       this.amount = this.currentUser.wallet.amount;
     },
-    next() {
-      this.$router.push({
-        name: "withdraw.paypwd"
-      });
+    pay() {
+      if (this.bank == '') {
+        this.$alert('请先选择银行卡').then(() => {
+          this.showlist()
+        })
+      } else {
+        this.isShow = true
+      }
+    },
+    confirm(){
+      let param = {bank_id: this.bank.id, amount: this.amount}
+      this.$toast.loading({mask: true})
+      this.$http.post('api/v2/user/withdraws/apply', param).then(()=>{
+        this.$toast.success('提现申请提交成功')
+        this.$router.back()
+      })
     }
   }
 };
@@ -248,5 +323,25 @@ export default {
   font-size: 0.597333rem;
   color: #999;
   text-align: center;
+}
+.password-zone {
+  height: 22rem;
+  position: relative;
+  .close {
+    font-size: 30px;
+    position: absolute;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    line-height: 28px;
+    text-align: center;
+  }
+  .title {
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    font-size: 12px;
+    color: #0079f3;
+  }
 }
 </style>

@@ -53,10 +53,10 @@ export default {
       isagree: false,
       saving: false,
       bankinfo:{
-        bankno: "6217998200001637184",
-        realname: "尤敬强",
-        mobile: "17693355155",
-        id_card: "622727199004107136",
+        bankno: "",
+        realname: "",
+        mobile: "",
+        id_card: "",
         is_default: 1
       },
       protocol: ''

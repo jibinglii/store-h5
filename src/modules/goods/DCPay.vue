@@ -118,7 +118,6 @@ export default {
       }
     },
     onInput(key) {
-      console.log(key)
       this.showValue = (this.showValue + key).slice(0, 6);
       if (this.showValue.length == 6) {
         // 验证密码

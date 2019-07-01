@@ -2,7 +2,6 @@
   <div>
     <x-header
       title="帮助中心"
-      back-url="/shop/me.html"
     ></x-header>
     <div class="header">
       <h1>您好</h1>

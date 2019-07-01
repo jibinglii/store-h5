@@ -9,15 +9,6 @@ export default [
       import ('./withdraw')
   },
   {
-    path: 'withdraw/paypwd',
-    name: 'withdraw.paypwd',
-    meta: {
-      requiresAuth: true
-    },
-    component: () =>
-      import ('./payPwd')
-  },
-  {
     path: 'withdraw/resultdetails',
     name: 'withdraw.resultdetails',
     meta: {

@@ -1,65 +1,101 @@
 <template>
   <div>
     <x-header title="提现记录"></x-header>
-    <ul class="list">
-      <li v-for="item in items" :key="item.id">
-        <div class="info_l">
-          <p class="bankno">{{ item.bankno }}</p>
+    <div class="withdraw-list">
+      <div class="item" v-for="item in items" :key="item.id">
+        <div class="amount">
+          <p class="p">{{ item.amount|formatMoney}}</p>
+          <p class="time">{{ item.created_at}}</p>
         </div>
-        <div class="info_r">
-          <h3>提现金额：{{ item.amount }}</h3>
-          <p>提现日期：{{ item.updated_at }}</p>
+        <div class="info">
+          <div class="status" v-html="item.status_label">
+          </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+    <infinite-loading @infinite="infiniteHandler" spinner="spiral">
+      <div slot="no-more">没有更多数据啦...</div>
+      <div slot="no-results">没有数据</div>
+    </infinite-loading>
   </div>
 </template>
 
 <script>
-import XHeader from "$components/XHeader";
-export default {
-  name: "withdraw-history",
-  components: {
-    XHeader
-  },
-  data() {
-    return {
-      items: []
-    };
-  },
-  created() {
-    this.$http.get("api/v2/user/withdraws").then(({ data }) => {
-      this.items = data.withdraws.data;
-      console.log(this.items);
-    });
-  },
-  methods: {}
-};
-</script>
-<style lang="scss" scoped>
-.list {
-  background: #ffffff;
-  li {
-    list-style: none;
-    padding: 0.853333rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: solid 1px #f2f2f2;
-    .bankno {
-      font-size: 0.64rem;
-      letter-spacing: 1px;
-    }
-    .info_r {
-      h3 {
-        font-size: 0.682667rem;
-        font-weight: 500;
+  import XHeader from "$components/XHeader";
+  import InfiniteLoading from "vue-infinite-loading";
+
+  export default {
+    name: "withdraw-history",
+    components: {
+      XHeader, InfiniteLoading
+    },
+    data() {
+      return {
+        items: [],
+        page: 1
+      };
+    },
+    created() {
+    },
+    methods: {
+      async infiniteHandler($state) {
+        let param = {
+          params: {
+            page: this.page,
+          }
+        };
+        this.$http.get("api/v2/user/withdraws", param).then(({data}) => {
+          if (data.withdraws.data.length > 0) {
+            this.page += 1;
+            this.items.push(...data.withdraws.data);
+            $state.loaded();
+          }
+          if (data.withdraws.per_page > data.withdraws.data.length) {
+            $state.complete();
+          }
+        });
       }
-      p {
-        font-size: 0.512rem;
-        color: #999;
+    }
+  };
+</script>
+<style lang="scss">
+  .withdraw-list {
+    background: #ffffff;
+    .item {
+      border-bottom: 1px #f2f2f2 solid;
+      height: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .amount {
+        padding-left: 15px;
+
+        .p {
+          font-size: 18px;
+
+        }
+
+        .time {
+          font-size: 15px;
+        }
+      }
+
+      .info {
+        padding-right: 15px;
+        font-size: 16px;
+        .status {
+          .text-blue {
+            color: #3490dc;
+          }
+          .text-red {
+            color: #e3342f;
+          }
+          .text-success {
+            color: #38c172;
+          }
+        }
       }
     }
   }
-}
 </style>

@@ -21,8 +21,8 @@
         <h6>总金额</h6>
         <span>￥{{ info.settled|formatMoney }}</span>
       </div>
-      <div class="title">
-        {{ month }}
+      <!-- <div class="title">
+        {{ currentDate }}
         <div class="select">
           <select v-model="month" @change="changeMonth">
             <option value="201906">201906</option>
@@ -30,7 +30,8 @@
             <option value="201904">201904</option>
           </select>
         </div>
-      </div>
+      </div> -->
+      <settle-filter @confirm="confirm"></settle-filter>
       <div class="list">
         <distributor-status-item :item="item" v-for="item in items" :key="item.id"></distributor-status-item>
         <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="spiral">
@@ -47,17 +48,17 @@ import distributorStatusItem from "./components/distributorStatusItem";
 import XHeader from "$components/XHeader";
 import Button from "vant/lib/button";
 import "vant/lib/button/style";
-import DatetimePicker from "vant/lib/button";
-import "vant/lib/button/style";
 import { mapGetters } from "vuex";
 import InfiniteLoading from "vue-infinite-loading";
+import SettleFilter from './components/SettleFilter'
 export default {
   name: "settleManage",
   components: {
     XHeader,
     "van-button": Button,
     "distributor-status-item": distributorStatusItem,
-    InfiniteLoading
+    InfiniteLoading,
+    SettleFilter
   },
   computed: {
     ...mapGetters(["currentUser"])
@@ -67,7 +68,8 @@ export default {
       info: {},
       items: [],
       page: 1,
-      month: "201906",
+      currentDate: "",
+      month: "",
       infiniteId: +new Date()
     };
   },
@@ -76,8 +78,11 @@ export default {
     this.$store.dispatch("loadUser");
   },
   methods: {
+    confirm (date) {
+      this.month = date
+      this.changeMonth()
+    },
     changeMonth() {
-      console.log(1);
       this.items = [];
       this.page = 1;
       this.infiniteId += 1;

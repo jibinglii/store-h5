@@ -110,7 +110,8 @@ export default {
     },
     copy(goods) {
       if (undefined != goods.uuid) {
-        this.$copyText(window.location.href).then((e) => {
+        let url = location.origin + '/' + window.STORE_ID + '/goods/' + goods.uuid + '.html?spread_id=' + this.$user().id
+        this.$copyText(url).then((e) => {
           this.$toast('复制成功，赶快去微信、QQ粘贴分享给你的好友吧');
         }, function (e) {
         })

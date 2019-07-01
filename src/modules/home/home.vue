@@ -169,11 +169,9 @@ export default {
       img {
         width: 3.125rem;
         height: 3.125rem;
-        flex: 2;
       }
       .top-search-text {
         padding-left: 10px;
-        flex: 10;
         h4 {
           font-size: 0.8125rem;
           font-weight: 400;

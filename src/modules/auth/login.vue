@@ -11,7 +11,7 @@
       >
       <div>
       <h4>{{ currentStore.name }}</h4>
-      <p>{{ currentStore.desc }}</p>
+<!--      <p>{{ currentStore.desc }}</p>-->
       </div>
 
     </div>

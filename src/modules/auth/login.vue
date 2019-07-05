@@ -314,7 +314,7 @@ export default {
         background-image: url("/images/shop/login/code_btn.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        font-size: 13px;
+        font-size: 12px;
       }
     }
   }

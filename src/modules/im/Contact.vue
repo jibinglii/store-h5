@@ -115,6 +115,10 @@ export default {
       };
       this.messages.push(mmsg);
       ImHistory.addMessage(mmsg);
+      this.$nextTick(() => {
+        var div = document.getElementById("msg")
+        div.scrollTop = div.scrollHeight
+      })
     },
     opened(message) {
       var myDate = new Date().toLocaleString();
@@ -146,6 +150,10 @@ export default {
       };
       this.messages.push(mmsg);
       ImHistory.addMessage(mmsg);
+      this.$nextTick(() => {
+        var div = document.getElementById("msg")
+        div.scrollTop = div.scrollHeight
+      })
     }
   },
   beforeDestroy() {
@@ -165,11 +173,14 @@ export default {
 
 $logo-width: 36px;
 .msg {
-  margin-top: 50px;
-  margin-bottom: 55px;
-  padding: 10px 0 0 0;
+  padding: 10px 0 55px 0;
   width: 100%;
-
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
   .msg-item {
     display: flex;
     padding: 0px 8px;

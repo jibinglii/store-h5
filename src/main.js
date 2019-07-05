@@ -45,3 +45,8 @@ setTimeout(() => {
         render: h => h(Root)
     }).$mount('#app')
 }, 200)
+
+
+// import Vconsole from 'vconsole';
+// let vConsole = new Vconsole()
+// export default vConsole

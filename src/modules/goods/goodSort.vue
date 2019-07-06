@@ -7,7 +7,10 @@
           <dt>
             <img :src="item.img" alt>
           </dt>
-          <dd>{{item.desc}}</dd>
+          <dd>
+            {{item.title}}<br>
+            <span>{{item.desc}}</span>
+          </dd>
         </dl>
       </van-col>
     </van-row>
@@ -34,22 +37,26 @@ export default {
         {
           id: "2",
           img: require("../../assets/images/liuliang.png"),
-          desc: "流量"
+          title: "流量",
+          desc: "群、自媒体、网站流量等",
         },
         {
           id: "3",
           img: require("../../assets/images/zhanghao.png"),
-          desc: "账号"
+          title: "账号",
+          desc: "网店、自媒体、社交账号等"
         },
         {
           id: "4",
           img: require("../../assets/images/youxi.png"),
-          desc: "游戏"
+          title: "游戏",
+          desc: "账号、装备、金币、材料等"
         },
         {
           id: "5",
           img: require("../../assets/images/fuwu.png"),
-          desc: "服务"
+          title: "服务",
+          desc: "代练、租号、陪玩等"
         }
       ]
     };
@@ -65,7 +72,7 @@ export default {
           name: "goods.add",
           query: {
             id: item.id,
-            desc: item.desc
+            desc: item.title
           }
         });
       }
@@ -91,6 +98,14 @@ export default {
     dt {
       img {
         width: 2.986667rem;
+      }
+    }
+    dd{
+      font-size: 1rem;
+
+      span{
+        color:#888;
+        font-size: .6rem;
       }
     }
   }

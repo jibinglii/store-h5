@@ -41,6 +41,7 @@
     <x-cell-group v-if="order.status>1">
       <we-info-cell title="发货信息"></we-info-cell>
       <info-cell title="发货时间">{{order.express_at}}</info-cell>
+      <info-cell title="备注">{{order.express_remark}}</info-cell>
     </x-cell-group>
 
     <x-cell-group>
@@ -61,6 +62,31 @@
       </div>
     </x-cell-group>
 
+    <van-action-sheet
+      v-model="show"
+      title="发货信息"
+      :close-on-click-overlay="false"
+    >
+      <van-cell-group>
+        <van-field
+          v-model="express_remark"
+          type="textarea"
+          autosize
+          required
+          input-align="left"
+          placeholder="请输入发货备注信息"
+          id="express_remark"
+        />
+      </van-cell-group>
+      <div class="btn">
+        <van-button
+          type="primary"
+          hairline
+          size="large"
+          @click="save"
+        >保存</van-button>
+      </div>
+    </van-action-sheet>
   </div>
 </template>
 
@@ -71,10 +97,20 @@ import XCellGroup from '$components/XCellGroup'
 import InfoCell from '$components/InfoCell'
 import XButton from '$components/XButton'
 import WeInfoCell from '$components/WeInfoCell'
-
+import CellGroup from "vant/lib/cell-group";
+import Field from "vant/lib/field";
+import "vant/lib/field/style";
+import Button from "vant/lib/button";
+import "vant/lib/button/style";
+import ActionSheet from 'vant/lib/action-sheet'
+import 'vant/lib/action-sheet/style'
 export default {
   components: {
-    XHeader, GoodsItemHorizontal, XCellGroup, WeInfoCell, XButton, InfoCell
+    XHeader, GoodsItemHorizontal, XCellGroup, WeInfoCell, XButton, InfoCell,
+    "van-cell-group": CellGroup,
+    "van-field": Field,
+    "van-button": Button,
+    [ActionSheet.name]: ActionSheet,
   },
   data() {
     return {
@@ -116,7 +152,9 @@ export default {
       },
       order: {
         status: -1
-      }
+      },
+      show: false,
+      express_remark: ''
     }
   },
   mounted() {
@@ -150,7 +188,15 @@ export default {
       location.href = url;
     },
     shipping(id) {
+      this.show = true
+    },
+    save () {
+      if (this.express_remark == ''){
+        this.$toast.fail('请输入备注信息')
+        return false
+      }
       let message = "您确定要[确认发货]该订单吗？";
+      this.show = false
       this.$confirm({
         title: "温馨提示",
         content: message,
@@ -161,12 +207,13 @@ export default {
       }).then(function () {
         console.log('“cancel”');
       })
-        .catch(() => {
-          this.$http.post('api/v1/order/shipping/' + id, {}, { loading: true }).then(({ data }) => {
-            this.$toast(data.message);
-            this.getDetail()
-          })
-        });
+      .catch(() => {
+        this.$toast.loading({mask: true})
+        this.$http.post('api/v1/order/shipping/' + this.id, {express_remark: this.express_remark}, { loading: true }).then(({ data }) => {
+          this.$toast(data.message);
+          this.getDetail()
+        })
+      });
     }
   }
 }
@@ -215,4 +262,14 @@ export default {
     padding: 0px 10px;
   }
 }
+.btn {
+    text-align: center;
+
+    .van-button--primary {
+      width: 90%;
+      margin: 1rem auto;
+      background: #000;
+      color: #ffffff;
+    }
+  }
 </style>

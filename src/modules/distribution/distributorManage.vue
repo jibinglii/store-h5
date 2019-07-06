@@ -16,7 +16,7 @@
         label="分销员ID"
         type="text"
         input-align="right"
-        placeholder="请输入分销员ID"
+        placeholder="请输入分销员ID或手机号"
         autofocus
         :disabled="!isAdd"
       />

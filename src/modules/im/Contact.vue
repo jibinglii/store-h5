@@ -8,6 +8,7 @@
           v-for="(item, index) in messages"
           :class="{'out': item.from == currentUser.id}"
           :key="item.id"
+          v-if="item.data != ''"
         >
           <div class="logo">
             <img :src="currentUser.avatar" alt v-if="item.from == currentUser.id" />
@@ -55,7 +56,7 @@ export default {
   created() {
     this.$toast.loading({ mask: true });
     this.$store.dispatch("hasNewMsg", false);
-    ImHistory.init(this.currentStore.hash_id);
+    ImHistory.init(this.currentStore.hash_id+':'+this.currentUser.id);
   },
   mounted() {
     WebIM.config = WebIMConfig;
@@ -126,34 +127,36 @@ export default {
       console.log(myDate);
     },
     send() {
-      let id = this.conn.getUniqueId(); // 生成本地消息id
-      let msg = new WebIM.default.message("txt", id); // 创建文本消息
-      msg.set({
-        msg: this.msg, // 消息内容
-        to: this.currentStore.user_id + "",
-        ext: {
+      if (this.msg != ''){
+        let id = this.conn.getUniqueId(); // 生成本地消息id
+        let msg = new WebIM.default.message("txt", id); // 创建文本消息
+        msg.set({
+          msg: this.msg, // 消息内容
+          to: this.currentStore.user_id + "",
+          ext: {
+            time: new Date().toLocaleString()
+          },
+          success: function(id, serverMsgId) {},
+          fail: function(e) {}
+        });
+        msg.body.chatType = "singleChat";
+        this.conn.send(msg.body);
+        this.msg = "";
+        let mmsg = {
+          id: msg.body.id,
+          from: this.currentUser.id,
+          to: msg.body.to,
+          type: "chat",
+          data: msg.body.msg,
           time: new Date().toLocaleString()
-        },
-        success: function(id, serverMsgId) {},
-        fail: function(e) {}
-      });
-      msg.body.chatType = "singleChat";
-      this.conn.send(msg.body);
-      this.msg = "";
-      let mmsg = {
-        id: msg.body.id,
-        from: this.currentUser.id,
-        to: msg.body.to,
-        type: "chat",
-        data: msg.body.msg,
-        time: new Date().toLocaleString()
-      };
-      this.messages.push(mmsg);
-      ImHistory.addMessage(mmsg);
-      this.$nextTick(() => {
-        var div = document.getElementById("msg")
-        div.scrollTop = div.scrollHeight
-      })
+        };
+        this.messages.push(mmsg);
+        ImHistory.addMessage(mmsg);
+        this.$nextTick(() => {
+          var div = document.getElementById("msg")
+          div.scrollTop = div.scrollHeight
+        })
+      }
     },
     loseFocus(){
       setTimeout(()=>{

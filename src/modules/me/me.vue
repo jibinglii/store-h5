@@ -75,13 +75,13 @@ export default {
               title: '商品管理',
               url: 'seller/goods',
               img: '/images/store/shangpin.png',
-              show: true
+              show: _.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1
             },
             {
               title: '分销管理',
               url: 'distribution.distribution',
               img: '/images/store/fenxiao.png',
-              show: true,
+              show: !(_.indexOf(this.$currentStore().roles,'渠道店铺') != -1),
             },
             {
               title: '结算管理',

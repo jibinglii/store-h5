@@ -1,7 +1,7 @@
 <template>
   <div class="fixed-bottom">
     <div class="weui-tabbar">
-      <router-link :to="{name: 'contact'}" class="weui-tabbar__item" :class="{'has-new-msg': isHasNewMsg}">
+      <router-link :to="{name: 'contact'}" class="weui-tabbar__item" :class="{'has-new-msg': isHasNewMsg}" v-show="canContact">
         <span style="display: inline-block;position: relative;">
             <img src="../assets/images/kefu.png" alt="" class="kefu">
             <span class="weui-badge weui-badge_dot" style="position: absolute;top: 2px;right: -5px;"
@@ -35,6 +35,9 @@
       ...mapGetters(['isHasNewMsg']),
       currentUrl() {
         return this.$route.name;
+      },
+      canContact () {
+        return this.$user().id != this.$currentStore().user_id
       }
     },
     methods: {

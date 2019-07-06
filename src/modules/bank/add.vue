@@ -3,7 +3,7 @@
     <x-header title="添加银行卡" back-url="/shop/bankcard.html"></x-header>
 
     <div class="tips" @click="help">
-      请填写您本人的的银行卡
+      请填写您本人的收款账户
       <i class="weui-icon-info weui-icon_msg"></i>
     </div>
     <x-cell-group>

@@ -1,6 +1,6 @@
 <template>
     <div class="cell-groups">
-        <div v-for="(item, index) in cells" :key="item.value" @click="setvalue(index, item)" class="info-cell">
+        <div v-for="(item, index) in cells" :key="item.value" @click="setvalue(index, item)" class="info-cell" v-if="item.show||false">
             <label>
                 <img :src="item.icon" />
                 {{ item.title }}

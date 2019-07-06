@@ -192,6 +192,7 @@ export default {
       if (!this.isagree) {
         this.$alert('您必须同意《搜瓜用户服务协议》才能继续登录')
       } else {
+        this.$toast.loading({mask: true})
         if (this.type == 'code') {
           this.loginByCode();
         } else {
@@ -211,8 +212,7 @@ export default {
       const { username, password } = this.param
       try {
         await this.attemptLogin({ username, password })
-        this.$toast.success('欢迎回来~')
-        this.$router.push({ name: 'home' })
+        this.loginSuccess()
       } catch (e) {
         if (e.status !== 422) {
           this.$toast.fail('账号密码错误！')
@@ -231,14 +231,24 @@ export default {
       const { username, code } = this.param
       try {
         await this.attemptLoginByCode({ username, code })
-        this.$toast.success('欢迎回来~')
-        this.$router.push({ name: 'home' })
+        this.loginSuccess()
       } catch (e) {
+        console.log(e)
         if (e.status !== 422) {
           this.$toast.fail('账号密码错误！')
         }
       }
-    }
+    },
+    loginSuccess () {
+      let redirect = this.$route.query['redirect']
+      if(redirect != '' && redirect != undefined) {
+        redirect = decodeURIComponent(redirect)
+        location.replace(redirect);
+      } else {
+        this.$router.push({ name: 'home', params: {store: window.STORE_ID} })
+      }
+      this.$toast.success('欢迎回来~')
+    },
   },
   created() {
     protocol.getProtocol('register').then(({ data }) => {

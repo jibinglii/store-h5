@@ -18,7 +18,7 @@
       </div>
       <div class="fixed-bottom">
         <div class="input-box">
-          <input type="text" @blur.prevent="loseFocus" class="message" v-model="msg" />
+          <input type="text" @blur.prevent="loseFocus" @focus.prevent="getFocus" class="message" v-model="msg" />
           <div class="btn">
             <a @click="send">发送</a>
           </div>
@@ -51,6 +51,9 @@ export default {
   },
   computed: {
     ...mapGetters(["currentStore", "currentUser"])
+  },
+  ready(){
+    window.addEventListener('scroll', this.handleScroll)
   },
   created() {
     this.$toast.loading({ mask: true });
@@ -157,8 +160,16 @@ export default {
     },
     loseFocus(){
       setTimeout(()=>{
-        window.scrollTo(0, 0);
-      },100)
+        window.scrollTo(0, this.scrollHeight);
+      },150)
+    },
+    getFocus() {
+      setTimeout(()=>{
+        window.scrollTo(0, document.body.scrollHeight);
+      }, 150);
+    },
+    handleScroll(){
+      this.scrollHeight=window.scrollY;
     },
   },
   beforeDestroy() {

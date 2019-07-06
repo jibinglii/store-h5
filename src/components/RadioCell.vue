@@ -26,8 +26,8 @@ export default {
         }
     },
     mounted(){
-
-},
+        
+    },
     methods: {
         setvalue(index, value){
             this.currentIndex = index;

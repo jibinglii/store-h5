@@ -18,7 +18,7 @@
       </div>
       <div class="fixed-bottom">
         <div class="input-box">
-          <input type="text" class="message" v-model="msg" />
+          <input type="text" @blur.prevent="loseFocus" class="message" v-model="msg" />
           <div class="btn">
             <a @click="send">发送</a>
           </div>
@@ -154,7 +154,12 @@ export default {
         var div = document.getElementById("msg")
         div.scrollTop = div.scrollHeight
       })
-    }
+    },
+    loseFocus(){
+      setTimeout(()=>{
+        window.scrollTo(0, 0);
+      },100)
+    },
   },
   beforeDestroy() {
     // this.conn.close()

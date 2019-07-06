@@ -6,7 +6,7 @@
       <radio-cell :cells="radios" v-model="cardtype"></radio-cell>
     </x-group>
 
-    <x-cell-group v-if="cardtype.value == 'dc'" title="完善银行卡信息">
+    <x-cell-group v-if="cardtype.value == 'bank'" title="完善银行卡信息">
       <info-cell v-if="hasRealname" title="姓名">{{bankinfo.realname}}</info-cell>
       <input-cell v-if="!hasRealname" v-model="bankinfo.realname" title="姓名" placeholder="请输入您的姓名"></input-cell>
       <input-cell type="number" v-model="bankinfo.id_card" title="身份证号" placeholder="请输入您的身份证号"></input-cell>
@@ -67,7 +67,7 @@ export default {
   },
   data() {
     return {
-      hasRealname: 0,
+      hasRealname: false,
       isagree: false,
       saving: false,
       bankinfo:{
@@ -114,20 +114,20 @@ export default {
       if (!this.isagree) {
         this.$alert("请勾选《绑卡服务协议》");
       } else {
-        for (var index in this.bankinfo){
-          if(this.bankinfo[index]==""){
-            validate = false;
-            break;
-          }
-        }
-        if(!validate){
-          this.$alert("您填写的信息不完整");
-        }
+        // for (var index in this.bankinfo){
+        //   if(this.bankinfo[index]==""){
+        //     validate = false;
+        //     break;
+        //   }
+        // }
+        // if(!validate){
+        //   this.$alert("您填写的信息不完整");
+        // }
         if (!this.saving && validate) {
           this.saving = true;
           this.$toast.loading('信息保存中');
           this.$http
-            .post("api/v1/bankcard", this.bankinfo)
+            .post("api/v1/bankcard", _.assign(this.bankinfo, {bank: this.cardtype.value}))
             .then(({data}) => {
               this.saving = false;
               let redirect = this.$route.query['redirect']
@@ -142,6 +142,8 @@ export default {
               } else {
                 this.$router.replace({name: 'banks'})
               }
+            }).catch(() => {
+              this.saving = false;
             })
         }
       }

@@ -38,18 +38,18 @@ export default {
         //   icon:'/images/shop/juhefq.png',
         //   checked: true
         // },
-        // {
-        //   title:'支付宝',
-        //   value: 'alipay',
-        //   icon:'/images/shop/alipay.png',
-        //   checked: false
-        // },
-        // {
-        //   title:'微信',
-        //   value: 'wechat',
-        //   icon:'/images/shop/weixin.png',
-        //   checked: true
-        // }
+        {
+          title:'支付宝',
+          value: 'alipay',
+          icon:'/images/shop/alipay.png',
+          checked: false
+        },
+        {
+          title:'微信',
+          value: 'wechat',
+          icon:'/images/shop/weixin.png',
+          checked: true
+        }
       ],
       order: {
         total_amount: '...'
@@ -92,6 +92,13 @@ export default {
       }else if (this.paytype.value == 'juhe'){
         let url = "/api/v1/pay/juhefq?id=" + this.orderId + "&paytype=" + this.paytype.value;
         location.replace(url)
+      }else if(this.paytype.value == 'alipay'){
+        let url = "/api/v2/alipay/"+ this.orderId;
+        location.replace(url)
+      }else if(this.paytype.value == 'wechat'){
+        let url = "/api/v2/pay/wechat/" + this.orderId +
+                        "?callback=" + encodeURIComponent(location.origin + '/shop/result/0.html?id=' + this.orderId);
+        location.replace(url);
       }
     },
     getOrderInfo(){

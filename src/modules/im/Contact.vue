@@ -2,24 +2,30 @@
   <keep-alive>
     <div>
       <x-header :title="title"></x-header>
-      <div class="msg" id="msg">
-        <div
-          class="msg-item"
-          v-for="(item, index) in messages"
-          :class="{'out': item.from == currentUser.id}"
-          :key="item.id"
-          v-if="item.data != ''"
-        >
-          <div class="logo">
-            <img :src="currentUser.avatar" alt v-if="item.from == currentUser.id" />
-            <img :src="currentStore.logo" alt v-else />
+      <van-pull-refresh v-model="isLoading" @refresh="onLoad"
+      :disabled="pullRefreshDisabled"
+      success-text="加载完成"
+      :success-duration="1500"
+      >
+        <div class="msg" id="msg">
+          <div
+            class="msg-item"
+            v-for="item in messages"
+            :class="{'out': item.from == currentUser.id}"
+            :key="item.id"
+            v-show="item.data != ''"
+          >
+            <div class="logo">
+              <img :src="currentUser.avatar" alt v-if="item.from == currentUser.id" />
+              <img :src="currentStore.logo" alt v-else />
+            </div>
+            <div class="text">{{ item.data }}</div>
           </div>
-          <div class="text">{{ item.data }}</div>
         </div>
-      </div>
+      </van-pull-refresh>
       <div class="fixed-bottom">
         <div class="input-box">
-          <input type="text" @blur.prevent="loseFocus" @focus.prevent="getFocus" class="message" v-model="msg" />
+          <input type="text" @blur.prevent="loseFocus" @focus.prevent="getFocus" class="message" v-model="msg"/>
           <div class="btn">
             <a @click="send">发送</a>
           </div>
@@ -31,27 +37,33 @@
 
 <script>
 import XHeader from "$components/XHeader";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import ImHistory from "$utils/im_history";
 
 const WebIM = require("easemob-websdk");
 import WebIMConfig from "./WebIMConfig";
 
+import PullRefresh from 'vant/lib/pull-refresh'
+import 'vant/lib/pull-refresh/style'
+import { setTimeout } from 'timers';
+
 export default {
   name: "contact",
   components: {
-    XHeader
+    XHeader,
+    'van-pull-refresh': PullRefresh
   },
   data() {
     return {
       title: "与【" + this.$currentStore().name + "】对话",
-      messages: [],
       conn: {},
-      msg: ""
+      msg: "",
+      isLoading: false,
+      pullRefreshDisabled: false
     };
   },
   computed: {
-    ...mapGetters(["currentStore", "currentUser"])
+    ...mapGetters(["currentStore", "currentUser", "messages"])
   },
   ready(){
     window.addEventListener('scroll', this.handleScroll)
@@ -60,53 +72,25 @@ export default {
     this.$toast.loading({ mask: true });
     this.$store.dispatch("hasNewMsg", false);
     ImHistory.init(this.currentStore.hash_id+':'+this.currentUser.id);
-  },
-  mounted() {
-    WebIM.config = WebIMConfig;
-    this.conn = WebIM.conn = new WebIM.default.connection({
-      appKey: WebIM.config.appkey,
-      isHttpDNS: WebIM.config.isHttpDNS,
-      isMultiLoginSessions: WebIM.config.isMultiLoginSessions,
-      host: WebIM.config.Host,
-      https: WebIM.config.https,
-      url: WebIM.config.xmppURL,
-      apiUrl: WebIM.config.apiURL,
-      isAutoLogin: false,
-      heartBeatWait: WebIM.config.heartBeatWait,
-      autoReconnectNumMax: WebIM.config.autoReconnectNumMax,
-      autoReconnectInterval: WebIM.config.autoReconnectInterval,
-      isStropheLog: WebIM.config.isStropheLog,
-      delivery: WebIM.config.delivery
-    });
-    this.conn.listen({
-      onOpened: this.opened,
-      onClosed: function(message) {
-        console.log("onclose:" + message);
-        console.log(error);
-      }, //连接关闭回调
-      onTextMessage: this.onTextMessage,
-      onError: function(message) {
-        console.log("onError: ", message);
-      }
-    });
-
-    let options = {
-      apiUrl: WebIM.config.apiURL,
-      user: this.currentUser.easemob.user_id,
-      pwd: this.currentUser.easemob.password,
-      appKey: WebIM.config.appkey
-    };
-    this.conn.open(options);
-    setTimeout(() => {
-      this.$toast.clear();
-    }, 300);
-
-    // 加载历史消息
-    ImHistory.fetchMessage("chat").then(res => {
-      this.messages = res;
-    });
+    this.$store.dispatch('setMessages')
+    this.connect()
   },
   methods: {
+    ...mapActions(['addMessage']),
+    onLoad () {
+      this.isLoading = true
+      this.$store.dispatch('loadMore').then(() => {
+        this.isLoading = false
+      }).catch((e) => {
+        this.isLoading = false
+        if (e.code === 400){
+          this.pullRefreshDisabled = true
+        }
+        if (e.code === 200) {
+          this.pullRefreshDisabled = true
+        }
+      })
+    },
     onTextMessage(message) {
       this.$store.dispatch("hasNewMsg", true);
       let mmsg = {
@@ -117,8 +101,7 @@ export default {
         data: message.data,
         time: new Date().toLocaleString()
       };
-      this.messages.push(mmsg);
-      ImHistory.addMessage(mmsg);
+      this.addMessage(mmsg)
       this.$nextTick(() => {
         var div = document.getElementById("msg")
         div.scrollTop = div.scrollHeight
@@ -131,7 +114,7 @@ export default {
     },
     send() {
       if (this.msg != ''){
-        let id = this.conn.getUniqueId(); // 生成本地消息id
+        let id = window.conn.getUniqueId(); // 生成本地消息id
         let msg = new WebIM.default.message("txt", id); // 创建文本消息
         msg.set({
           msg: this.msg, // 消息内容
@@ -143,7 +126,7 @@ export default {
           fail: function(e) {}
         });
         msg.body.chatType = "singleChat";
-        this.conn.send(msg.body);
+        window.conn.send(msg.body);
         this.msg = "";
         let mmsg = {
           id: msg.body.id,
@@ -153,8 +136,7 @@ export default {
           data: msg.body.msg,
           time: new Date().toLocaleString()
         };
-        this.messages.push(mmsg);
-        ImHistory.addMessage(mmsg);
+        this.addMessage(mmsg)
         this.$nextTick(() => {
           var div = document.getElementById("msg")
           div.scrollTop = div.scrollHeight
@@ -174,6 +156,45 @@ export default {
     handleScroll(){
       this.scrollHeight=window.scrollY;
     },
+    connect(){
+      WebIM.config = WebIMConfig;
+      window.conn = WebIM.conn = new WebIM.default.connection({
+        appKey: WebIM.config.appkey,
+        isHttpDNS: WebIM.config.isHttpDNS,
+        isMultiLoginSessions: WebIM.config.isMultiLoginSessions,
+        host: WebIM.config.Host,
+        https: WebIM.config.https,
+        url: WebIM.config.xmppURL,
+        apiUrl: WebIM.config.apiURL,
+        isAutoLogin: WebIM.config.isAutoLogin,
+        heartBeatWait: WebIM.config.heartBeatWait,
+        autoReconnectNumMax: WebIM.config.autoReconnectNumMax,
+        autoReconnectInterval: WebIM.config.autoReconnectInterval,
+        isStropheLog: WebIM.config.isStropheLog,
+        delivery: WebIM.config.delivery
+      });
+      window.conn.listen({
+        onOpened: this.opened,
+        onClosed: function(message) {
+          console.log("onclose:" + message);
+        }, //连接关闭回调
+        onTextMessage: this.onTextMessage,
+        onError: function(message) {
+          console.log("onError: ", message);
+        }
+      });
+
+      let options = {
+        apiUrl: WebIM.config.apiURL,
+        user: this.currentUser.easemob.user_id,
+        pwd: this.currentUser.easemob.password,
+        appKey: WebIM.config.appkey
+      };
+      window.conn.open(options);
+      setTimeout(() => {
+        this.$toast.clear();
+      }, 300);
+    }
   },
   beforeDestroy() {
     // this.conn.close()
@@ -195,7 +216,7 @@ $logo-width: 36px;
   padding: 10px 0 55px 0;
   width: 100%;
   position: absolute;
-  top: 50px;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
@@ -297,6 +318,14 @@ $logo-width: 36px;
         font-size: 0.8rem;
       }
     }
+  }
+}
+/deep/.van-pull-refresh {
+  height: calc(100vh - 100px);
+  position: relative;
+  top: 50px;
+  .van-pull-refresh__track {
+    height: calc(100vh - 100px);
   }
 }
 </style>

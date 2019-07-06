@@ -30,7 +30,8 @@ export default {
           title:'银行卡',
           value: 'dc',
           icon:'/images/shop/bank.png',
-          checked: true
+          checked: true,
+          show: true,
         },
         // {
         //   title:'分期付款',
@@ -38,18 +39,20 @@ export default {
         //   icon:'/images/shop/juhefq.png',
         //   checked: true
         // },
-        // {
-        //   title:'支付宝',
-        //   value: 'alipay',
-        //   icon:'/images/shop/alipay.png',
-        //   checked: false
-        // },
-        // {
-        //   title:'微信',
-        //   value: 'wechat',
-        //   icon:'/images/shop/weixin.png',
-        //   checked: true
-        // }
+        {
+          title:'支付宝',
+          value: 'alipay',
+          icon:'/images/shop/alipay.png',
+          checked: false,
+          show: !this.isWechat(),
+        },
+        {
+          title:'微信',
+          value: 'wechat',
+          icon:'/images/shop/weixin.png',
+          checked: true,
+          show: !this.isAlipay(),
+        }
       ],
       order: {
         total_amount: '...'
@@ -90,8 +93,15 @@ export default {
       if (this.paytype.value == 'dc'){
         this.$router.push({name: 'pay.bank', params: {'order': this.orderId}})
       }else if (this.paytype.value == 'juhe'){
-        let url = "/api/v1/pay/juhefq?id=" + this.orderId + "&paytype=" + this.paytype.value;
+        let url = window.API_ROOT + "/api/v1/pay/juhefq?id=" + this.orderId + "&paytype=" + this.paytype.value;
         location.replace(url)
+      }else if(this.paytype.value == 'alipay'){
+        let url = window.API_ROOT + "/api/v2/alipay/"+ this.orderId;
+        location.replace(url)
+      }else if(this.paytype.value == 'wechat'){
+        let url = window.API_ROOT + "/api/v2/pay/wechat/" + this.orderId +
+                        "?callback=" + encodeURIComponent(location.origin + '/shop/result/0.html?id=' + this.orderId);
+        location.replace(url);
       }
     },
     getOrderInfo(){

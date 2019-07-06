@@ -14,6 +14,7 @@ const beforeEach = (to, from, next) => {
   vuex
     .dispatch('checkUserToken')
     .then(() => {
+      console.log(vuex.getters.isLogged)
       if (vuex.getters.isLogged && to.path.indexOf('auth') > 0) {
         return next({ name: 'home', params: {store: window.STORE_ID} })
       }
@@ -22,7 +23,7 @@ const beforeEach = (to, from, next) => {
     .catch(() => {
       if (needAuth(to)) {
         // No token, or it is invalid
-        return next({ name: 'auth.login' }) // redirect to login
+        return next({ name: 'auth.login', params: {store: window.STORE_ID}, query: {redirect: encodeURIComponent(window.location.href)} }) // redirect to login
       }
       next()
     })

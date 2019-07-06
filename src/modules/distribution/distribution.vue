@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     showPeople () {
-      return !(_.indexOf(this.$currentStore().roles,'推广员') != -1)
+      return !(_.indexOf(this.$currentStore().roles,'分销店铺') != -1)
     }
   },
 };

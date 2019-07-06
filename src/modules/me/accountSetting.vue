@@ -12,7 +12,7 @@
         :to="{name: 'me.edit-pay-pwd'}"
       />
       <van-cell
-        title="银行卡管理"
+        title="收付款账号"
         is-link
         :to="{name: 'banks'}"
       />

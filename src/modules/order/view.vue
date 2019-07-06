@@ -60,6 +60,7 @@
     <x-cell-group v-if="order.status>1">
       <we-info-cell title="发货信息"></we-info-cell>
       <info-cell title="发货时间">{{order.express_at}}</info-cell>
+      <info-cell title="备注">{{order.express_remark}}</info-cell>
     </x-cell-group>
 
     <x-cell-group>

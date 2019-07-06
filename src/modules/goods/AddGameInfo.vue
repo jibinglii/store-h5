@@ -148,7 +148,6 @@
                 }
               })
               .catch(fail => {
-                this.$alert(fail.response.data.message);
                 this.saving = false;
                 this.$toast.clear()
               });

@@ -70,7 +70,9 @@
             .then(response => {
               this.saving = false;
               this.$toast.clear()
-              this.$router.go(-2)
+              this.$router.replace({
+                name: 'seller/goods'
+              })
             })
             .catch(response => {
               this.saving = false;

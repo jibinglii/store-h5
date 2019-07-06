@@ -96,7 +96,7 @@ export default {
       })
     },
     getBankInfo() {
-      bank.list().then(({ data }) => {
+      bank.list(true).then(({ data }) => {
         if (data.bank_cards.length == 0) {
           throw new Exception('没有银行卡')
         }

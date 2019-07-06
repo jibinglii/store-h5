@@ -13,7 +13,7 @@
           <van-dropdown-item v-model="param.game_id" :options="gamesOptions" @change="loadServer"/>
         </van-dropdown-menu>
       </van-cell>
-      <van-cell title="所属行业" is-link v-show="param.game_id != 0" @click="show=true">
+      <van-cell title="商品属性" is-link v-show="param.game_id != 0" @click="show=true">
         {{ serverName }}
       </van-cell>
     </van-cell-group>
@@ -273,6 +273,9 @@
 
 <style lang="scss" scoped>
   .add {
+    /deep/.van-dropdown-item__content{
+      padding-top: 10px;
+    }
     /deep/ .van-cell-group {
       .van-cell__title {
         font-weight: 600;

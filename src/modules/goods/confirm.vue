@@ -92,7 +92,7 @@ export default {
       totalHtml: '',
       goods: {},
       serviceColumns: [],
-      defaultIndex: 1,
+      defaultIndex: 2,
       receiver_name: '',
       receiver_mobile: '',
       services: [{"name":"30天担保产品","value":"1","day":30,"rate":0.1},{"name":"60天担保产品","value":"2","day":60,"rate":0.15},{"name":"不参与担保服务","value":"0","day":0,"rate":0}],
@@ -146,7 +146,6 @@ export default {
             this.$toast.clear()
             this.creating = false;
             this.$toast(data.message)
-            this.$router.back()
           })
         }
       } else {

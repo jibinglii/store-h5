@@ -33,6 +33,11 @@ export default {
       const isWechat = /micromessenger/i.test(ua);
       return isWechat;
     },
+    isAlipay() {
+      const ua = window.navigator.userAgent;
+      const isWechat = /alipayclient/i.test(ua);
+      return isWechat;
+    },
     isSoogua() {
       const ua = window.navigator.userAgent;
       const isWechat = /soogua/i.test(ua);

@@ -194,9 +194,6 @@ export default {
         this.loginSuccess()
       } catch (e) {
         console.log(e)
-        if (e.status !== 422) {
-          this.$toast.fail("账号密码错误！");
-        }
       }
     },
     loginSuccess () {

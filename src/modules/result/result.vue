@@ -99,7 +99,7 @@ export default {
     if (id != undefined) {
       this.getFuiouH5(id)
     } else {
-      this.getDetail(id);
+      this.getDetail();
     }
   },
   mounted() {
@@ -136,10 +136,10 @@ export default {
         this.order = data.order;
       })
     },
-    async getDetail(id) {
-      let orderId = this.$route.params.id
+    async getDetail() {
+      let id = this.$route.query['order_id']
       if (id != undefined){
-        this.$http.get('/api/v1/order/' + orderId, {
+        this.$http.get('/api/v1/order/' + id, {
           params: {
             include: 'goods',
             'fields[goods]': 'id,title,server_name,game_name,amount,images'

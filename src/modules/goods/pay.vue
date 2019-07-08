@@ -51,7 +51,7 @@ export default {
           value: 'wechat',
           icon:'/images/shop/weixin.png',
           checked: true,
-          show: !this.isAlipay(),
+          show: this.isWechat(),
         }
       ],
       order: {
@@ -96,11 +96,12 @@ export default {
         let url = window.API_ROOT + "/api/v1/pay/juhefq?id=" + this.orderId + "&paytype=" + this.paytype.value;
         location.replace(url)
       }else if(this.paytype.value == 'alipay'){
-        let url = window.API_ROOT + "/api/v2/alipay/"+ this.orderId;
+        let url = window.API_ROOT + "/api/v2/alipay/"+ this.orderId +
+                  "?callback=" + encodeURIComponent(location.origin + '/' + window.STORE_ID + '/result/0?id=' + this.orderId);
         location.replace(url)
       }else if(this.paytype.value == 'wechat'){
         let url = window.API_ROOT + "/api/v2/pay/wechat/" + this.orderId +
-                        "?callback=" + encodeURIComponent(location.origin + '/shop/result/0.html?id=' + this.orderId);
+                        "?callback=" + encodeURIComponent(location.origin + '/' + window.STORE_ID + '/result/0?id=' + this.orderId);
         location.replace(url);
       }
     },

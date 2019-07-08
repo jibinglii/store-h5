@@ -1,6 +1,9 @@
 <template>
   <div>
-    404
+    <h4>{{ $route.query['code'] }}</h4>
+    <p>
+      {{ $route.query['reason'] }}
+    </p>
   </div>
 </template>
 

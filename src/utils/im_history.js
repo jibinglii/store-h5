@@ -4,7 +4,7 @@ const DB_VERSION = '2.0'
 const DB_ENABLE = true
 const TABLE_NAME = 'webim_history'
 const TABLE_INDEX_KEYS = ['id', 'from', 'to', 'type', 'data']
-const PAGE_NUM = 10
+const PAGE_NUM = 20
 
 const ImHistory = {
   init: function (username) {

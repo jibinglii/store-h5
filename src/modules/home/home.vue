@@ -4,7 +4,7 @@
       title="店铺主页"
       :allow-back="false"
     ></x-header>
-    <div class="top-search">
+    <div class="top-search" v-if="!isMainStore">
       <div class="top-search-l">
         <img
           :src="currentStore.logo"
@@ -79,7 +79,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentStore'])
+    ...mapGetters(['currentStore']),
+    isMainStore() {
+      return _.isEmpty(this.currentStore)
+    }
   },
   created() {
     this.getAds()

@@ -51,7 +51,7 @@ export default {
           value: 'wechat',
           icon:'/images/shop/weixin.png',
           checked: true,
-          show: this.isWechat(),
+          show: true//this.isWechat(),
         }
       ],
       order: {

@@ -9,9 +9,12 @@ const http = axios.create({
 
 window.API_ROOT = process.env.VUE_APP_API_URL
 let url = window.location.pathname
-url.match(/^\/?(\w+)\/?.*$/)
-let store = RegExp.$1
+let store = ''
+if (null != url.match(/^\/?(\w+)\/?.*$/)){
+  store = RegExp.$1
+}
 window.STORE_ID = store
+
 interceptors(http)
 
 /**

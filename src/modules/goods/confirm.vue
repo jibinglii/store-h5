@@ -81,6 +81,8 @@ import InputCell from '$components/InputCell'
 import XPicker from '$components/XPicker'
 import Agree from '$components/Agree'
 import protocol from '$api/protocol'
+import localforage from 'localforage'
+
 export default {
   components: {
     XHeader, GoodsItemHorizontal, XCellGroup, InfoCell, XPicker, Agree, InputCell
@@ -105,6 +107,14 @@ export default {
       isagree: false
     }
   },
+  watch: {
+    receiver_name (val) {
+      localforage.setItem('receiver_name', val)
+    },
+    receiver_mobile (val) {
+      localforage.setItem('receiver_mobile', val)
+    }
+  },
   computed: {
     canSubmit() {
       if (this.receiver_name != '' && this.receiver_mobile != '') {
@@ -117,6 +127,12 @@ export default {
     this.goodsId = this.$route.params.goods
     this.getDetail();
     this.getSaleProtocol();
+    localforage.getItem('receiver_name').then(val => {
+      val == '' || (this.receiver_name = val)
+    })
+    localforage.getItem('receiver_mobile').then(val => {
+      val == '' || (this.receiver_mobile = val)
+    })
   },
   methods: {
     next() {

@@ -231,17 +231,17 @@ export default {
     },
     connectSaler() {
       // 联系卖家
-      this.downloadApp();
       if (this.$cookies.get('connect:goods:' + this.goodsId)) {
-        window.soogua.postMessage(JSON.stringify({
-          "action": "route",
-          "params": JSON.stringify({ "url": "message/" + this.goods.user_id + "/6" })
-        }))
+        this.$router.push({
+          name: 'contact'
+        })
       } else {
-        window.soogua.postMessage(JSON.stringify({
-          "action": "route",
-          "params": JSON.stringify({ "url": "message/" + this.goods.user_id + "/6/" + this.goodsId })
-        }));
+       this.$router.push({
+          name: 'contact',
+          params: {
+            goods_id: this.goodsId
+          }
+        })
         this.$cookies.set('connect:goods:' + this.goodsId, true)
       }
     },
@@ -251,8 +251,7 @@ export default {
           this.$toast.success('收藏成功');
           this.$set(goods, 'is_collect', true)
         }).catch(error => {
-          console.log(error.config)
-          // this.$toast.fail(response.message)
+          this.$toast.fail(error.data.message)
         });
       }
     },

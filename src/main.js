@@ -11,7 +11,7 @@ import 'vant/lib/toast/style'
 import mixins from './mixins/index'
 import '$utils/rem'
 import * as filters from './filters'
-
+import VueCookies from 'vue-cookies';
 // const FastClick = require('fastclick');
 import Lazyload from 'vant/lib/lazyload'
 Vue.use(Lazyload)
@@ -19,6 +19,7 @@ import { Alert, Confirm } from 'wc-messagebox'
 import 'wc-messagebox/style.css'
 Vue.use(Alert)
 Vue.use(Confirm)
+Vue.use(VueCookies)
 import FastClick from 'fastclick'
 Vue.config.productionTip = false
 Vue.mixin(mixins)

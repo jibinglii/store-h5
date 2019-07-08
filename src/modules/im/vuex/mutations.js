@@ -8,7 +8,7 @@ export default {
     state.messages = value
   },
   [TYPES.LOAD_MESSAGES] (state, value) {
-    state.messages.push(...value)
+    state.messages.unshift(...value)
   },
   [TYPES.PLUS_PAGE] (state) {
     state.page += 1

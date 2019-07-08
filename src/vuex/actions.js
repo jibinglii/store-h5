@@ -14,9 +14,6 @@ export const storeInfo = ({ commit }) => {
         }
         commit('storeInfo', store)
         return Promise.resolve()
-    }).catch(error => {
-      Toast.fail('店铺不存在')
-      location.replace('/404?code=404&reason=店铺不存在')
     })
   }
 }

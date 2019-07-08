@@ -17,7 +17,7 @@ import beforeEach from './beforeEach'
 Vue.use(Router)
 
 const AppRoute = {
-    path: '/:store?/',
+    path: '/:store/',
     component: () =>
         import ('../app'),
     children: [...home, ...auth, ...store, ...collection, ...me, ...goods, ...distribution, ...bank, ...order,

@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      tabs: [{"id": "0", "title": "全部"},{ "id": "1", "title": "游戏" }, { "id": "2", "title": "流量" }, { "id": "3", "title": "账号" }, { "id": "4", "title": "服务" }],
+      tabs: [{"id": "0", "title": "全部"},{ "id": "0,1", "title": "游戏" }, { "id": "2", "title": "流量" }, { "id": "3", "title": "账号" }, { "id": "4", "title": "服务" }],
       active: 0,
       goods: []
     }

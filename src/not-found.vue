@@ -34,7 +34,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   background-color: white;
-  img{
+  img {
     width: 80%;
     height: auto;
   }

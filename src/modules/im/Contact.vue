@@ -104,7 +104,7 @@ export default {
       this.addMessage(mmsg)
       this.$nextTick(() => {
         var div = document.getElementById("msg")
-        div.scrollTop = div.scrollHeight
+        div == undefined ||  (div.scrollTop = div.scrollHeight)
       })
     },
     opened(message) {
@@ -139,7 +139,7 @@ export default {
         this.addMessage(mmsg)
         this.$nextTick(() => {
           var div = document.getElementById("msg")
-          div.scrollTop = div.scrollHeight
+          div == undefined ||  (div.scrollTop = div.scrollHeight)
         })
       }
     },
@@ -213,7 +213,7 @@ export default {
 
 $logo-width: 36px;
 .msg {
-  padding: 10px 0 55px 0;
+  padding: 10px 0;
   width: 100%;
   position: absolute;
   top: 0;

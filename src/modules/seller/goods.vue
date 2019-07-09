@@ -1,7 +1,6 @@
 <template>
   <div class="pagebox">
-    <x-header title="商品管理">
-    </x-header>
+    <x-header title="商品管理" back-url="me.me" />
     <van-tabs
       @click="filterData"
       v-model="tabIndex"
@@ -132,7 +131,7 @@ export default {
       if (this.status != -1) {
         param['params']['status'] = this.status
       }
-      this.$http.get('/api/v1/user/goods', param).then(({ data }) => {
+      this.$http.get('/api/v2/store/user/goods', param).then(({ data }) => {
         if (data.goods.data.length > 0) {
           this.page += 1;
           this.items.push(...data.goods.data);

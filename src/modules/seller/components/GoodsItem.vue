@@ -62,7 +62,7 @@
         @click="assign"
       >分配推广员</button>
       <router-link
-        v-if="goods.status == 0"
+        v-if="goods.status == 0 && $user().id == goods.user_id"
         class="goods-btn btn-black"
         :to="{name: 'goods.edit.game.info', params: {id: goods.uuid}}"
         replace

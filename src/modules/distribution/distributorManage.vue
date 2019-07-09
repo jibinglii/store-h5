@@ -19,6 +19,8 @@
         placeholder="请输入分销员ID或手机号"
         autofocus
         :disabled="!isAdd"
+        clearable
+        @click="copySpreadId"
       />
       <van-field
         v-model="profit_rate"
@@ -27,7 +29,6 @@
         input-align="right"
         placeholder="请输入分润比例"
       >
-        <div slot="right-icon">%</div>
       </van-field>
     </van-cell-group>
     <div class="btn">
@@ -48,7 +49,7 @@
       >保存
       </van-button>
 
-      <van-cell-group title="分销商品">
+      <van-cell-group title="分销商品" v-if="!isAdd">
         <van-swipe-cell v-for="item in sellerGoods" :key="item.uuid">
           <div class="goods">
             <div class="image">
@@ -63,15 +64,20 @@
           <div slot="right" class="btns">
             <van-button
               square
-              type="danger"
-              text="删除"
-              @click="deleteGoods(item.uuid)"
+              text="复制推广链接"
+              @click="copyGoods(item.uuid)"
             />
             <van-button
               square
               type="info"
               text="修改"
               @click="updateGoods(item)"
+            />
+            <van-button
+              square
+              type="danger"
+              text="删除"
+              @click="deleteGoods(item.uuid)"
             />
           </div>
 
@@ -116,6 +122,10 @@
   import "vant/lib/swipe-cell/style";
   import ActionSheet from 'vant/lib/action-sheet'
   import 'vant/lib/action-sheet/style'
+  import Vue from 'vue';
+  import VueClipboard from 'vue-clipboard2';
+  VueClipboard.config.autoSetContainer = true
+  Vue.use(VueClipboard);
   export default {
     components: {
       XHeader,
@@ -147,6 +157,19 @@
       console.log(this.$refs)
     },
     methods: {
+      copySpreadId () {
+        this.$copyText(this.spread_id).then((e) => {
+            this.$toast('复制成功');
+          }, function (e) {
+        })
+      },
+      copyGoods(uuid){
+        let url = location.origin + '/' + window.STORE_ID + '/goods/' + uuid + '.html?spread_id=' + this.spread_id
+        this.$copyText(url).then((e) => {
+          this.$toast('复制成功，赶快去微信、QQ粘贴给你的分销员推广吧');
+        }, function (e) {
+        })
+      },
       async getSellerGoods(){
         await this.$http.get('api/v2/store/sellers/my-drp-goods/' + this.spread_id).then(({data})=>{
           this.sellerGoods = data.goods
@@ -241,6 +264,7 @@
       margin: 1rem auto;
       background: #000;
       color: #ffffff;
+      border: none;
     }
   }
   .van-swipe-cell {
@@ -301,15 +325,13 @@
       .van-button {
         height: 100%;
         line-height: 100%;
-        width: 3.1rem;
+        min-width: 3.1rem;
       }
       .van-button--square {
         border-radius: 0;
       }
-      .van-button--normal {
-        padding: 0 0.75rem;
-        font-size: 0.75rem;
-        line-height: 0.65rem;
+      .van-button--normal{
+        padding: 0 10px;
       }
       .van-button--danger {
         color: #fff;

@@ -72,7 +72,7 @@ export default {
         this.$router.push({'name': 'auth.login'})
       } else {
         this.$store.dispatch('setToken', token)
-        this.$store.dispatch('loaduser')
+        this.$store.dispatch('loadUser')
         this.$router.push({'name': 'me.me'})
       }
     }

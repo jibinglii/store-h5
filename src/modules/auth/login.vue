@@ -41,7 +41,7 @@
       <a href="javascript:" v-if="type == 'code'">使用密码登录</a>
       <a href="javascript:" v-else>使用验证码登录</a>
     </div>
-    <div class="socail">
+    <div class="socail" v-show="isWechat()">
       <div class="title">
         <span>第三方登录</span>
       </div>

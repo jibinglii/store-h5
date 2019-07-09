@@ -115,7 +115,7 @@ export default {
   },
   computed: {
     isSeller(){
-      return _.indexOf(this.$user().roles,'分销员') != -1
+      return _.indexOf(this.$user().roles,'分销员') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1
     }
   },
   mounted() {

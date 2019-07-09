@@ -76,6 +76,12 @@
         class="btn-black"
         @click="copySeller(goods)"
       >复制链接</button>
+      <!-- _.indexOf(this.$currentStore().roles,'推广店铺') != -1 -->
+      <button
+        v-if="goods.status == 4 && _.indexOf(this.$currentStore().roles,'推广店铺') != -1"
+        class="btn-black"
+        @click="assign"
+      >分配推广员</button>
     </div>
   </div>
 </template>

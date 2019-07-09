@@ -31,7 +31,7 @@
         <div class="clear"></div>
       </div>
     </router-link>
-    <div class="b">
+    <div class="b" v-if="!isSeller">
       <span class="status">{{goods.status_label}}</span>
       <button style="opacity: 0">&nbsp;</button>
       <button
@@ -68,6 +68,15 @@
         replace
       >修改</router-link>
     </div>
+    <div class="b" v-else>
+      <span class="status">{{goods.status_label}}</span>
+      <button style="opacity: 0">&nbsp;</button>
+      <button
+        v-if="goods.status == 4"
+        class="btn-black"
+        @click="copySeller(goods)"
+      >复制链接</button>
+    </div>
   </div>
 </template>
 
@@ -80,6 +89,10 @@ export default {
   props: {
     goods: {
       type: Object
+    },
+    isSeller: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -111,6 +124,15 @@ export default {
     copy(goods) {
       if (undefined != goods.uuid) {
         let url = location.origin + '/' + window.STORE_ID + '/goods/' + goods.uuid + '.html?spread_id=' + this.$user().id
+        this.$copyText(url).then((e) => {
+          this.$toast('复制成功，赶快去微信、QQ粘贴分享给你的好友吧');
+        }, function (e) {
+        })
+      }
+    },
+    copySeller(goods){
+      if (undefined != goods.uuid) {
+        let url = location.origin + '/' + goods.store_uuid + '/goods/' + goods.uuid + '.html?spread_id=' + this.$user().id
         this.$copyText(url).then((e) => {
           this.$toast('复制成功，赶快去微信、QQ粘贴分享给你的好友吧');
         }, function (e) {

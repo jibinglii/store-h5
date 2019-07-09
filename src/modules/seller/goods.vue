@@ -4,6 +4,7 @@
     <van-tabs
       @click="filterData"
       v-model="tabIndex"
+      v-show="!isSeller"
     >
       <van-tab
         :title="item.title"
@@ -19,6 +20,7 @@
           :goods="item"
           @update="filterData(tabIndex)"
           @assign="assign"
+          :is-seller="isSeller"
         ></goods-item>
         <infinite-loading
           :identifier="infiniteId"
@@ -109,6 +111,11 @@ export default {
       assignUserId: '',
       assignRate: '',
       currentGoods: {}
+    }
+  },
+  computed: {
+    isSeller(){
+      return _.indexOf(this.$user().roles,'分销员') != -1
     }
   },
   mounted() {

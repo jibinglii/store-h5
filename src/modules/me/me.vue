@@ -15,16 +15,16 @@
     </div>
     <cell-group
       :title="item.title"
-      v-for="item in list"
-      :key="item.title"
-      v-if="item.show"
+      v-for="(item, index) in list"
+      :key="index"
+      v-show="item.show"
     >
       <cell
         :title="inner.title"
         :img="inner.img"
         :url="inner.url"
-        v-for="inner in item.sub"
-        :key="inner.title"
+        v-for="(inner, index) in item.sub"
+        :key="index"
         v-show="inner.show"
       />
     </cell-group>
@@ -63,31 +63,39 @@ export default {
         },
         {
           title: '我是卖家',
-          show: this.$currentStore().user_id == this.$user().id,
+          show: this.isAdmin  || (
+            _.indexOf(this.$user().roles,'代理') != -1 || _.indexOf(this.$user().roles,'分销员') != -1
+          ),
           sub: [
             {
               title: '店铺管理',
               url: 'me.storemanage',
               img: '/images/store/dianpu.png',
-              show: _.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1
+              show: this.isAdmin && (_.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1)
             },
             {
               title: '商品管理',
               url: 'seller/goods',
               img: '/images/store/shangpin.png',
-              show: _.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1
+              show: this.isAdmin && (_.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1)
+            },
+            {
+              title: '商品管理',
+              url: 'seller/goods',
+              img: '/images/store/shangpin.png',
+              show: _.indexOf(this.$user().roles,'分销员') != -1
             },
             {
               title: '分销管理',
               url: 'distribution.distribution',
               img: '/images/store/fenxiao.png',
-              show: !(_.indexOf(this.$currentStore().roles,'渠道店铺') != -1),
+              show: this.isAdmin && !(_.indexOf(this.$currentStore().roles,'渠道店铺') != -1),
             },
             {
               title: '结算管理',
               url: 'me.settlemanage',
               img: '/images/store/jiesuan.png',
-              show: true
+              show: _.indexOf(this.$user().roles,'代理') != -1 || _.indexOf(this.$user().roles,'分销员') != -1
             }
           ]
         },
@@ -137,7 +145,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["currentUser", "currentStore"])
+    ...mapGetters(["currentUser", "currentStore"]),
+    isAdmin () {
+      return this.$currentStore().user_id == this.$user().id
+    }
+  },
+  created() {
+    console.log(this.$user())
   }
 };
 </script>

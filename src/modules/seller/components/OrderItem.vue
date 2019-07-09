@@ -27,11 +27,6 @@
         class="btn-white"
         :to="{name: 'seller/orders/view', params: {'order': order.id}}"
       >查看</router-link>
-      <button
-        @click="shipping(order.id)"
-        v-show="order.status==1"
-        class="btn-black"
-      >确认发货</button>
     </div>
   </div>
 </template>
@@ -45,27 +40,6 @@ export default {
     }
   },
   methods: {
-    shipping(id) {
-      let message = "您确定要[确认发货]该订单吗？";
-      this.$confirm({
-        title: "温馨提示",
-        content: message,
-        yesText: "否", // 左边按钮文本,
-        yesStyle: { overflow: "inherit" },
-        noText: "是", // 设置右边按钮文本,
-        noStyle: { overflow: "inherit" } // 设置右边按钮样式,
-      }).then(function () {
-        console.log('“cancel”');
-      })
-        .catch(() => {
-          axios.post('api/v1/order/shipping/' + id, {}, { loading: true }).then(({ data }) => {
-            this.$toast(data.message);
-            setTimeout(() => {
-              window.location.reload()
-            }, 500)
-          })
-        });
-    }
   }
 }
 </script>

@@ -41,6 +41,18 @@
       <a href="javascript:" v-if="type == 'code'">使用密码登录</a>
       <a href="javascript:" v-else>使用验证码登录</a>
     </div>
+    <div class="socail">
+      <div class="title">
+        <span>第三方登录</span>
+      </div>
+      <div class="socail-channel">
+        <div class="item wechat" v-show="isWechat()">
+          <a href="javascript:void()" @click="wechat">
+            <img src="/images/shop/weixin.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
     <div class="agreement">
       <label for="weuiAgree" class="weui-agree">
         <input
@@ -97,6 +109,9 @@ export default {
   // components: {  },
   methods: {
     ...mapActions(["attemptLogin", "attemptLoginByCode"]),
+    wechat () {
+      location.href = window.API_ROOT + '/api/v2/oauth/wechat/' + window.STORE_ID
+    },
     getCode() {
       if (this.param.username == "") {
         this.$toast.fail("请填写手机号");
@@ -306,5 +321,26 @@ export default {
   width: 100%;
   text-align: center;
   margin-top: 30px;
+}
+.socail{
+  width: 100%;
+  .title{
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+  }
+  .socail-channel{
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    .item{
+      width: 50px;
+      text-align: center;
+      img{
+        width: 36px;
+        height: auto;
+      }
+    }
+  }
 }
 </style>

@@ -87,6 +87,7 @@ export default {
       margin: 2.133333rem auto;
       background: #000;
       color: #ffffff;
+      border: none;
     }
   }
 }

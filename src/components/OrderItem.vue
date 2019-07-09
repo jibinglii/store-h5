@@ -1,5 +1,5 @@
 <template>
-  <div class="goods">
+  <div class="goods" v-if="order">
     <router-link :to="{name: 'orders.view', params: {'id': order.id}}">
       <div class="t">
         <span>{{order.goods_title}}</span>
@@ -43,11 +43,6 @@
         v-show="order.status==0"
         class="btn-black"
       >删除</button>
-      <button
-        @click="repayment(order.id)"
-        class="btn-blue"
-        v-if="order.juhefq.status == 1"
-      >去还款</button>
       <button
         @click="confirm(order.id)"
         v-show="order.status==2"

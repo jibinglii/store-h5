@@ -97,11 +97,10 @@ export default {
         console.log('“cancel”');
       })
         .catch(() => {
-          axios.post('api/v1/order/confirm/' + id, {}, { loading: true }).then(({ data }) => {
-            this.$toast(data.message);
-            setTimeout(() => {
-              window.location.reload()
-            }, 500)
+          this.$toast.loading({mask: true})
+          this.$http.post('api/v1/order/confirm/' + id, {}, { loading: true }).then(({ message }) => {
+            this.$toast(message);
+            this.$emit('confirm')
           })
         });
     },

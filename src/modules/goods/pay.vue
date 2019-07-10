@@ -24,40 +24,53 @@ export default {
   data () {
     return {
       orderId: '',
-      paytype: {index: 0, value: 'dc'},
-      radios:[
-        {
-          title:'银行卡',
-          value: 'dc',
-          icon:'/images/shop/bank.png',
-          checked: true,
-          show: true,
-        },
-        // {
-        //   title:'分期付款',
-        //   value: 'juhe',
-        //   icon:'/images/shop/juhefq.png',
-        //   checked: true
-        // },
-        {
-          title:'支付宝',
-          value: 'alipay',
-          icon:'/images/shop/alipay.png',
-          checked: false,
-          show: !this.isWechat(),
-        },
-        {
-          title:'微信',
-          value: 'wechat',
-          icon:'/images/shop/weixin.png',
-          checked: true,
-          show: true//this.isWechat(),
-        }
-      ],
+      paytype: {index: 0, value: 'bank'},
       order: {
         total_amount: '...'
       },
-      canPay: false
+      canPay: false,
+      payment: {}
+    }
+  },
+  computed: {
+    radios () {
+      if (this.payment.types != undefined){
+        let types = Object.values(this.payment.types)
+        let limit = this.payment.payment
+        console.log(limit['alipay'])
+        let r = [
+          {
+            title:'银行卡',
+            value: 'bank',
+            icon:'/images/shop/bank.png',
+            checked: true,
+            show: _.indexOf(types, 'bank') != -1 && (limit['bank'].norm == 0 ? true : limit['bank'].norm > this.order.total_amount),
+          },
+          // {
+          //   title:'分期付款',
+          //   value: 'juhe',
+          //   icon:'/images/shop/juhefq.png',
+          //   checked: true
+          // },
+          {
+            title:'支付宝',
+            value: 'alipay',
+            icon:'/images/shop/alipay.png',
+            checked: false,
+            show: _.indexOf(types, 'alipay') != -1 && (limit['alipay'].norm == 0 ? true : limit['alipay'].norm > this.order.total_amount) && !this.isWechat(),
+          },
+          {
+            title:'微信',
+            value: 'wechat',
+            icon:'/images/shop/weixin.png',
+            checked: true,
+            show: _.indexOf(types, 'wechat') != -1 && (limit['wechat'].norm == 0 ? true : limit['wechat'].norm > this.order.total_amount) && this.isWechat(),
+          }
+        ]
+        return r
+      }
+
+      return []
     }
   },
   created () {
@@ -81,6 +94,7 @@ export default {
     });
     this.orderId = this.$route.params.order
     this.getOrderInfo()
+    this.getPayment()
   },
   mounted () {
     this.totalHtml = " ¥ " + this.formatMoney(this.total) + " 元";
@@ -90,7 +104,7 @@ export default {
       if (!this.canPay){
         return
       }
-      if (this.paytype.value == 'dc'){
+      if (this.paytype.value == 'bank'){
         this.$router.push({name: 'pay.bank', params: {'order': this.orderId}})
       }else if (this.paytype.value == 'juhe'){
         let url = window.API_ROOT + "/api/v1/pay/juhefq?id=" + this.orderId + "&paytype=" + this.paytype.value;
@@ -105,12 +119,17 @@ export default {
         location.replace(url);
       }
     },
-    getOrderInfo(){
+    async getOrderInfo(){
       this.$toast.loading({mask: true})
-      order.view(this.orderId).then(({data})=>{
+      await order.view(this.orderId).then(({data})=>{
         this.$toast.clear()
         this.order = data.order
         this.canPay = true
+      })
+    },
+    async getPayment(){
+      await this.$http.get('api/v2/payment/channel').then(data => {
+        this.payment = data.data
       })
     }
   }

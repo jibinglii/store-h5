@@ -104,7 +104,8 @@ export default {
       },
       creating: false,
       insureContent: '',
-      isagree: false
+      isagree: false,
+      spread_id: 0
     }
   },
   watch: {
@@ -133,6 +134,12 @@ export default {
     localforage.getItem('receiver_mobile').then(val => {
       val == '' || (this.receiver_mobile = val)
     })
+    if (this.$cookies.get('goods-spread') != undefined && this.$cookies.get('goods-spread') != 'undefined'){
+      this.spread_id = this.$cookies.get('goods-spread')
+    }
+    if (this.$route.query['spread_id'] != undefined){
+      this.spread_id = this.$route.query['spread_id']
+    }
   },
   methods: {
     next() {
@@ -150,7 +157,7 @@ export default {
             receiver_mobile: this.receiver_mobile,
             express_type: 0,
             insure: this.serviceValue.index,
-            spread_id: this.$route.query['spread_id']
+            spread_id: this.spread_id
           };
           this.$toast.loading({mask: true})
           this.$http.post('api/v1/order/' + this.goodsId, param).then(({ data }) => {

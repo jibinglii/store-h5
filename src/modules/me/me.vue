@@ -83,7 +83,7 @@ export default {
               title: '商品管理',
               url: 'seller/goods',
               img: '/images/store/shangpin.png',
-              show: _.indexOf(this.$user().roles,'分销员') != -1
+              show: this.$currentStore().user_id != this.$user().id && _.indexOf(this.$user().roles,'分销员') != -1
             },
             {
               title: '分销管理',
@@ -95,7 +95,13 @@ export default {
               title: '结算管理',
               url: 'me.settlemanage',
               img: '/images/store/jiesuan.png',
-              show: _.indexOf(this.$user().roles,'代理') != -1 || _.indexOf(this.$user().roles,'分销员') != -1
+              show: true
+            },
+            {
+              title: '广告管理',
+              url: 'ad.list',
+              img: '/images/store/ad.png',
+              show: this.$currentStore().user_id == this.$user().id && (_.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1)
             }
           ]
         },

@@ -208,6 +208,10 @@ export default {
   },
   methods: {
     buy(goodsId) {
+      if (this.$route.query['spread_id'] != undefined){
+        this.$cookies.set('goods-spread', this.$route.query['spread_id'], 1800)
+      }
+
       if (this.canBuy) {
         this.$router.push({ name: 'confirm', params: { 'goods': goodsId }, query: { 'spread_id': this.$route.query['spread_id'] } })
       }

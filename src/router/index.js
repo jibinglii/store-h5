@@ -11,6 +11,7 @@ import { routes as seller } from '$modules/seller'
 import { routes as distribution } from '$modules/distribution'
 import { routes as withdraw } from '$modules/withdraw'
 import { routes as im } from '$modules/im'
+import { routes as ad } from '$modules/ad'
 import Vue from 'vue'
 import Router from 'vue-router'
 import beforeEach from './beforeEach'
@@ -21,7 +22,7 @@ const AppRoute = {
     component: () =>
         import ('../app'),
     children: [...home, ...auth, ...store, ...collection, ...me, ...goods, ...distribution, ...bank, ...order,
-        ...result, ...seller, ...withdraw, ...im
+        ...result, ...seller, ...withdraw, ...im, ...ad
     ]
 }
 

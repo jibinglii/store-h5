@@ -33,9 +33,9 @@ export default {
   },
   data () {
     return {
-      title:'测试',
-      content: '测试',
-      nimg: ['http://zs-3-km.oss-cn-beijing.aliyuncs.com/005LZQP5gy1fttaru78njj31w02iob2h.jpg'],
+      title:'',
+      content: '',
+      nimg: [],
       url: ''
     }
   },

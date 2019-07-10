@@ -20,6 +20,14 @@ import 'wc-messagebox/style.css'
 Vue.use(Alert)
 Vue.use(Confirm)
 Vue.use(VueCookies)
+
+import VueFab from 'vue-float-action-button'
+Vue.use(VueFab, {
+    // opitons 可选iconfont图标或MaterialIcons
+    // iconType: 'MaterialDesign'
+    iconType: 'iconfont'
+});
+
 import FastClick from 'fastclick'
 Vue.config.productionTip = false
 Vue.mixin(mixins)

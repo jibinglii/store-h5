@@ -78,7 +78,7 @@
       >复制链接</button>
       <!-- _.indexOf(this.$currentStore().roles,'推广店铺') != -1 -->
       <button
-        v-if="goods.status == 4 && _.indexOf(this.$currentStore().roles,'推广店铺') != -1"
+        v-if="goods.status == 4 && isSellerStore"
         class="btn-black"
         @click="assign"
       >分配推广员</button>
@@ -99,6 +99,11 @@ export default {
     isSeller: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    isSellerStore () {
+      return _.indexOf(this.$currentStore().roles,'推广店铺') != -1 && _.indexOf(this.$user().roles, '分销员') == -1
     }
   },
   methods: {

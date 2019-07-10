@@ -63,7 +63,7 @@ export default {
         },
         {
           title: '我是卖家',
-          show: this.isAdmin  || (
+          show: this.$currentStore().user_id == this.$user().id  || (
             _.indexOf(this.$user().roles,'代理') != -1 || _.indexOf(this.$user().roles,'分销员') != -1
           ),
           sub: [
@@ -71,13 +71,13 @@ export default {
               title: '店铺管理',
               url: 'me.storemanage',
               img: '/images/store/dianpu.png',
-              show: this.isAdmin && (_.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1)
+              show: this.$currentStore().user_id == this.$user().id && (_.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1)
             },
             {
               title: '商品管理',
               url: 'seller/goods',
               img: '/images/store/shangpin.png',
-              show: this.isAdmin && (_.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1)
+              show: this.$currentStore().user_id == this.$user().id && (_.indexOf(this.$currentStore().roles,'渠道店铺') != -1 || _.indexOf(this.$currentStore().roles,'推广店铺') != -1)
             },
             {
               title: '商品管理',
@@ -89,7 +89,7 @@ export default {
               title: '分销管理',
               url: 'distribution.distribution',
               img: '/images/store/fenxiao.png',
-              show: this.isAdmin && !(_.indexOf(this.$currentStore().roles,'渠道店铺') != -1),
+              show: this.$currentStore().user_id == this.$user().id && !(_.indexOf(this.$currentStore().roles,'渠道店铺') != -1),
             },
             {
               title: '结算管理',
@@ -149,9 +149,6 @@ export default {
     isAdmin () {
       return this.$currentStore().user_id == this.$user().id
     }
-  },
-  created() {
-    console.log(this.$user())
   }
 };
 </script>

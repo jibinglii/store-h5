@@ -2,7 +2,7 @@
     <vue-fab
     :mainBtnColor="mainBtnColor"
     size="big"
-    style="bottom: 7.5rem;" icon="icon-menu" active-icon="icon-close"
+    style="bottom: 6.25rem;" icon="icon-add"
     :scroll-auto-hide="false"
     >
     <fab-item

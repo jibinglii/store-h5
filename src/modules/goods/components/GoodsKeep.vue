@@ -34,12 +34,13 @@
       </div>
     </div>
     <div class="divider"></div>
-    <a
+    <router-link
       class="more"
       href="/shop/contact.html"
+      v-show="false"
     >
       如需了解更多，点击这里联系客服
-    </a>
+    </router-link>
   </div>
 </template>
 

@@ -95,16 +95,17 @@
 
     <div class="btn-group">
       <div class="btn-l">
-        <a
-          @click="connectSaler"
+        <router-link
           class="service"
+          v-show="canContact"
+          :to="{name: 'contact'}"
         >
           <img
             src="/images/shop/goods-service.png"
             alt=""
           >
           <span>联系卖家</span>
-        </a>
+        </router-link>
         <a
           @click="collect(goods)"
           class="collect"
@@ -113,7 +114,7 @@
       <a
         @click="buy(goodsId)"
         class="buy"
-        :class="{disabled: !canBuy}"
+        :class="{disabled: !canBuy, 'can-not-contact': !canContact}"
       >{{canBuy?'立即购买':'暂时无货'}}</a>
     </div>
 
@@ -187,6 +188,9 @@ export default {
         return false
       }
       return this.goods.store_nums > 0
+    },
+    canContact () {
+      return this.$user().id != this.$currentStore().user_id
     }
   },
   created() {
@@ -232,22 +236,6 @@ export default {
         }).catch(({ response }) => {
           this.$router.back()
         });
-    },
-    connectSaler() {
-      // 联系卖家
-      if (this.$cookies.get('connect:goods:' + this.goodsId)) {
-        this.$router.push({
-          name: 'contact'
-        })
-      } else {
-       this.$router.push({
-          name: 'contact',
-          params: {
-            goods_id: this.goodsId
-          }
-        })
-        this.$cookies.set('connect:goods:' + this.goodsId, true)
-      }
     },
     collect(goods) {
       if (!goods.is_collect) {
@@ -474,6 +462,9 @@ export default {
       margin-top: -1px;
       &.disabled {
         opacity: 0.7;
+      }
+      &.can-not-contact{
+        width: 38+24%;
       }
     }
   }

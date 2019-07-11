@@ -38,6 +38,7 @@
       class="more"
       href="/shop/contact.html"
       v-show="false"
+      :to="{name: 'home'}"
     >
       如需了解更多，点击这里联系客服
     </router-link>

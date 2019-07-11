@@ -105,7 +105,8 @@ export default {
       creating: false,
       insureContent: '',
       isagree: false,
-      spread_id: 0
+      spread_id: 0,
+      token: ''
     }
   },
   watch: {
@@ -128,6 +129,7 @@ export default {
     this.goodsId = this.$route.params.goods
     this.getDetail();
     this.getSaleProtocol();
+    this.getToken();
     localforage.getItem('receiver_name').then(val => {
       val == '' || (this.receiver_name = val)
     })
@@ -157,7 +159,8 @@ export default {
             receiver_mobile: this.receiver_mobile,
             express_type: 0,
             insure: this.serviceValue.index,
-            spread_id: this.spread_id
+            spread_id: this.spread_id,
+            '_token': this.token
           };
           this.$toast.loading({mask: true})
           this.$http.post('api/v1/order/' + this.goodsId, param).then(({ data }) => {
@@ -209,6 +212,11 @@ export default {
         this.insureContent = data.data.content
       })
     },
+    getToken(){
+      this.$http.get('api/request-token').then(data => {
+        this.token = data.data
+      })
+    }
   }
 }
 </script>

@@ -78,7 +78,6 @@
     }
 
     .x-spec-input-item {
-      float: left;
       width: 27%;
       height: 40px;
       list-style-type: none;

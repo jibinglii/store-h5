@@ -24,6 +24,7 @@
           :key="index"
           :order="item"
           @delete="deleteOrder"
+          @confirm="confirm"
         ></order-item>
         <infinite-loading
           :identifier="infiniteId"
@@ -77,6 +78,11 @@ export default {
       this.status = this.statusTypes[index].id;
     },
     deleteOrder(id) {
+      this.page = 1;
+      this.items = [];
+      this.infiniteId += 1;
+    },
+    confirm () {
       this.page = 1;
       this.items = [];
       this.infiniteId += 1;

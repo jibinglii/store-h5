@@ -13,10 +13,11 @@ export const postLogin = ({ username, password }) => {
         scope: ''
     })
 }
-export const postLoginByCode = ({ username, code }) => {
+export const postLoginByCode = ({ username, code, oauth_id }) => {
         return http.post('api/v1/user/login-by-code', {
             mobile: username,
             code: code,
+            oauth_id: oauth_id,
             client_id: process.env.VUE_APP_AUTH_CLIENT_ID,
         })
     }

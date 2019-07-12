@@ -2,15 +2,29 @@
   <div class="page-box">
     <x-header title="添加银行卡" back-url="/shop/bankcard.html"></x-header>
 
-    <div class="tips" @click="help">
-      请填写您本人的的银行卡
-      <i class="weui-icon-info weui-icon_msg"></i>
-    </div>
-    <x-cell-group>
+    <x-group title="选择账户类型">
+      <radio-cell :cells="radios" v-model="cardtype"></radio-cell>
+    </x-group>
+
+    <x-cell-group v-if="cardtype.value == 'bank'" title="完善银行卡信息">
       <info-cell v-if="hasRealname" title="姓名">{{bankinfo.realname}}</info-cell>
       <input-cell v-if="!hasRealname" v-model="bankinfo.realname" title="姓名" placeholder="请输入您的姓名"></input-cell>
       <input-cell type="number" v-model="bankinfo.id_card" title="身份证号" placeholder="请输入您的身份证号"></input-cell>
       <input-cell type="number" v-model="bankinfo.bankno" title="银行卡号" placeholder="请输入卡号"></input-cell>
+      <input-cell type="number" v-model="bankinfo.mobile" title="预留手机号" placeholder="请输入手机号"></input-cell>
+    </x-cell-group>
+
+    <x-cell-group v-if="cardtype.value == 'alipay'" title="完善支付宝信息">
+      <info-cell v-if="hasRealname" title="姓名">{{bankinfo.realname}}</info-cell>
+      <input-cell v-if="!hasRealname" v-model="bankinfo.realname" title="姓名" placeholder="请输入您的姓名"></input-cell>
+      <input-cell type="text" v-model="bankinfo.bankno" title="支付宝账号" placeholder="请输入您的账号"></input-cell>
+      <input-cell type="number" v-model="bankinfo.mobile" title="预留手机号" placeholder="请输入手机号"></input-cell>
+    </x-cell-group>
+
+    <x-cell-group v-if="cardtype.value == 'wechat'" title="完善微信收款信息">
+      <info-cell v-if="hasRealname" title="姓名">{{bankinfo.realname}}</info-cell>
+      <input-cell v-if="!hasRealname" v-model="bankinfo.realname" title="姓名" placeholder="请输入您的姓名"></input-cell>
+      <input-cell type="text" v-model="bankinfo.bankno" title="微信账号" placeholder="请输入您的账号"></input-cell>
       <input-cell type="number" v-model="bankinfo.mobile" title="预留手机号" placeholder="请输入手机号"></input-cell>
     </x-cell-group>
 
@@ -32,7 +46,9 @@
 
 <script>
 import XHeader from "$components/XHeader";
+import XGroup from "$components/XGroup";
 import XCellGroup from "$components/XCellGroup";
+import RadioCell from "$components/RadioCell";
 import InputCell from "$components/InputCell";
 import InfoCell from "$components/InfoCell";
 import XButton from "$components/XButton";
@@ -41,7 +57,9 @@ import protocol from '$api/protocol';
 export default {
   components: {
     XHeader,
+    XGroup,
     XCellGroup,
+    RadioCell,
     InputCell,
     InfoCell,
     XButton,
@@ -49,7 +67,7 @@ export default {
   },
   data() {
     return {
-      hasRealname: 0,
+      hasRealname: false,
       isagree: false,
       saving: false,
       bankinfo:{
@@ -57,9 +75,34 @@ export default {
         realname: "",
         mobile: "",
         id_card: "",
+        bank: "bank",
         is_default: 1
       },
-      protocol: ''
+      protocol: '',
+      cardtype: {index: 0, value: 'bank'},
+      radios:[
+        {
+          title:'银行卡',
+          value: 'bank',
+          icon:'/images/shop/bank.png',
+          checked: true,
+          show: true
+        },
+        {
+          title:'支付宝',
+          value: 'alipay',
+          icon:'/images/shop/alipay.png',
+          checked: false,
+          show: true
+        },
+        {
+          title:'微信',
+          value: 'wechat',
+          icon:'/images/shop/weixin.png',
+          checked: true,
+          show: true
+        }
+      ],
     }
   },
   created () {
@@ -71,20 +114,20 @@ export default {
       if (!this.isagree) {
         this.$alert("请勾选《绑卡服务协议》");
       } else {
-        for (var index in this.bankinfo){
-          if(this.bankinfo[index]==""){
-            validate = false;
-            break;
-          }
-        }
-        if(!validate){
-          this.$alert("您填写的信息不完整");
-        }
+        // for (var index in this.bankinfo){
+        //   if(this.bankinfo[index]==""){
+        //     validate = false;
+        //     break;
+        //   }
+        // }
+        // if(!validate){
+        //   this.$alert("您填写的信息不完整");
+        // }
         if (!this.saving && validate) {
           this.saving = true;
           this.$toast.loading('信息保存中');
           this.$http
-            .post("api/v1/bankcard", this.bankinfo)
+            .post("api/v1/bankcard", _.assign(this.bankinfo, {bank: this.cardtype.value}))
             .then(({data}) => {
               this.saving = false;
               let redirect = this.$route.query['redirect']
@@ -99,6 +142,8 @@ export default {
               } else {
                 this.$router.replace({name: 'banks'})
               }
+            }).catch(() => {
+              this.saving = false;
             })
         }
       }
@@ -110,7 +155,7 @@ export default {
     help() {
       this.$alert({
         title: "持卡人说明",
-        content: "为保证账户资金安全，只能绑定认证用户本人的银行卡（储蓄卡）"
+        content: "为保证账户资金安全，只能绑定认证用户本人的银行卡（储蓄卡）或支付宝账户"
       });
     },
     getProtocol () {

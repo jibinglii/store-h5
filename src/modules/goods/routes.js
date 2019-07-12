@@ -1,12 +1,9 @@
 export default [{
-  path: 'goods/:goods.html',
-  name: 'goods.view',
-  meta: {
-    requiresAuth: true
+    path: 'goods/:goods.html',
+    name: 'goods.view',
+    component: () =>
+      import('./goods')
   },
-  component: () =>
-    import('./goods')
-},
   {
     path: 'confirm/:goods.html',
     name: 'confirm',

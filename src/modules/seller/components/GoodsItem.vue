@@ -31,7 +31,7 @@
         <div class="clear"></div>
       </div>
     </router-link>
-    <div class="b">
+    <div class="b" v-if="!isSeller">
       <span class="status">{{goods.status_label}}</span>
       <button style="opacity: 0">&nbsp;</button>
       <button
@@ -62,11 +62,26 @@
         @click="assign"
       >分配推广员</button>
       <router-link
-        v-if="goods.status == 0"
+        v-if="goods.status == 0 && $user().id == goods.user_id"
         class="goods-btn btn-black"
         :to="{name: 'goods.edit.game.info', params: {id: goods.uuid}}"
         replace
       >修改</router-link>
+    </div>
+    <div class="b" v-else>
+      <span class="status">{{goods.status_label}}</span>
+      <button style="opacity: 0">&nbsp;</button>
+      <button
+        v-if="goods.status == 4"
+        class="btn-black"
+        @click="copySeller(goods)"
+      >复制链接</button>
+      <!-- _.indexOf(this.$currentStore().roles,'推广店铺') != -1 -->
+      <button
+        v-if="goods.status == 4 && isSellerStore"
+        class="btn-black"
+        @click="assign"
+      >分配推广员</button>
     </div>
   </div>
 </template>
@@ -80,6 +95,15 @@ export default {
   props: {
     goods: {
       type: Object
+    },
+    isSeller: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    isSellerStore () {
+      return _.indexOf(this.$currentStore().roles,'推广店铺') != -1 && _.indexOf(this.$user().roles, '分销员') == -1
     }
   },
   methods: {
@@ -110,7 +134,17 @@ export default {
     },
     copy(goods) {
       if (undefined != goods.uuid) {
-        this.$copyText(window.location.href).then((e) => {
+        let url = location.origin + '/' + window.STORE_ID + '/goods/' + goods.uuid + '.html?spread_id=' + this.$user().id
+        this.$copyText(url).then((e) => {
+          this.$toast('复制成功，赶快去微信、QQ粘贴分享给你的好友吧');
+        }, function (e) {
+        })
+      }
+    },
+    copySeller(goods){
+      if (undefined != goods.uuid) {
+        let url = location.origin + '/' + goods.store_uuid + '/goods/' + goods.uuid + '.html?spread_id=' + this.$user().id
+        this.$copyText(url).then((e) => {
           this.$toast('复制成功，赶快去微信、QQ粘贴分享给你的好友吧');
         }, function (e) {
         })

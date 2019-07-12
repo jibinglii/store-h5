@@ -41,7 +41,6 @@ export const setUser = ({ commit }, user) => {
 export const setToken = ({ commit }, payload) => {
   // prevent if payload is a object
   const token = isEmpty(payload) ? null : payload.token || payload
-
   // Commit the mutations
   commit(TYPES.SET_TOKEN, token)
 

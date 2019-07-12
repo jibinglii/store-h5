@@ -1,7 +1,7 @@
 <template>
   <div class="goods">
     <x-header
-      title="我的银行卡"
+      title="收付款账号"
       url="me.accountsetting"
     >
       <i
@@ -36,7 +36,7 @@
       >
         <img src="/images/shop/bank-add.png" />
         <br />
-        添加银行卡
+        添加
       </li>
     </ul>
   </div>

@@ -1,4 +1,5 @@
 export default {
   toggled: false,
-  store: {}
+  store: {},
+  hasNewMsg: false
 }

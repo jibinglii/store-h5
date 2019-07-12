@@ -1,44 +1,25 @@
 <template>
   <div class="body">
-    <x-header
-      title="登录"
-      back-url="home"
-    ></x-header>
+    <x-header title="登录" back-url="home"></x-header>
     <div class="bg">
-      <img
-        :src="currentStore.logo"
-        alt=""
-      >
+      <img :src="currentStore.logo" alt />
       <div>
-      <h4>{{ currentStore.name }}</h4>
-<!--      <p>{{ currentStore.desc }}</p>-->
+        <h4>{{ currentStore.name }}</h4>
+        <!--      <p>{{ currentStore.desc }}</p>-->
       </div>
-
     </div>
     <div class="login-box">
       <div class="item">
         <div class="icon">
-          <img src="/images/shop/login/mobile.png">
+          <img src="/images/shop/login/mobile.png" />
         </div>
-        <input
-          type="tel"
-          placeholder="请输入手机号码"
-          v-model="param.username"
-        >
+        <input type="tel" placeholder="请输入手机号码" v-model="param.username" />
       </div>
-      <div
-        class="item"
-        v-if="type == 'code'"
-      >
+      <div class="item" v-if="type == 'code'">
         <div class="icon">
-          <img src="/images/shop/login/password.png">
+          <img src="/images/shop/login/password.png" />
         </div>
-        <input
-          type="tel"
-          placeholder="请输入验证码"
-          v-model="param.code"
-          class="code"
-        >
+        <input type="tel" placeholder="请输入验证码" v-model="param.code" class="code" />
         <div class="code-btn-box">
           <button
             class="code-btn"
@@ -47,205 +28,214 @@
           >{{ vCodeLabel }}</button>
         </div>
       </div>
-      <div
-        class="item"
-        v-else
-      >
+      <div class="item" v-else>
         <div class="icon">
-          <img src="/images/shop/login/password.png">
+          <img src="/images/shop/login/password.png" />
         </div>
-        <input
-          type="password"
-          placeholder="请输入您的密码"
-          v-model="param.password"
-        >
+        <input type="password" placeholder="请输入您的密码" v-model="param.password" />
       </div>
       <div class="tips">未注册的手机号验证后自动创建搜瓜账号</div>
-      <button
-        type="button"
-        class="login-btn"
-        @click="login()"
-      >
-        登 录
-      </button>
+      <button type="button" class="login-btn" @click="login()">登 录</button>
     </div>
-    <div
-      class="toggle"
-      @click="toggle()"
-    >
-      <a
-        href="javascript:"
-        v-if="type == 'code'"
-      >使用密码登录</a>
-      <a
-        href="javascript:"
-        v-else
-      >使用验证码登录</a>
+    <div class="toggle" @click="toggle()">
+      <a href="javascript:" v-if="type == 'code'">使用密码登录</a>
+      <a href="javascript:" v-else>使用验证码登录</a>
+    </div>
+    <div class="socail">
+      <div class="title">
+        <span>第三方登录</span>
+      </div>
+      <div class="socail-channel">
+        <div class="item wechat" v-show="isWechat()">
+          <a href="javascript:void()" @click="wechat">
+            <img src="/images/shop/weixin.png" alt="">
+          </a>
+        </div>
+        <div class="item qq">
+          <a href="javascript:void()" @click="qq">
+            <img src="/images/shop/qq.png" alt="">
+          </a>
+        </div>
+      </div>
     </div>
     <div class="agreement">
-      <label
-        for="weuiAgree"
-        class="weui-agree"
-      >
+      <label for="weuiAgree" class="weui-agree">
         <input
           id="weuiAgree"
           type="checkbox"
           v-model="isagree"
           checked
           class="weui-agree__checkbox"
-        >
+        />
         <span class="weui-agree__text">
           我已阅读并同意
-          <a
-            @click="showAgree"
-            href="javascript:void(0)"
-          >《搜瓜用户服务协议》</a>
+          <a @click="showAgree" href="javascript:void(0)">《搜瓜用户服务协议》</a>
         </span>
       </label>
     </div>
-    <agree
-      title="商品寄售服务协议"
-      ref="agree"
-      :content="registerProtocol"
-    />
+    <agree title="商品寄售服务协议" ref="agree" :content="registerProtocol" />
     <nav-block></nav-block>
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import XHeader from "$components/XHeader"
-import Agree from "$components/Agree"
-import Tcaptcha from '$utils/tcaptcha'
-import protocol from '$api/protocol'
-import Nav from "$components/Nav"
+import { mapActions, mapGetters } from "vuex";
+import XHeader from "$components/XHeader";
+import Agree from "$components/Agree";
+import Tcaptcha from "$utils/tcaptcha";
+import protocol from "$api/protocol";
+import Nav from "$components/Nav";
 export default {
   components: {
-    XHeader, Agree, 'nav-block': Nav
+    XHeader,
+    Agree,
+    "nav-block": Nav
   },
   data() {
     return {
-      appid: '2056057733',
-      registerProtocol: '',
+      appid: "2056057733",
+      registerProtocol: "",
       isagree: true,
-      type: 'code',
+      type: "code",
       param: {
-        username: '',
-        password: '',
-        code: ''
+        username: "",
+        password: "",
+        code: ""
       },
       vCount: null,
       defaultCodeSecond: 60,
       vCodeSecond: 60,
-      vCodeLabel: '获取验证码',
-      vCodeButtonDisabled: false,
-    }
+      vCodeLabel: "获取验证码",
+      vCodeButtonDisabled: false
+    };
   },
-  computed:{
-    ...mapGetters(['currentStore'])
+  computed: {
+    ...mapGetters(["currentStore"])
   },
   // components: {  },
   methods: {
-    ...mapActions(['attemptLogin', 'attemptLoginByCode']),
+    ...mapActions(["attemptLogin", "attemptLoginByCode"]),
+    wechat () {
+      location.href = window.API_ROOT + '/api/v2/oauth/wechat/' + window.STORE_ID
+    },
+    qq(){
+      location.href = window.API_ROOT + '/api/v2/oauth/qq/' + window.STORE_ID
+    },
     getCode() {
-      if (this.param.username == '') {
-        this.$toast.fail('请填写手机号');
+      if (this.param.username == "") {
+        this.$toast.fail("请填写手机号");
         return;
       }
-      let captcha1 = new TencentCaptcha(this.appid, (res) => {
+      let captcha1 = new TencentCaptcha(this.appid, res => {
         if (res.ret == 0) {
-          this.$http.post("api/v1/tcatpcha", { 'ticket': res.ticket, 'randstr': res.randstr, mobile: this.param.username }).then(({ data }) => {
-            this.param.code = data.code;
-            this.$toast.success('验证发送成功');
-            this.vCount = setInterval(this.countDown, 1000)
-          }).catch(fail => {
-            this.$toast.fail(fail.response.message)
-          })
+          this.$http
+            .post("api/v1/tcatpcha", {
+              ticket: res.ticket,
+              randstr: res.randstr,
+              mobile: this.param.username
+            })
+            .then(({ data }) => {
+              this.param.code = data.code;
+              this.$toast.success("验证发送成功");
+              this.vCount = setInterval(this.countDown, 1000);
+            })
+            .catch(fail => {
+              this.$toast.fail(fail.response.message);
+            });
         }
       });
-      captcha1.show()
+      captcha1.show();
     },
     countDown() {
       if (this.vCodeSecond === 0) {
-        this.vCodeLabel = '重新获取';
+        this.vCodeLabel = "重新获取";
         this.vCodeSecond = this.defaultCodeSecond;
         this.vCodeButtonDisabled = false;
-        clearInterval(this.vCount)
+        clearInterval(this.vCount);
       } else {
         this.vCodeButtonDisabled = true;
-        this.vCodeLabel = this.vCodeSecond + ' s';
-        this.vCodeSecond = this.vCodeSecond - 1
+        this.vCodeLabel = this.vCodeSecond + " s";
+        this.vCodeSecond = this.vCodeSecond - 1;
       }
     },
     showAgree() {
       this.$refs.agree.show();
     },
     toggle() {
-      if (this.type == 'code') {
-        this.type = '';
-        location.hash = '#login'
+      if (this.type == "code") {
+        this.type = "";
+        location.hash = "#login";
       } else {
-        this.type = 'code';
-        location.hash = '#code'
+        this.type = "code";
+        location.hash = "#code";
       }
     },
     login() {
       if (!this.isagree) {
-        this.$alert('您必须同意《搜瓜用户服务协议》才能继续登录')
+        this.$alert("您必须同意《搜瓜用户服务协议》才能继续登录");
       } else {
+        this.$toast.loading({mask: true})
         if (this.type == 'code') {
           this.loginByCode();
         } else {
-          this.loginByPassword()
+          this.loginByPassword();
         }
       }
     },
     async loginByPassword() {
-      if (this.param.username == '') {
-        this.$toast('请填写手机号码');
-        return
+      if (this.param.username == "") {
+        this.$toast("请填写手机号码");
+        return;
       }
-      if (this.param.password == '') {
-        this.$toast('请输入您的密码');
-        return
+      if (this.param.password == "") {
+        this.$toast("请输入您的密码");
+        return;
       }
-      const { username, password } = this.param
+      const { username, password } = this.param;
       try {
+        this.$toast.loading('登录中...');
         await this.attemptLogin({ username, password })
-        this.$toast.success('欢迎回来~')
-        this.$router.push({ name: 'home' })
+        this.loginSuccess()
       } catch (e) {
         if (e.status !== 422) {
-          this.$toast.fail('账号密码错误！')
+          this.$toast.fail("账号密码错误！");
         }
       }
     },
     async loginByCode() {
-      if (this.param.username == '') {
-        this.$toast('请填写手机号码');
-        return
+      if (this.param.username == "") {
+        this.$toast("请填写手机号码");
+        return;
       }
-      if (this.param.code == '') {
-        this.$toast('请输入验证码');
-        return
+      if (this.param.code == "") {
+        this.$toast("请输入验证码");
+        return;
       }
-      const { username, code } = this.param
+      const { username, code } = this.param;
       try {
+        this.$toast.loading('登录中...');
         await this.attemptLoginByCode({ username, code })
-        this.$toast.success('欢迎回来~')
-        this.$router.push({ name: 'home' })
+        this.loginSuccess()
       } catch (e) {
-        if (e.status !== 422) {
-          this.$toast.fail('账号密码错误！')
-        }
+        console.log(e)
       }
-    }
+    },
+    loginSuccess () {
+      let redirect = this.$route.query['redirect']
+      if(redirect != '' && redirect != undefined) {
+        redirect = decodeURIComponent(redirect)
+        location.replace(redirect);
+      } else {
+        this.$router.push({ name: 'home', params: {store: window.STORE_ID} })
+      }
+      this.$toast.success('欢迎回来~')
+    },
   },
   created() {
-    protocol.getProtocol('register').then(({ data }) => {
-      this.registerProtocol = data.content
-    })
+    protocol.getProtocol("register").then(({ data }) => {
+      this.registerProtocol = data.content;
+    });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -271,6 +261,7 @@ export default {
     padding: 3px;
   }
   .item {
+    position: relative;
     height: 50px;
     margin-top: 15px;
     background: url("/images/shop/login/line.png") no-repeat;
@@ -297,13 +288,10 @@ export default {
       background: rgba(0, 0, 0, 0);
       padding-left: 10px;
       font-size: 16px;
-      &.code {
-        flex: 4;
-      }
     }
     .code-btn-box {
-      display: inline-flex;
-      flex: 7;
+      position: absolute;
+      right: 0;
       .code-btn {
         display: inline-block;
         width: 100%;
@@ -314,7 +302,7 @@ export default {
         background-image: url("/images/shop/login/code_btn.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        font-size: 13px;
+        font-size: 12px;
       }
     }
   }
@@ -341,5 +329,26 @@ export default {
   width: 100%;
   text-align: center;
   margin-top: 30px;
+}
+.socail{
+  width: 100%;
+  .title{
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+  }
+  .socail-channel{
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    .item{
+      width: 50px;
+      text-align: center;
+      img{
+        width: 36px;
+        height: auto;
+      }
+    }
+  }
 }
 </style>

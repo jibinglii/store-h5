@@ -1,7 +1,7 @@
 // Variables
 @import "variables";
 @import "../css/weui.mini.css";
-@import url('//at.alicdn.com/t/font_1165461_uv6xada15ho.css');
+@import url('//at.alicdn.com/t/font_1165461_v6f1hk18eu.css');
 
 body{
   // font-family: PingFang-SC-Medium;
@@ -22,4 +22,9 @@ a {
   font-size: 12px;
   padding: 5px;
   text-align: center;
+}
+.van-button--primary {
+  background: #000;
+  color: #ffffff;
+  border: none;
 }

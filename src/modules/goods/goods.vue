@@ -95,16 +95,17 @@
 
     <div class="btn-group">
       <div class="btn-l">
-        <a
-          @click="connectSaler"
+        <router-link
           class="service"
+          v-show="canContact"
+          :to="{name: 'contact'}"
         >
           <img
             src="/images/shop/goods-service.png"
             alt=""
           >
           <span>联系卖家</span>
-        </a>
+        </router-link>
         <a
           @click="collect(goods)"
           class="collect"
@@ -113,7 +114,7 @@
       <a
         @click="buy(goodsId)"
         class="buy"
-        :class="{disabled: !canBuy}"
+        :class="{disabled: !canBuy, 'can-not-contact': !canContact}"
       >{{canBuy?'立即购买':'暂时无货'}}</a>
     </div>
 
@@ -187,6 +188,9 @@ export default {
         return false
       }
       return this.goods.store_nums > 0
+    },
+    canContact () {
+      return this.$user().id != this.$currentStore().user_id
     }
   },
   created() {
@@ -208,6 +212,10 @@ export default {
   },
   methods: {
     buy(goodsId) {
+      if (this.$route.query['spread_id'] != undefined){
+        this.$cookies.set('goods-spread', this.$route.query['spread_id'], 1800)
+      }
+
       if (this.canBuy) {
         this.$router.push({ name: 'confirm', params: { 'goods': goodsId }, query: { 'spread_id': this.$route.query['spread_id'] } })
       }
@@ -229,30 +237,13 @@ export default {
           this.$router.back()
         });
     },
-    connectSaler() {
-      // 联系卖家
-      this.downloadApp();
-      if (this.$cookies.get('connect:goods:' + this.goodsId)) {
-        window.soogua.postMessage(JSON.stringify({
-          "action": "route",
-          "params": JSON.stringify({ "url": "message/" + this.goods.user_id + "/6" })
-        }))
-      } else {
-        window.soogua.postMessage(JSON.stringify({
-          "action": "route",
-          "params": JSON.stringify({ "url": "message/" + this.goods.user_id + "/6/" + this.goodsId })
-        }));
-        this.$cookies.set('connect:goods:' + this.goodsId, true)
-      }
-    },
     collect(goods) {
       if (!goods.is_collect) {
         this.$http.put('api/v1/collect/goods/' + this.goodsId).then(({ data }) => {
           this.$toast.success('收藏成功');
           this.$set(goods, 'is_collect', true)
         }).catch(error => {
-          console.log(error.config)
-          // this.$toast.fail(response.message)
+          this.$toast.fail(error.data.message)
         });
       }
     },
@@ -471,6 +462,9 @@ export default {
       margin-top: -1px;
       &.disabled {
         opacity: 0.7;
+      }
+      &.can-not-contact{
+        width: 38+24%;
       }
     }
   }

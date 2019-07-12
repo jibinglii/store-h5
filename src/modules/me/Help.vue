@@ -43,7 +43,6 @@
       <h2>问题分类</h2>
       <div class="content">
         <router-link
-          :href="'/shop/helplist/'+item.id + '.html'"
           class="c-item"
           v-for="item in faqGroups"
           :key="item.id"

@@ -81,6 +81,8 @@ import InputCell from '$components/InputCell'
 import XPicker from '$components/XPicker'
 import Agree from '$components/Agree'
 import protocol from '$api/protocol'
+import localforage from 'localforage'
+
 export default {
   components: {
     XHeader, GoodsItemHorizontal, XCellGroup, InfoCell, XPicker, Agree, InputCell
@@ -92,7 +94,7 @@ export default {
       totalHtml: '',
       goods: {},
       serviceColumns: [],
-      defaultIndex: 1,
+      defaultIndex: 2,
       receiver_name: '',
       receiver_mobile: '',
       services: [{"name":"30天担保产品","value":"1","day":30,"rate":0.1},{"name":"60天担保产品","value":"2","day":60,"rate":0.15},{"name":"不参与担保服务","value":"0","day":0,"rate":0}],
@@ -102,7 +104,17 @@ export default {
       },
       creating: false,
       insureContent: '',
-      isagree: false
+      isagree: false,
+      spread_id: 0,
+      token: ''
+    }
+  },
+  watch: {
+    receiver_name (val) {
+      localforage.setItem('receiver_name', val)
+    },
+    receiver_mobile (val) {
+      localforage.setItem('receiver_mobile', val)
     }
   },
   computed: {
@@ -117,6 +129,19 @@ export default {
     this.goodsId = this.$route.params.goods
     this.getDetail();
     this.getSaleProtocol();
+    this.getToken();
+    localforage.getItem('receiver_name').then(val => {
+      val == '' || (this.receiver_name = val)
+    })
+    localforage.getItem('receiver_mobile').then(val => {
+      val == '' || (this.receiver_mobile = val)
+    })
+    if (this.$cookies.get('goods-spread') != undefined && this.$cookies.get('goods-spread') != 'undefined'){
+      this.spread_id = this.$cookies.get('goods-spread')
+    }
+    if (this.$route.query['spread_id'] != undefined){
+      this.spread_id = this.$route.query['spread_id']
+    }
   },
   methods: {
     next() {
@@ -134,7 +159,8 @@ export default {
             receiver_mobile: this.receiver_mobile,
             express_type: 0,
             insure: this.serviceValue.index,
-            spread_id: this.$route.query['spread_id']
+            spread_id: this.spread_id,
+            '_token': this.token
           };
           this.$toast.loading({mask: true})
           this.$http.post('api/v1/order/' + this.goodsId, param).then(({ data }) => {
@@ -146,7 +172,6 @@ export default {
             this.$toast.clear()
             this.creating = false;
             this.$toast(data.message)
-            this.$router.back()
           })
         }
       } else {
@@ -187,6 +212,11 @@ export default {
         this.insureContent = data.data.content
       })
     },
+    getToken(){
+      this.$http.get('api/request-token').then(data => {
+        this.token = data.data
+      })
+    }
   }
 }
 </script>

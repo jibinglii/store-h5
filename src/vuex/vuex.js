@@ -1,8 +1,9 @@
 import { vuex as Auth } from '$modules/auth'
+import { vuex as Im } from '$modules/im'
 import { isFunction } from 'lodash'
 
 // start extraction data from vuex modules
-const vuex = { Auth }
+const vuex = { Auth, Im}
 const keys = Object.keys(vuex)
 
 // process and extract data (modules and plugins)

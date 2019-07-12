@@ -13,7 +13,7 @@
 <!--      </div>-->
 <!--    </div>-->
     <van-cell-group>
-     <van-cell icon="todo-list-o" title="分销任务" is-link to="distributionproducts"/>
+     <van-cell icon="todo-list-o" title="分销任务" is-link to="distributionproducts" v-if="isFenxiaoyuan"/>
      <van-cell icon="bill-o" title="分销人员管理" is-link to="distributor" v-if="showPeople"/>
      <van-cell icon="user-o" title="分销订单管理" is-link :to="{name: 'seller/orders'}" v-if="showPeople"/>
     </van-cell-group>
@@ -38,7 +38,10 @@ export default {
   },
   computed: {
     showPeople () {
-      return !(_.indexOf(this.$currentStore().roles,'推广员') != -1)
+      return !(_.indexOf(this.$currentStore().roles,'分销店铺') != -1)
+    },
+    isFenxiaoyuan () {
+      return !(_.indexOf(this.$currentStore().roles,'推广店铺') != -1)
     }
   },
 };

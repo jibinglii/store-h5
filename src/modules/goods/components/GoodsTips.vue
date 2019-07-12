@@ -8,9 +8,9 @@
         {{ item }}
       </div>
     </div>
-    <a class="more" href="/shop/contact.html">
+    <router-link class="more" :to="{name: 'me.helps'}">
       验证客服真伪
-    </a>
+    </router-link>
   </div>
 </template>
 

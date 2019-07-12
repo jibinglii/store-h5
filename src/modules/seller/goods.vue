@@ -1,10 +1,10 @@
 <template>
   <div class="pagebox">
-    <x-header title="商品管理">
-    </x-header>
+    <x-header title="商品管理" back-url="me.me" />
     <van-tabs
       @click="filterData"
       v-model="tabIndex"
+      v-show="!isSeller"
     >
       <van-tab
         :title="item.title"
@@ -20,6 +20,7 @@
           :goods="item"
           @update="filterData(tabIndex)"
           @assign="assign"
+          :is-seller="isSeller"
         ></goods-item>
         <infinite-loading
           :identifier="infiniteId"
@@ -112,6 +113,11 @@ export default {
       currentGoods: {}
     }
   },
+  computed: {
+    isSeller(){
+      return _.indexOf(this.$user().roles,'分销员') != -1
+    }
+  },
   mounted() {
     this.tabIndex = location.hash.substr(1) || 0
     this.status = this.statusTypes[this.tabIndex].id
@@ -132,7 +138,7 @@ export default {
       if (this.status != -1) {
         param['params']['status'] = this.status
       }
-      this.$http.get('/api/v1/user/goods', param).then(({ data }) => {
+      this.$http.get('/api/v2/store/user/goods', param).then(({ data }) => {
         if (data.goods.data.length > 0) {
           this.page += 1;
           this.items.push(...data.goods.data);

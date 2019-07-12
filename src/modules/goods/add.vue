@@ -3,17 +3,17 @@
     <x-header title="添加商品"></x-header>
     <van-cell-group>
       <van-cell title="商品类型">{{$route.query.desc}}</van-cell>
-      <van-cell title="交易类型" is-link>
+      <van-cell title="交易主类" is-link>
         <van-dropdown-menu>
           <van-dropdown-item v-model="param.type2" :options="typeOptions"/>
         </van-dropdown-menu>
       </van-cell>
-      <van-cell title="Game" is-link>
+      <van-cell title="交易辅类" is-link>
         <van-dropdown-menu>
           <van-dropdown-item v-model="param.game_id" :options="gamesOptions" @change="loadServer"/>
         </van-dropdown-menu>
       </van-cell>
-      <van-cell title="Server" is-link v-show="param.game_id != 0" @click="show=true">
+      <van-cell title="商品属性" is-link v-show="param.game_id != 0" @click="show=true">
         {{ serverName }}
       </van-cell>
     </van-cell-group>
@@ -273,6 +273,9 @@
 
 <style lang="scss" scoped>
   .add {
+    /deep/.van-dropdown-item__content{
+      padding-top: 10px;
+    }
     /deep/ .van-cell-group {
       .van-cell__title {
         font-weight: 600;

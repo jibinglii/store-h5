@@ -11,7 +11,7 @@ import 'vant/lib/toast/style'
 import mixins from './mixins/index'
 import '$utils/rem'
 import * as filters from './filters'
-
+import VueCookies from 'vue-cookies';
 // const FastClick = require('fastclick');
 import Lazyload from 'vant/lib/lazyload'
 Vue.use(Lazyload)
@@ -19,6 +19,15 @@ import { Alert, Confirm } from 'wc-messagebox'
 import 'wc-messagebox/style.css'
 Vue.use(Alert)
 Vue.use(Confirm)
+Vue.use(VueCookies)
+
+import VueFab from 'vue-float-action-button'
+Vue.use(VueFab, {
+    // opitons 可选iconfont图标或MaterialIcons
+    // iconType: 'MaterialDesign'
+    iconType: 'iconfont'
+});
+
 import FastClick from 'fastclick'
 Vue.config.productionTip = false
 Vue.mixin(mixins)
@@ -45,3 +54,8 @@ setTimeout(() => {
         render: h => h(Root)
     }).$mount('#app')
 }, 200)
+
+
+// import Vconsole from 'vconsole';
+// let vConsole = new Vconsole()
+// export default vConsole

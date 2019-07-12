@@ -11,7 +11,7 @@
       </div>
       <span class="explode">|</span>
       <div class="nav-link">
-        <router-link :to="{name: 'home'}">商城首页</router-link>
+        <a href="https:/soogua.aixuexue.net/download/index.html" target="_blank">下载搜瓜</a>
       </div>
     </div>
     <div class="logo">

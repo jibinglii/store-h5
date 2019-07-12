@@ -69,7 +69,9 @@ export default {
   },
   mounted() {
     this.tabIndex = location.hash.substr(1)
-    this.status = this.statusTypes[this.tabIndex].id
+    if (this.tabIndex != ''){
+      this.status = this.statusTypes[this.tabIndex].id
+    }
   },
   methods: {
     filterData(index, title) {

@@ -4,7 +4,7 @@
       title="店铺主页"
       :allow-back="false"
     ></x-header>
-    <div class="top-search">
+    <div class="top-search" v-if="!isMainStore">
       <div class="top-search-l">
         <img
           :src="currentStore.logo"
@@ -28,11 +28,6 @@
         <div class="iconfont icon-new-icon right"></div>
       </div>
       <div class="list">
-        <van-skeleton
-          :row="4"
-          :loading="loading"
-          row-width="9.0625rem"
-        />
         <goods-item
           v-for="item in goods"
           :key="item.id"
@@ -64,9 +59,7 @@ import { mapGetters } from 'vuex'
 import * as services from './services'
 import InfiniteLoading from 'vue-infinite-loading'
 import Loading from 'vant/lib/loading'
-import Skeleton from 'vant/lib/skeleton'
 import 'vant/lib/loading/style'
-import 'vant/lib/skeleton/style'
 export default {
   name: "home",
   components: {
@@ -75,8 +68,7 @@ export default {
     'nav-block': Nav,
     XHeader,
     InfiniteLoading,
-    'van-loading': Loading,
-    'van-skeleton': Skeleton
+    'van-loading': Loading
   },
   data() {
     return {
@@ -87,7 +79,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentStore'])
+    ...mapGetters(['currentStore']),
+    isMainStore() {
+      return _.isEmpty(this.currentStore)
+    }
   },
   created() {
     this.getAds()

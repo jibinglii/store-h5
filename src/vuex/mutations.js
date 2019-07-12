@@ -5,3 +5,7 @@ export const toggle = state => {
 export const storeInfo = (state, storeInfo) => {
   state.store = storeInfo
 }
+
+export const hasNewMsg = (state, isHasNewMsg) => {
+  state.hasNewMsg = isHasNewMsg
+}

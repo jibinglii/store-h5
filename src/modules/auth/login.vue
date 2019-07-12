@@ -42,18 +42,15 @@
       <a href="javascript:" v-else>使用验证码登录</a>
     </div>
     <div class="socail">
-      <div class="title">
-        <span>第三方登录</span>
-      </div>
       <div class="socail-channel">
         <div class="item wechat" v-show="isWechat()">
           <a href="javascript:void()" @click="wechat">
-            <img src="/images/shop/weixin.png" alt="">
+            微信快捷登录
           </a>
         </div>
-        <div class="item qq">
+        <div class="item qq" v-show="false">
           <a href="javascript:void()" @click="qq">
-            <img src="/images/shop/qq.png" alt="">
+            QQ快捷登录
           </a>
         </div>
       </div>
@@ -254,7 +251,7 @@ export default {
 }
 .login-box {
   padding: 10px 30px;
-  margin-top: 30px;
+  margin-top: 10px;
   .tips {
     font-size: 12px;
     color: gray;
@@ -338,16 +335,28 @@ export default {
     font-size: 12px;
   }
   .socail-channel{
-    display: flex;
+    display: block;
     justify-content: center;
     margin: 15px 0;
     .item{
-      width: 50px;
       text-align: center;
-      img{
-        width: 36px;
-        height: auto;
+      margin: 6px 0;
+      padding:0px 30px;
+      a{
+        display: block;
+        width: 100%;
+        line-height:50px;
+        background: #000;
+        color:#fff;
+        font-size:.9rem;
       }
+    }
+
+    .wechat a{
+      background: #6ac57a;
+    }
+    .qq a{
+      background: #3399ff;
     }
   }
 }

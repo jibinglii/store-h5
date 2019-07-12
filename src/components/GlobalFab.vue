@@ -2,8 +2,8 @@
     <vue-fab
     :mainBtnColor="mainBtnColor"
     size="big"
-    style="bottom: 6.25rem;" icon="icon-add"
-    :scroll-auto-hide="false"
+    style="bottom: 6.25rem;left: 1rem;" icon="icon-add"
+    :scroll-auto-hide="true"
     >
     <fab-item
       v-for="(item, idx) in menu"

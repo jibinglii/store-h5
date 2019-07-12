@@ -41,7 +41,7 @@
       <a href="javascript:" v-if="type == 'code'">使用密码登录</a>
       <a href="javascript:" v-else>使用验证码登录</a>
     </div>
-    <div class="socail" v-show="isWechat()">
+    <div class="socail">
       <div class="title">
         <span>第三方登录</span>
       </div>
@@ -49,6 +49,11 @@
         <div class="item wechat" v-show="isWechat()">
           <a href="javascript:void()" @click="wechat">
             <img src="/images/shop/weixin.png" alt="">
+          </a>
+        </div>
+        <div class="item qq">
+          <a href="javascript:void()" @click="qq">
+            <img src="/images/shop/qq.png" alt="">
           </a>
         </div>
       </div>
@@ -111,6 +116,9 @@ export default {
     ...mapActions(["attemptLogin", "attemptLoginByCode"]),
     wechat () {
       location.href = window.API_ROOT + '/api/v2/oauth/wechat/' + window.STORE_ID
+    },
+    qq(){
+      location.href = window.API_ROOT + '/api/v2/oauth/qq/' + window.STORE_ID
     },
     getCode() {
       if (this.param.username == "") {

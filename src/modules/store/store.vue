@@ -58,6 +58,7 @@ import GoodsItem from "$components/GoodsItem"
 import InfiniteLoading from 'vue-infinite-loading'
 import Loading from 'vant/lib/loading'
 import * as services from '$modules/home/services'
+import { mapGetters } from 'vuex'
 export default {
   name: "store",
   components: {
@@ -68,6 +69,9 @@ export default {
     GoodsItem,
     InfiniteLoading,
     'van-loading': Loading,
+  },
+  computed: {
+    ...mapGetters(['currentStore'])
   },
   data() {
     return {

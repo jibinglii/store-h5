@@ -155,6 +155,9 @@ export default {
     isAdmin () {
       return this.$currentStore().user_id == this.$user().id
     }
+  },
+  created () {
+    document.title = '我的'
   }
 };
 </script>

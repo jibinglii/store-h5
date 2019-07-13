@@ -1,7 +1,7 @@
 <template>
   <div class="page-home">
     <x-header
-      title="店铺主页"
+      :title="currentStore.name"
       :allow-back="false"
     ></x-header>
     <div class="top-search" v-if="!isMainStore">

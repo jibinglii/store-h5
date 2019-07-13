@@ -1,8 +1,7 @@
-
 <template>
   <div>
     <x-header
-      title="店铺主页"
+      :title="currentStore.name"
       back-url="home"
       :allow-back=false
     ></x-header>

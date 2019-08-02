@@ -31,16 +31,16 @@
 
       <van-cell-group>
         <p class="title">提现金额</p>
-        <van-field v-model="amount" placeholder="请输入提现金额" class="amountInput"/>
+        <van-field v-model="amount" placeholder="请输入提现金额" class="amountInput" @input="showBalance=false"/>
       </van-cell-group>
       <div class="dec" v-if="showBalance">
         钱包余额
         <span>￥{{currentUser.wallet.amount|formatMoney}}</span>
         <a @click="withdrawBtn">全部提现</a>
       </div>
-      <div class="dec" v-if="showDec">
+      <div class="dec" v-else>
         额外扣除
-        <span>￥{{amount}}</span>（费率0.10%）
+        <span>￥{{amount*fee}}</span>（费率0.5%）
       </div>
       <div class="btn">
         <van-button
@@ -125,13 +125,13 @@ export default {
       bankName: "请选择",
       bankImg: "",
       showBalance: true,
-      showDec: false,
       downIcon: true,
       isShow: false,
       showKeyboard: true,
       showValue: '',
       info: '',
-      bank: ''
+      bank: '',
+      fee: 0.005
     };
   },
 

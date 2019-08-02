@@ -3,26 +3,32 @@
   <div>
     <x-header title="提现"></x-header>
     <div class="card">
-      <van-cell-group>
+      <van-cell-group v-show="downIcon" class="cell-select">
         <van-cell title="到账银行卡">
           <span @click="showlist()" class="default_text">
             <i class="iconfont" :class="'icon-' + bankImg"></i>
             {{bankName}}
-            <van-icon name="arrow" v-show="downIcon"/>
-            <van-icon name="arrow-down" v-show="!downIcon"/>
+            <van-icon name="arrow" />
           </span>
         </van-cell>
-        <ul v-show="flag" class="select_box">
-          <li
-            @click="checkThis(item)"
-            v-for="(item, index) in bank_cards"
-            :key="index"
-          >
+      </van-cell-group>
+
+      <van-cell-group v-show="!downIcon" class="cell-selected">
+        <van-cell title="到账银行卡">
+          <span @click="showlist()" class="default_text">
+            <i class="iconfont" :class="'icon-' + bankImg"></i>
+            {{bankName}}
+            <van-icon name="arrow-down" />
+          </span>
+        </van-cell>
+        <ul class="select_box">
+          <li @click="checkThis(item)" v-for="(item, index) in bank_cards" :key="index">
             <i class="iconfont" :class="'icon-' + item.bank"></i>
             <a href="javascript:void(0);">{{item.bank_info.bankName}} {{item.bankno_last4}}</a>
           </li>
         </ul>
       </van-cell-group>
+
       <van-cell-group>
         <p class="title">提现金额</p>
         <van-field v-model="amount" placeholder="请输入提现金额" class="amountInput"/>
@@ -132,7 +138,7 @@ export default {
   computed: {
     ...mapGetters(["currentUser"]),
     canSubmit() {
-      if (this.amount != "") {
+      if (this.amount != "" && parseInt(this.amount)>0) {
         return true;
       }
       return false;
@@ -256,20 +262,20 @@ export default {
       width: 100%;
       position: absolute;
       z-index: 99999;
-      padding: 0 0 0.426667rem 0;
-      background-color: #ffffff;
       li {
         display: flex;
         align-items: center;
         padding: 0.426667rem;
-        border-bottom: solid 1px #f2f2f2;
+        border: solid 1px #a3a3a3;
+        border-top: none;
+        background: #fff;
         img {
-          padding-right: 0.426667rem;
+          padding-right: 0.526667rem;
           width: 0.64rem;
           height: 0.64rem;
         }
         a {
-          font-size: 0.597333rem;
+          font-size: 0.7rem;
         }
       }
     }
@@ -314,6 +320,20 @@ export default {
     }
   }
 }
+
+.cell-select {
+  .van-cell {
+    border: solid 1px #ffffff;
+    background: #fff;
+  }
+}
+.cell-selected {
+  .van-cell {
+    border: solid 1px #a3a3a3;
+    background: #fafafa;
+  }
+}
+
 .quesBotm {
   width: 100%;
   position: fixed;
